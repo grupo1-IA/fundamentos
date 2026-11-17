@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
 <title>A Educação na Democracia Popular — CPAN-UFMS</title>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <style>
 :root {
   --ink: #0f172a;
@@ -453,88 +454,100 @@ strong { color: var(--ink); }
   color: #1e3a8a;
 }
 
-/* QUIZ ESTILO KAHOOT COM QR CODE E SOM */
+/* QUIZ MULTIPLAYER ESTILO KAHOOT COM PIN, LINK, QR CODE, SOM E RANKING */
 .quiz-layout {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   align-items: stretch;
-  margin-top: 4px;
+  margin-top: 2px;
+  height: 495px;
 }
 .quiz-main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 14px 18px;
 }
-.quiz-qr-box {
-  width: 245px;
+.quiz-sidebar {
+  width: 270px;
   flex-shrink: 0;
   background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
   border: 2px solid #93c5fd;
   border-radius: 18px;
-  padding: 14px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   text-align: center;
 }
-.quiz-qr-box img {
-  width: 155px;
-  height: 155px;
+.quiz-sidebar img {
+  width: 132px;
+  height: 132px;
   background: #ffffff;
-  padding: 8px;
+  padding: 6px;
   border-radius: 12px;
   border: 2px solid #bfdbfe;
 }
-.quiz-tabs {
+.pin-badge {
+  background: #0f172a;
+  color: #fbbf24;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  padding: 5px 14px;
+  border-radius: 10px;
+  border: 2px solid #334155;
+  width: 100%;
+}
+.link-box {
+  background: #ffffff;
+  border: 1.5px solid #93c5fd;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 11px;
+  color: #1e3a8a;
+  font-weight: 700;
+  width: 100%;
+  word-break: break-all;
+  line-height: 1.25;
+}
+.quiz-topbar {
   display: flex;
-  gap: 7px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1.5px solid #e2e8f0;
+  padding-bottom: 8px;
 }
-.quiz-tab {
-  border: 2px solid var(--line);
-  background: #f8fafc;
-  color: var(--ink);
-  font-weight: 800;
-  font-size: 14px;
-  padding: 5px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.quiz-tab.active {
-  background: var(--blue);
-  border-color: var(--blue);
+.timer-pill {
+  background: #1d4ed8;
   color: #ffffff;
+  font-weight: 900;
+  font-size: 16px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  min-width: 74px;
+  text-align: center;
 }
-.quiz-tab.answered-ok {
-  border-color: var(--green);
-  background: #dcfce7;
-  color: #14532d;
-}
-.sound-toggle {
-  margin-left: auto;
-  border: 2px solid #0284c7;
-  background: #e0f2fe;
-  color: #0c4a6e;
-  font-weight: 800;
-  font-size: 13.5px;
-  padding: 5px 11px;
-  border-radius: 10px;
-  cursor: pointer;
-}
+.timer-pill.urgent { background: #dc2626; animation: pulse 0.7s infinite; }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
 .quiz-qtext {
   font-size: 18.5px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--ink);
-  line-height: 1.32;
-  margin-bottom: 10px;
-  background: #f8fafc;
-  padding: 11px 15px;
+  line-height: 1.3;
+  background: #ffffff;
+  padding: 11px 14px;
   border-radius: 12px;
   border-left: 5px solid var(--cyan);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 .kahoot-options {
   display: grid;
@@ -544,12 +557,12 @@ strong { color: var(--ink); }
 .kahoot-btn {
   border: 0;
   border-radius: 12px;
-  padding: 13px 15px;
+  padding: 12px 14px;
   color: #ffffff;
   text-align: left;
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 700;
-  line-height: 1.28;
+  line-height: 1.25;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -558,11 +571,11 @@ strong { color: var(--ink); }
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 .kahoot-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
-.kahoot-btn.k0 { background: #dc2626; } /* Triângulo Vermelho */
-.kahoot-btn.k1 { background: #2563eb; } /* Losango Azul */
-.kahoot-btn.k2 { background: #d97706; } /* Círculo Amarelo */
-.kahoot-btn.k3 { background: #16a34a; } /* Quadrado Verde */
-.kahoot-btn.dimmed { opacity: 0.35; }
+.kahoot-btn.k0 { background: #dc2626; }
+.kahoot-btn.k1 { background: #2563eb; }
+.kahoot-btn.k2 { background: #d97706; }
+.kahoot-btn.k3 { background: #16a34a; }
+.kahoot-btn.dimmed { opacity: 0.3; }
 .kahoot-btn.winner { outline: 4px solid #0f172a; transform: scale(1.02); opacity: 1; }
 .k-shape {
   display: inline-flex;
@@ -575,16 +588,64 @@ strong { color: var(--ink); }
   font-size: 16px;
   flex-shrink: 0;
 }
-.feedback {
-  min-height: 44px;
-  margin-top: 8px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1.32;
-  color: #0f172a;
-}
 
-/* MODO CELULAR PARA ALUNOS (?quiz=1) */
+/* LISTA DE JOGADORES NO LOBBY E RANKING */
+.players-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 170px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+.player-chip {
+  background: #eff6ff;
+  border: 2px solid #93c5fd;
+  color: #1e3a8a;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  animation: fadeIn 0.25s ease;
+}
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 235px;
+  overflow-y: auto;
+}
+.rank-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-weight: 800;
+  font-size: 16px;
+}
+.rank-row.top1 { background: linear-gradient(90deg, #fef3c7, #fde68a); border-color: #f59e0b; color: #78350f; }
+.rank-row.top2 { background: #f1f5f9; border-color: #94a3b8; }
+.rank-row.top3 { background: #ffedd5; border-color: #fb923c; }
+
+.action-btn {
+  border: 0;
+  background: var(--blue);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.action-btn:hover { background: var(--cyan); }
+.action-btn.green { background: #15803d; }
+.action-btn.amber { background: #d97706; }
+
+/* MODO CELULAR PARA OS JOGADORES */
 body.mobile-quiz-mode {
   overflow-y: auto;
   background: #0f172a;
@@ -594,15 +655,26 @@ body.mobile-quiz-mode #viewport,
 body.mobile-quiz-mode #hud { display: none; }
 #mobile-quiz-app {
   display: none;
-  max-width: 540px;
+  max-width: 500px;
   margin: 0 auto;
   background: #ffffff;
   border-radius: 22px;
   padding: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45);
 }
 body.mobile-quiz-mode #mobile-quiz-app { display: block; }
 body.mobile-quiz-mode .kahoot-options { grid-template-columns: 1fr; }
+.m-input {
+  width: 100%;
+  padding: 13px 14px;
+  font-size: 17px;
+  font-weight: 700;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  outline: none;
+}
+.m-input:focus { border-color: #1d4ed8; }
 
 /* HUD Compacto */
 #hud {
@@ -676,11 +748,11 @@ button { font: inherit; }
   </div>
 </div>
 
-<!-- Tela dedicada automaticamente quando o aluno escaneia o QR Code no celular -->
+<!-- INTERFACE DO JOGADOR NO CELULAR (VIA QR CODE, LINK OU PIN) -->
 <div id="mobile-quiz-app">
   <div style="font-size:12px;font-weight:800;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.08em;">CPAN-UFMS · Fundamentos da Educação</div>
-  <h2 style="font-size:22px;margin:4px 0 8px;">Quiz: A Educação na Democracia Popular</h2>
-  <p style="font-size:14px;margin-bottom:12px;">Grupo: Moisés, Jesiel, Wéllington e Glaucio</p>
+  <h2 style="font-size:21px;margin:4px 0 6px;">Quiz: Educação na Democracia Popular</h2>
+  <p style="font-size:13.5px;margin-bottom:12px;color:#475569;">Moisés, Jesiel, Wéllington e Glaucio</p>
   <div id="mobile-quiz-body"></div>
 </div>
 
@@ -688,13 +760,13 @@ button { font: inherit; }
   <div class="controls">
     <button class="ctrl" id="prev" title="Slide anterior (←)">←</button>
     <button class="ctrl" id="next" title="Próximo slide (→)">→</button>
-    <span id="counter">1 / 15</span>
+    <span id="counter">1 / 14</span>
   </div>
   <button class="ctrl present-square" id="present" title="Apresentar em tela cheia">⛶</button>
 </div>
 
 <script>
-/* ILUSTRAÇÕES VETORIAIS CONTEXTUALIZADAS */
+/* ILUSTRAÇÕES VETORIAIS */
 const svgCoverEdu = `<svg viewBox="0 0 240 210" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="12" y="12" width="216" height="186" rx="24" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2.5"/>
   <circle cx="120" cy="105" r="74" fill="#dbeafe" opacity="0.6"/>
@@ -717,10 +789,8 @@ const svgTimeline1945 = `<svg viewBox="0 0 240 220" fill="none" xmlns="http://ww
 const svgBrasiliaJK = `<svg viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="14" y="14" width="212" height="192" rx="18" fill="#f0f9ff" stroke="#bae6fd" stroke-width="2"/>
   <rect x="30" y="156" width="180" height="14" rx="4" fill="#1e293b"/>
-  <!-- Cúpulas do Congresso Nacional (Brasília 1960) -->
   <path d="M44 156C44 132 92 132 92 156H44Z" fill="#0284c7"/>
   <path d="M148 134C148 156 196 156 196 134H148Z" fill="#1d4ed8"/>
-  <!-- Torres gêmeas -->
   <rect x="106" y="64" width="11" height="92" rx="2" fill="#334155"/>
   <rect x="123" y="64" width="11" height="92" rx="2" fill="#334155"/>
   <text x="120" y="44" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="800">Brasília (1960) · Plano de Metas</text>
@@ -781,9 +851,9 @@ const slides = [
         <p>Populismo, industrialização e disputas entre ensino público e privado.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Participação ativa: no Slide 14 a turma escaneia o QR Code pelo celular e joga o Quiz de 5 questões com som!">
-        <h3>🎮 Dinâmica Interativa</h3>
-        <p>Quiz estilo Kahoot com QR Code e áudio para toda a turma.</p>
+      <div class="card" data-practical="Participação ao vivo: no Slide 13 a turma entra pelo QR Code, Link ou PIN, coloca o nome e disputa o Ranking com som!">
+        <h3>🏆 Quiz Ao Vivo (Ranking)</h3>
+        <p>5 questões (0 a 1.000 pts) com placar atualizado a cada rodada.</p>
         <div class="practical-example"></div>
       </div>
     </div>
@@ -801,12 +871,12 @@ const slides = [
       <p>Quando falamos em <strong>“qualidade da escola pública”</strong>, estamos falando de rankings e notas padronizadas para o mercado, ou de uma escola que garante <strong>acesso, permanência e emancipação</strong> para as classes populares?</p>
     </div>
     <div class="grid">
-      <div class="card" data-practical="Moisés (Slides 1–4): Abertura, fim da Era Vargas (1945) e o período populista-desenvolvimentista.">
+      <div class="card" data-practical="Moisés (Slides 1–4) e Jesiel (Slides 5–7): Contexto político (1945–1964), governo JK, João Goulart e a Constituição de 1946.">
         <h3>1️⃣ Bloco 1 · Moisés & Jesiel</h3>
         <p>Contexto político (1945–1964), governo JK, João Goulart e a Constituição de 1946.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Wéllington & Glaucio (Slides 8–15): LDB 4.024/61, o artigo de Di Giorgi & Leite (2010), Quiz Kahoot com QR Code e conclusão.">
+      <div class="card" data-practical="Wéllington (Slides 8–10) e Glaucio (Slides 11–14): LDB 4.024/61, o artigo de Di Giorgi & Leite (2010), Quiz Ao Vivo com Ranking e conclusão.">
         <h3>2️⃣ Bloco 2 · Wéllington & Glaucio</h3>
         <p>A LDB 4.024/61, qualidade democrática e popular (2010), Quiz e síntese.</p>
         <div class="practical-example"></div>
@@ -1077,23 +1147,23 @@ const slides = [
   </div>`
 },
 
-/* 13. QUIZ ESTILO KAHOOT COM QR CODE E SOM (5 QUESTÕES) — GLAUCIO */
+/* 13. QUIZ MULTIPLAYER AO VIVO COM QR CODE, PIN, LINK, SOM E RANKING — GLAUCIO */
 {
-  section:"Glaucio · Slide 13 · Atividade Interativa (Kahoot)",
-  title:"Quiz Interativo: Teste seus Conhecimentos!",
-  subtitle:"Escaneie o QR Code com o celular para jogar com som ou responda diretamente no telão:",
+  section:"Glaucio · Slide 13 · Quiz Ao Vivo com Ranking (Kahoot)",
+  title:"Quiz Ao Vivo: Disputa no Telão!",
+  subtitle:"Entre pelo QR Code, Link ou digite o PIN no celular. Acertar mais rápido rende até 1.000 pontos!",
   body:`<div class="quiz-layout">
-    <div class="quiz-main">
-      <div class="quiz-tabs" id="quiz-tabs"></div>
-      <div class="quiz-qtext" id="quiz-qtext"></div>
-      <div class="kahoot-options" id="quiz-options"></div>
-      <div class="feedback" id="quiz-feedback"></div>
-    </div>
-    <div class="quiz-qr-box">
-      <div style="font-size:13px;font-weight:800;color:#1d4ed8;text-transform:uppercase;">📱 Jogue no Celular</div>
-      <img id="qr-img" alt="QR Code para abrir o Quiz no celular">
-      <div style="font-size:12.5px;color:#1e3a8a;font-weight:700;line-height:1.3;">Aponte a câmera do celular para entrar na sala com áudio!</div>
-      <button id="open-mobile-preview" style="border:0;background:#1d4ed8;color:#fff;font-size:12px;font-weight:800;padding:7px 10px;border-radius:8px;cursor:pointer;width:100%;">🔊 Testar Modo Celular</button>
+    <div class="quiz-main" id="host-quiz-stage"></div>
+    <div class="quiz-sidebar">
+      <div style="font-size:12px;font-weight:900;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.06em;">1. Escaneie o QR Code</div>
+      <img id="qr-img" alt="QR Code para entrar no Quiz">
+      <div style="font-size:12px;font-weight:900;color:#0f172a;text-transform:uppercase;">2. Ou acesse o link e use o PIN:</div>
+      <div class="pin-badge" id="host-pin-display">------</div>
+      <div class="link-box" id="host-link-display">Carregando link...</div>
+      <div style="display:flex;gap:6px;width:100%;">
+        <button id="copy-link-btn" class="action-btn" style="flex:1;font-size:11.5px;padding:6px 8px;">📋 Copiar Link</button>
+        <button id="open-mobile-preview" class="action-btn green" style="flex:1;font-size:11.5px;padding:6px 8px;">📱 Abrir Tela Aluno</button>
+      </div>
     </div>
   </div>`
 },
@@ -1117,7 +1187,7 @@ const slides = [
 }
 ];
 
-/* 5 QUESTÕES ESTILO KAHOOT */
+/* 5 QUESTÕES DO QUIZ (0 A 1000 PONTOS POR VELOCIDADE) */
 const quizData = [
   {
     q: "1. Qual acontecimento político em 29 de outubro de 1945 encerrou a ditadura do Estado Novo e iniciou o período populista no Brasil?",
@@ -1128,7 +1198,7 @@ const quizData = [
       "A inauguração de Brasília"
     ],
     correct: 0,
-    explanation: "Correto! Vargas foi deposto em 29/10/1945 após o crescimento das pressões pelo retorno das liberdades democráticas."
+    explanation: "Vargas foi deposto em 29/10/1945 após o crescimento das pressões pelo retorno das liberdades democráticas."
   },
   {
     q: "2. Qual programa do governo Juscelino Kubitschek (1956–1961) priorizou indústria de base, energia, transporte e educação?",
@@ -1139,18 +1209,18 @@ const quizData = [
       "Plano Salte"
     ],
     correct: 1,
-    explanation: "Correto! O Plano de Metas impulsionou a modernização econômica, a construção de Brasília (1960) e incluiu a educação no desenvolvimento."
+    explanation: "O Plano de Metas impulsionou a modernização econômica, a construção de Brasília (1960) e incluiu a educação."
   },
   {
     q: "3. O que a Constituição Federal de 1946 (Art. 5º, XV) atribuiu de inédito à União no campo educacional?",
     options: [
       "Privatizar todas as escolas secundárias",
-      "Extirpar o ensino público gratuito",
+      "Extinguir o ensino público gratuito",
       "Legislar sobre as diretrizes e bases da educação nacional",
       "Transferir as universidades aos municípios"
     ],
     correct: 2,
-    explanation: "Correto! Enquanto Cartas anteriores falavam apenas em 'traçar diretrizes', a de 1946 determinou legislar sobre as diretrizes e bases (originando a LDB)."
+    explanation: "Enquanto Cartas anteriores falavam apenas em 'traçar diretrizes', a de 1946 determinou legislar sobre diretrizes e bases."
   },
   {
     q: "4. Sobre a LDB (Lei n. 4.024/61), promulgada após 13 anos de debates, o que concluem Vieira e Farias (2007)?",
@@ -1161,7 +1231,7 @@ const quizData = [
       "Criou o FUNDEB e o sistema de cotas"
     ],
     correct: 1,
-    explanation: "Correto! Embora tenha unificado os níveis de ensino pela 1ª vez, a Lei 4.024/61 traduziu conciliações que favoreceram o setor privado."
+    explanation: "Embora tenha unificado os níveis de ensino pela 1ª vez, a Lei 4.024/61 traduziu conciliações que favoreceram o setor privado."
   },
   {
     q: "5. Na perspectiva democrática e popular defendida por Di Giorgi e Leite (2010), o que define a qualidade da escola pública?",
@@ -1172,11 +1242,11 @@ const quizData = [
       "Substituição de professores por apostilas padronizadas"
     ],
     correct: 2,
-    explanation: "Correto! Para Di Giorgi e Leite (2010), qualidade social exige inclusão, permanência, gestão democrática e formação cidadã emancipadora."
+    explanation: "Para Di Giorgi e Leite (2010), qualidade social exige inclusão, permanência, gestão democrática e formação cidadã emancipadora."
   }
 ];
 
-/* MOTOR DE ÁUDIO ESTILO KAHOOT (WEB AUDIO API - SEM ARQUIVOS EXTERNOS) */
+/* MOTOR DE ÁUDIO ESTILO KAHOOT (WEB AUDIO API) */
 let soundEnabled = true;
 function playKahootSound(type) {
   if (!soundEnabled) return;
@@ -1195,9 +1265,11 @@ function playKahootSound(type) {
       osc.start(ctx.currentTime + start);
       osc.stop(ctx.currentTime + start + dur);
     };
-    if (type === "select") {
-      playNote(440, 0, 0.12, "sine");
-      playNote(587.33, 0.08, 0.14, "sine");
+    if (type === "join") {
+      playNote(523.25, 0, 0.1, "sine");
+      playNote(783.99, 0.08, 0.16, "sine");
+    } else if (type === "tick") {
+      playNote(880, 0, 0.06, "sine");
     } else if (type === "correct") {
       playNote(523.25, 0, 0.14);
       playNote(659.25, 0.12, 0.14);
@@ -1210,26 +1282,21 @@ function playKahootSound(type) {
   } catch (e) {}
 }
 
-/* POSICIONAMENTO PREZI-CANVAS */
+/* POSICIONAMENTO DOS SLIDES */
 const layout = [
-  /* Moisés (1-4) */
   {x:0, y:0, s:1.03},
   {x:1850, y:0, s:1},
   {x:3700, y:0, s:1},
   {x:5550, y:0, s:1},
-  /* Jesiel (5-7) */
   {x:7400, y:-540, s:1},
   {x:9250, y:-540, s:1},
   {x:11100, y:-540, s:1},
-  /* Wéllington (8-10) */
   {x:12950, y:240, s:1},
   {x:14800, y:240, s:1},
   {x:16650, y:240, s:1},
-  /* Glaucio (11-13) */
   {x:18500, y:-420, s:1},
   {x:20350, y:-420, s:1},
   {x:22200, y:0, s:1},
-  /* Encerramento (14) */
   {x:24050, y:0, s:1.03}
 ];
 
@@ -1269,108 +1336,461 @@ for (let i = 0; i < layout.length - 1; i++) {
 svgConnections.style.transform = `translate(-${offset}px, -${offset}px)`;
 svgConnections.innerHTML = svgMarkup;
 
-/* CONFIGURAÇÃO DO QR CODE PARA O LINK ONLINE (GITHUB PAGES) */
-const qrUrl = new URL(window.location.href);
-qrUrl.searchParams.set("quiz", "1");
-const qrImg = document.getElementById("qr-img");
-if (qrImg) {
-  qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(qrUrl.toString());
-}
-
+/* =====================================================================
+   SISTEMA MULTIPLAYER EM TEMPO REAL (TELÃO HOST + CELULARES VIA PEERJS)
+   ===================================================================== */
 const shapes = ["▲", "◆", "●", "■"];
-let currentQ = 0;
-const solvedQ = new Set();
+const ROUND_SECONDS = 20;
+const params = new URLSearchParams(window.location.search);
+const isMobilePlayer = params.get("play") === "1" || params.has("pin");
 
-function renderQuiz(qIdx) {
-  currentQ = qIdx;
-  const tabsEl = document.getElementById("quiz-tabs");
-  const qtextEl = document.getElementById("quiz-qtext");
-  const optsEl = document.getElementById("quiz-options");
-  const fbEl = document.getElementById("quiz-feedback");
-  if (!tabsEl) return;
-
-  tabsEl.innerHTML = quizData.map((_, idx) => {
-    const cls = ["quiz-tab"];
-    if (idx === currentQ) cls.push("active");
-    if (solvedQ.has(idx)) cls.push("answered-ok");
-    return `<button class="${cls.join(" ")}" data-qidx="${idx}">Q${idx + 1}${solvedQ.has(idx) ? " ✓" : ""}</button>`;
-  }).join("") + `<button class="sound-toggle" id="toggle-sound">${soundEnabled ? "🔊 Som: ON" : "🔇 Som: OFF"}</button>`;
-
-  const item = quizData[currentQ];
-  qtextEl.textContent = item.q;
-  optsEl.innerHTML = item.options.map((opt, oIdx) =>
-    `<button class="kahoot-btn k${oIdx}" data-oidx="${oIdx}"><span class="k-shape">${shapes[oIdx]}</span><span>${opt}</span></button>`
-  ).join("");
-  fbEl.style.color = "#0f172a";
-  fbEl.textContent = "Peça para a turma votar nas cores pelo celular ou levantando a mão!";
+function generatePin() {
+  return String(Math.floor(100000 + Math.random() * 900000));
 }
-renderQuiz(0);
 
-/* MODO CELULAR PARA OS ALUNOS (?quiz=1) */
-function initMobileQuiz() {
-  document.body.classList.add("mobile-quiz-mode");
-  const container = document.getElementById("mobile-quiz-body");
-  let mIdx = 0;
-  let mScore = 0;
+function getBasePlayerUrl(pin = "") {
+  const u = new URL(window.location.href);
+  u.search = "";
+  u.searchParams.set("play", "1");
+  if (pin) u.searchParams.set("pin", pin);
+  return u.toString();
+}
 
-  function renderMobileStep() {
-    if (mIdx >= quizData.length) {
-      playKahootSound("correct");
-      container.innerHTML = `
-        <div style="text-align:center;padding:18px 8px;">
-          <div style="font-size:46px;">🏆</div>
-          <h3 style="justify-content:center;font-size:24px;">Quiz Concluído!</h3>
-          <p style="font-size:19px;font-weight:800;color:#15803d;">Você acertou ${mScore} de ${quizData.length} questões!</p>
-          <button id="m-restart" style="margin-top:12px;border:0;background:#1d4ed8;color:#fff;font-weight:800;padding:12px 20px;border-radius:12px;cursor:pointer;">Jogar Novamente</button>
-        </div>`;
-      document.getElementById("m-restart").onclick = () => { mIdx = 0; mScore = 0; renderMobileStep(); };
-      return;
-    }
-    const item = quizData[mIdx];
-    container.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <span class="pill">Questão ${mIdx + 1} de ${quizData.length}</span>
-        <span style="font-weight:800;color:#15803d;">Pontos: ${mScore}</span>
-      </div>
-      <div class="quiz-qtext">${item.q}</div>
-      <div class="kahoot-options">
-        ${item.options.map((opt, i) => `<button class="kahoot-btn k${i}" data-midx="${i}"><span class="k-shape">${shapes[i]}</span><span>${opt}</span></button>`).join("")}
-      </div>
-      <div class="feedback" id="m-fb"></div>
-    `;
-    container.querySelectorAll(".kahoot-btn").forEach(btn => {
-      btn.onclick = () => {
-        const chosen = Number(btn.dataset.midx);
-        const ok = chosen === item.correct;
-        container.querySelectorAll(".kahoot-btn").forEach((b, idx) => {
-          b.disabled = true;
-          if (idx === item.correct) b.classList.add("winner");
-          else b.classList.add("dimmed");
-        });
-        const mfb = document.getElementById("m-fb");
-        if (ok) {
-          mScore++;
-          playKahootSound("correct");
-          mfb.style.color = "#15803d";
-          mfb.textContent = "✓ " + item.explanation;
-        } else {
-          playKahootSound("wrong");
-          mfb.style.color = "#b91c1c";
-          mfb.textContent = "✗ " + item.explanation;
-        }
-        const nextBtn = document.createElement("button");
-        nextBtn.textContent = mIdx + 1 < quizData.length ? "Próxima Questão →" : "Ver Resultado Final 🏆";
-        nextBtn.style.cssText = "margin-top:10px;width:100%;border:0;background:#0f172a;color:#fff;font-weight:800;padding:12px;border-radius:12px;cursor:pointer;";
-        nextBtn.onclick = () => { mIdx++; renderMobileStep(); };
-        mfb.appendChild(nextBtn);
-      };
+function getSortedRanking(playersMap) {
+  return Object.values(playersMap).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+}
+
+/* MODO TELÃO (HOST) */
+if (!isMobilePlayer) {
+  const roomPin = generatePin();
+  const hostPeerId = "cpan-ufms-quiz-" + roomPin;
+  const players = {}; // peerId -> { id, name, score, lastGain, answeredQ, conn }
+  let hostState = {
+    phase: "lobby", // lobby | question | ranking | final
+    qIndex: 0,
+    timeLeft: ROUND_SECONDS,
+    questionStartTs: 0,
+    timerInterval: null,
+    statusText: "Iniciando sala online..."
+  };
+
+  const pinDisplay = document.getElementById("host-pin-display");
+  const linkDisplay = document.getElementById("host-link-display");
+  const qrImg = document.getElementById("qr-img");
+  const directLink = getBasePlayerUrl(roomPin);
+  const pinEntryLink = getBasePlayerUrl();
+
+  if (pinDisplay) pinDisplay.textContent = roomPin;
+  if (linkDisplay) linkDisplay.textContent = pinEntryLink;
+  if (qrImg) {
+    qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(directLink);
+  }
+
+  document.getElementById("copy-link-btn")?.addEventListener("click", () => {
+    navigator.clipboard?.writeText(pinEntryLink);
+    const btn = document.getElementById("copy-link-btn");
+    btn.textContent = "✓ Copiado!";
+    setTimeout(() => { btn.textContent = "📋 Copiar Link"; }, 1800);
+  });
+
+  document.getElementById("open-mobile-preview")?.addEventListener("click", () => {
+    window.open(directLink, "_blank");
+  });
+
+  function broadcast(payload) {
+    Object.values(players).forEach(p => {
+      if (p.conn && p.conn.open) {
+        p.conn.send(payload);
+      }
     });
   }
-  renderMobileStep();
+
+  function startQuestion(qIdx) {
+    clearInterval(hostState.timerInterval);
+    hostState.phase = "question";
+    hostState.qIndex = qIdx;
+    hostState.timeLeft = ROUND_SECONDS;
+    hostState.questionStartTs = Date.now();
+
+    Object.values(players).forEach(p => {
+      p.answeredQ = -1;
+      p.lastGain = 0;
+    });
+
+    const qObj = quizData[qIdx];
+    broadcast({
+      type: "question",
+      qIndex: qIdx,
+      total: quizData.length,
+      q: qObj.q,
+      options: qObj.options,
+      seconds: ROUND_SECONDS
+    });
+
+    renderHostStage();
+
+    hostState.timerInterval = setInterval(() => {
+      hostState.timeLeft--;
+      if (hostState.timeLeft <= 5 && hostState.timeLeft > 0) {
+        playKahootSound("tick");
+      }
+      const timerEl = document.getElementById("host-timer");
+      if (timerEl) {
+        timerEl.textContent = `⏱️ ${hostState.timeLeft}s`;
+        if (hostState.timeLeft <= 5) timerEl.classList.add("urgent");
+      }
+      if (hostState.timeLeft <= 0) {
+        finishQuestionRound();
+      }
+    }, 1000);
+  }
+
+  function finishQuestionRound() {
+    clearInterval(hostState.timerInterval);
+    const qIdx = hostState.qIndex;
+    const qObj = quizData[qIdx];
+    hostState.phase = "ranking";
+    playKahootSound("correct");
+
+    const ranking = getSortedRanking(players).map((p, idx) => ({
+      pos: idx + 1,
+      name: p.name,
+      score: p.score,
+      lastGain: p.lastGain
+    }));
+
+    Object.values(players).forEach((p, idx) => {
+      const rankPos = ranking.findIndex(r => r.name === p.name) + 1;
+      if (p.conn && p.conn.open) {
+        p.conn.send({
+          type: "round_result",
+          correctIndex: qObj.correct,
+          explanation: qObj.explanation,
+          gained: p.lastGain,
+          totalScore: p.score,
+          rank: rankPos,
+          isLast: qIdx + 1 >= quizData.length
+        });
+      }
+    });
+
+    renderHostStage();
+  }
+
+  function renderHostStage() {
+    const stage = document.getElementById("host-quiz-stage");
+    if (!stage) return;
+    const playerList = Object.values(players);
+
+    if (hostState.phase === "lobby") {
+      stage.innerHTML = `
+        <div class="quiz-topbar">
+          <span class="pill">🟢 Sala Aberta · ${hostState.statusText}</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="action-btn amber" id="host-sound-btn">${soundEnabled ? "🔊 Som: ON" : "🔇 Som: OFF"}</button>
+            <button class="action-btn green" id="host-start-btn">▶ Iniciar 1ª Questão (${playerList.length} jogadores)</button>
+          </div>
+        </div>
+        <div style="margin:8px 0;">
+          <h3 style="margin-bottom:4px;">👥 Participantes conectados no telão (${playerList.length}):</h3>
+          <p style="font-size:15px;margin:0;">Peça para a turma escanear o QR Code ou digitar o PIN <strong>${roomPin}</strong> e inserir seu nome.</p>
+        </div>
+        <div class="players-chips">
+          ${playerList.length === 0
+            ? `<div style="padding:18px;border:2px dashed #cbd5e1;border-radius:14px;width:100%;text-align:center;color:#64748b;font-weight:700;">Aguardando os alunos entrarem pelo celular... (Você também pode clicar em "Abrir Tela Aluno" ao lado para testar)</div>`
+            : playerList.map(p => `<span class="player-chip">🎓 ${p.name}</span>`).join("")}
+        </div>
+        <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:10px 14px;font-size:14.5px;color:#1e3a8a;font-weight:700;">
+          ⚡ Regra de Pontuação: 0 a 1.000 pontos por questão. Acertou mais rápido = mais pontos. Errou = 0 ponto!
+        </div>
+      `;
+    } else if (hostState.phase === "question") {
+      const qIdx = hostState.qIndex;
+      const qObj = quizData[qIdx];
+      const answeredCount = playerList.filter(p => p.answeredQ === qIdx).length;
+      stage.innerHTML = `
+        <div class="quiz-topbar">
+          <span class="pill">Questão ${qIdx + 1} de ${quizData.length}</span>
+          <span style="font-weight:800;color:#1e3a8a;font-size:15px;">Respostas: ${answeredCount} / ${playerList.length}</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="timer-pill" id="host-timer">⏱️ ${hostState.timeLeft}s</span>
+            <button class="action-btn amber" id="host-reveal-btn">Encerrar & Ver Ranking</button>
+          </div>
+        </div>
+        <div class="quiz-qtext">${qObj.q}</div>
+        <div class="kahoot-options">
+          ${qObj.options.map((opt, idx) => `
+            <button class="kahoot-btn k${idx}" data-host-opt="${idx}">
+              <span class="k-shape">${shapes[idx]}</span>
+              <span>${opt}</span>
+            </button>`).join("")}
+        </div>
+        <div style="font-size:14px;color:#475569;font-weight:700;">Os jogadores estão respondendo nos celulares... (Ou clique em uma alternativa no telão para encerrar a rodada)</div>
+      `;
+    } else if (hostState.phase === "ranking") {
+      const qIdx = hostState.qIndex;
+      const qObj = quizData[qIdx];
+      const ranking = getSortedRanking(players);
+      const isLast = qIdx + 1 >= quizData.length;
+      stage.innerHTML = `
+        <div class="quiz-topbar">
+          <span class="pill" style="background:#dcfce7;color:#14532d;">✓ Gabarito: ${shapes[qObj.correct]} ${qObj.options[qObj.correct]}</span>
+          <button class="action-btn green" id="host-next-btn">${isLast ? "🏆 Ver Pódio Final" : `Próxima Questão (${qIdx + 2}/${quizData.length}) →`}</button>
+        </div>
+        <div style="font-size:14.5px;color:#1e3a8a;font-weight:700;background:#eff6ff;padding:7px 12px;border-radius:10px;">
+          💡 ${qObj.explanation}
+        </div>
+        <div>
+          <h3 style="margin-bottom:6px;">📊 Ranking Atualizado Após a Rodada ${qIdx + 1}:</h3>
+          <div class="ranking-list">
+            ${ranking.length === 0
+              ? `<div style="color:#64748b;font-weight:700;">Nenhum participante conectado nesta rodada.</div>`
+              : ranking.map((p, idx) => `
+                <div class="rank-row ${idx === 0 ? "top1" : idx === 1 ? "top2" : idx === 2 ? "top3" : ""}">
+                  <span>${idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `#${idx + 1}`} ${p.name}</span>
+                  <span>
+                    <small style="color:${p.lastGain > 0 ? "#15803d" : "#b91c1c"};margin-right:10px;">
+                      ${p.lastGain > 0 ? `+${p.lastGain} pts` : "+0 pt"}
+                    </small>
+                    <strong>${p.score} pts</strong>
+                  </span>
+                </div>`).join("")}
+          </div>
+        </div>
+      `;
+    } else if (hostState.phase === "final") {
+      const ranking = getSortedRanking(players);
+      stage.innerHTML = `
+        <div class="quiz-topbar">
+          <span class="pill" style="background:#fef3c7;color:#78350f;">🏆 Pódio Final do Seminário</span>
+          <button class="action-btn" id="host-restart-btn">🔄 Reiniciar Quiz</button>
+        </div>
+        <div class="ranking-list" style="max-height:330px;">
+          ${ranking.length === 0
+            ? `<div style="color:#64748b;font-weight:700;">Nenhum participante conectado.</div>`
+            : ranking.map((p, idx) => `
+              <div class="rank-row ${idx === 0 ? "top1" : idx === 1 ? "top2" : idx === 2 ? "top3" : ""}" style="font-size:18px;padding:11px 16px;">
+                <span>${idx === 0 ? "🥇 CAMPEÃO:" : idx === 1 ? "🥈 2º Lugar:" : idx === 2 ? "🥉 3º Lugar:" : `#${idx + 1}`} ${p.name}</span>
+                <strong>${p.score} pontos</strong>
+              </div>`).join("")}
+        </div>
+        <div style="text-align:center;font-weight:800;color:#1d4ed8;font-size:16px;">Parabéns a todos os participantes!</div>
+      `;
+    }
+  }
+
+  /* INICIALIZA SERVIDOR P2P (PEERJS) NO TELÃO */
+  try {
+    const peer = new Peer(hostPeerId);
+    peer.on("open", () => {
+      hostState.statusText = "Conectado e pronto!";
+      renderHostStage();
+    });
+    peer.on("error", (err) => {
+      hostState.statusText = "Modo local ativo (" + err.type + ")";
+      renderHostStage();
+    });
+    peer.on("connection", (conn) => {
+      conn.on("data", (data) => {
+        if (data.type === "join") {
+          const cleanName = String(data.name || "Aluno").trim().slice(0, 22) || "Aluno";
+          players[conn.peer] = {
+            id: conn.peer,
+            name: cleanName,
+            score: 0,
+            lastGain: 0,
+            answeredQ: -1,
+            conn
+          };
+          playKahootSound("join");
+          conn.send({
+            type: "joined",
+            name: cleanName,
+            phase: hostState.phase
+          });
+          if (hostState.phase === "question") {
+            const qObj = quizData[hostState.qIndex];
+            conn.send({
+              type: "question",
+              qIndex: hostState.qIndex,
+              total: quizData.length,
+              q: qObj.q,
+              options: qObj.options,
+              seconds: hostState.timeLeft
+            });
+          }
+          renderHostStage();
+        } else if (data.type === "answer" && hostState.phase === "question") {
+          const p = players[conn.peer];
+          const qIdx = hostState.qIndex;
+          if (!p || p.answeredQ === qIdx) return;
+
+          p.answeredQ = qIdx;
+          const isCorrect = Number(data.choice) === quizData[qIdx].correct;
+          if (isCorrect) {
+            const elapsedSec = Math.max(0, (Date.now() - hostState.questionStartTs) / 1000);
+            const ratio = Math.min(1, elapsedSec / ROUND_SECONDS);
+            // Escala Kahoot: 1000 pts no instante 0s até 500 pts no último segundo
+            const gained = Math.max(500, Math.round(1000 * (1 - ratio / 2)));
+            p.lastGain = gained;
+            p.score += gained;
+          } else {
+            p.lastGain = 0;
+          }
+
+          conn.send({ type: "answer_received" });
+
+          const allAnswered = Object.values(players).every(pl => pl.answeredQ === qIdx);
+          if (allAnswered && Object.keys(players).length > 0) {
+            finishQuestionRound();
+          } else {
+            renderHostStage();
+          }
+        }
+      });
+
+      conn.on("close", () => {
+        delete players[conn.peer];
+        renderHostStage();
+      });
+    });
+  } catch (e) {
+    hostState.statusText = "Modo local";
+  }
+
+  renderHostStage();
+
+  /* EVENTOS DE CLIQUE DO TELÃO */
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "host-sound-btn") {
+      soundEnabled = !soundEnabled;
+      renderHostStage();
+      return;
+    }
+    if (e.target.id === "host-start-btn") {
+      startQuestion(0);
+      return;
+    }
+    if (e.target.id === "host-reveal-btn" || e.target.closest(".kahoot-btn[data-host-opt]")) {
+      finishQuestionRound();
+      return;
+    }
+    if (e.target.id === "host-next-btn") {
+      if (hostState.qIndex + 1 < quizData.length) {
+        startQuestion(hostState.qIndex + 1);
+      } else {
+        hostState.phase = "final";
+        playKahootSound("correct");
+        renderHostStage();
+      }
+      return;
+    }
+    if (e.target.id === "host-restart-btn") {
+      Object.values(players).forEach(p => { p.score = 0; p.lastGain = 0; p.answeredQ = -1; });
+      hostState.phase = "lobby";
+      hostState.qIndex = 0;
+      renderHostStage();
+      return;
+    }
+  });
 }
 
-if (new URLSearchParams(window.location.search).get("quiz") === "1") {
-  initMobileQuiz();
+/* =====================================================================
+   MODO JOGADOR NO CELULAR (ENTRADA COM PIN + NOME E RESPOSTAS AO VIVO)
+   ===================================================================== */
+if (isMobilePlayer) {
+  document.body.classList.add("mobile-quiz-mode");
+  const container = document.getElementById("mobile-quiz-body");
+  const prefilledPin = params.get("pin") || "";
+
+  function renderJoinForm(errorMsg = "") {
+    container.innerHTML = `
+      ${errorMsg ? `<div style="background:#fef2f2;border:1.5px solid #fca5a5;color:#991b1b;padding:10px;border-radius:10px;font-weight:700;font-size:14px;margin-bottom:10px;">${errorMsg}</div>` : ""}
+      <label style="display:block;font-weight:800;font-size:13.5px;margin-bottom:4px;color:#1e293b;">PIN da Sala (6 dígitos)</label>
+      <input class="m-input" id="inp-pin" type="tel" maxlength="6" placeholder="Ex: 482910" value="${prefilledPin}">
+      <label style="display:block;font-weight:800;font-size:13.5px;margin-bottom:4px;color:#1e293b;">Seu Nome (aparecerá no telão)</label>
+      <input class="m-input" id="inp-name" type="text" maxlength="20" placeholder="Digite seu nome ou apelido">
+      <button id="btn-join-room" class="action-btn green" style="width:100%;padding:14px;font-size:17px;">🚀 Entrar no Quiz</button>
+    `;
+
+    document.getElementById("btn-join-room").onclick = () => {
+      const pinVal = document.getElementById("inp-pin").value.trim();
+      const nameVal = document.getElementById("inp-name").value.trim();
+      if (pinVal.length < 6) {
+        renderJoinForm("Digite o PIN de 6 dígitos exibido no telão.");
+        return;
+      }
+      if (!nameVal) {
+        renderJoinForm("Digite seu nome para aparecer no ranking do telão.");
+        return;
+      }
+
+      container.innerHTML = `<div style="text-align:center;padding:24px;font-weight:800;color:#1d4ed8;">Conectando à sala ${pinVal}...</div>`;
+      const clientPeer = new Peer();
+      clientPeer.on("open", () => {
+        const conn = clientPeer.connect("cpan-ufms-quiz-" + pinVal);
+        conn.on("open", () => {
+          conn.send({ type: "join", name: nameVal });
+        });
+        conn.on("data", (msg) => {
+          if (msg.type === "joined") {
+            playKahootSound("join");
+            container.innerHTML = `
+              <div style="text-align:center;padding:22px 10px;">
+                <div style="font-size:44px;">✅</div>
+                <h3 style="justify-content:center;font-size:22px;">Você entrou, ${msg.name}!</h3>
+                <p style="font-size:16px;color:#334155;">Veja seu nome no telão e aguarde o grupo iniciar a pergunta.</p>
+              </div>`;
+          } else if (msg.type === "question") {
+            container.innerHTML = `
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span class="pill">Questão ${msg.qIndex + 1} de ${msg.total}</span>
+                <span style="font-size:13px;font-weight:800;color:#d97706;">⚡ Responda rápido!</span>
+              </div>
+              <div class="quiz-qtext" style="font-size:16px;">${msg.q}</div>
+              <div class="kahoot-options">
+                ${msg.options.map((opt, i) => `
+                  <button class="kahoot-btn k${i}" data-mchoice="${i}">
+                    <span class="k-shape">${shapes[i]}</span>
+                    <span>${opt}</span>
+                  </button>`).join("")}
+              </div>`;
+            container.querySelectorAll(".kahoot-btn").forEach(btn => {
+              btn.onclick = () => {
+                conn.send({ type: "answer", choice: Number(btn.dataset.mchoice) });
+                container.innerHTML = `
+                  <div style="text-align:center;padding:28px 10px;">
+                    <div style="font-size:42px;">⏳</div>
+                    <h3 style="justify-content:center;">Resposta enviada!</h3>
+                    <p style="font-size:15.5px;">Aguarde o fim do tempo para ver sua pontuação e o ranking no telão.</p>
+                  </div>`;
+              };
+            });
+          } else if (msg.type === "round_result") {
+            const won = msg.gained > 0;
+            playKahootSound(won ? "correct" : "wrong");
+            container.innerHTML = `
+              <div style="text-align:center;padding:18px 10px;border-radius:16px;background:${won ? "#f0fdf4" : "#fef2f2"};border:2px solid ${won ? "#86efac" : "#fca5a5"};">
+                <div style="font-size:44px;">${won ? "🎉" : "❌"}</div>
+                <h3 style="justify-content:center;font-size:22px;color:${won ? "#15803d" : "#b91c1c"};">
+                  ${won ? `Acertou! +${msg.gained} pontos` : "Errou! +0 ponto"}
+                </h3>
+                <p style="font-size:17px;font-weight:800;color:#0f172a;margin:6px 0;">
+                  Total: ${msg.totalScore} pts · Posição: #${msg.rank}
+                </p>
+                <p style="font-size:14px;color:#334155;">${msg.explanation}</p>
+                <div style="margin-top:12px;font-size:13.5px;font-weight:800;color:#1d4ed8;">
+                  ${msg.isLast ? "Confira o Pódio Final no telão! 🏆" : "Olhe o ranking no telão e aguarde a próxima pergunta..."}
+                </div>
+              </div>`;
+          }
+        });
+        conn.on("error", () => renderJoinForm("Não foi possível conectar. Verifique o PIN no telão."));
+      });
+      clientPeer.on("error", () => renderJoinForm("Sala não encontrada. Confira o PIN de 6 dígitos no telão."));
+    };
+  }
+  renderJoinForm();
 }
 
 /* NAVEGAÇÃO DOS SLIDES NO TELÃO */
@@ -1415,7 +1835,7 @@ document.getElementById("present").addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (e) => {
-  if (document.body.classList.contains("mobile-quiz-mode")) return;
+  if (isMobilePlayer) return;
   if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
     e.preventDefault();
     focusSlide(current + 1);
@@ -1433,18 +1853,6 @@ document.addEventListener("keydown", (e) => {
 });
 
 document.addEventListener("click", (e) => {
-  if (e.target.id === "open-mobile-preview") {
-    window.open(qrUrl.toString(), "_blank");
-    return;
-  }
-
-  if (e.target.id === "toggle-sound") {
-    soundEnabled = !soundEnabled;
-    if (soundEnabled) playKahootSound("select");
-    renderQuiz(currentQ);
-    return;
-  }
-
   const card = e.target.closest(".card");
   if (card && card.hasAttribute("data-practical")) {
     const exampleBox = card.querySelector(".practical-example");
@@ -1452,43 +1860,6 @@ document.addEventListener("click", (e) => {
       exampleBox.textContent = card.getAttribute("data-practical");
     }
     card.classList.toggle("selected");
-    return;
-  }
-
-  const tab = e.target.closest(".quiz-tab");
-  if (tab) {
-    playKahootSound("select");
-    renderQuiz(Number(tab.dataset.qidx));
-    return;
-  }
-
-  const opt = e.target.closest(".kahoot-btn[data-oidx]");
-  if (opt) {
-    const item = quizData[currentQ];
-    const chosen = Number(opt.dataset.oidx);
-    const options = [...document.querySelectorAll(".kahoot-btn[data-oidx]")];
-    options.forEach((o, idx) => {
-      o.classList.remove("winner", "dimmed");
-      if (idx === item.correct) o.classList.add("winner");
-      else o.classList.add("dimmed");
-    });
-    const ok = chosen === item.correct;
-    const fbEl = document.getElementById("quiz-feedback");
-    if (ok) {
-      solvedQ.add(currentQ);
-      playKahootSound("correct");
-      fbEl.style.color = "#14532d";
-      fbEl.textContent = "✓ " + item.explanation;
-      const activeTab = document.querySelector(`.quiz-tab[data-qidx="${currentQ}"]`);
-      if (activeTab) {
-        activeTab.classList.add("answered-ok");
-        activeTab.textContent = `Q${currentQ + 1} ✓`;
-      }
-    } else {
-      playKahootSound("wrong");
-      fbEl.style.color = "#991b1b";
-      fbEl.textContent = "✗ " + item.explanation;
-    }
   }
 });
 
