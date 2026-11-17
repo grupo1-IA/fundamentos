@@ -1337,6 +1337,34 @@ svgConnections.style.transform = `translate(-${offset}px, -${offset}px)`;
 svgConnections.innerHTML = svgMarkup;
 
 /* =====================================================================
+   CONFIGURAÇÃO ICE (STUN + TURN PARA ATRAVESSAR FIREWALL WI-FI / 4G)
+   ===================================================================== */
+const peerConfig = {
+  debug: 1,
+  config: {
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" },
+      { urls: "stun:stun1.l.google.com:19302" },
+      {
+        urls: "turn:openrelay.metered.ca:80",
+        username: "openrelayproject",
+        credential: "openrelayproject"
+      },
+      {
+        urls: "turn:openrelay.metered.ca:443",
+        username: "openrelayproject",
+        credential: "openrelayproject"
+      },
+      {
+        urls: "turn:openrelay.metered.ca:443?transport=tcp",
+        username: "openrelayproject",
+        credential: "openrelayproject"
+      }
+    ]
+  }
+};
+
+/* =====================================================================
    SISTEMA MULTIPLAYER EM TEMPO REAL (TELÃO HOST + CELULARES VIA PEERJS)
    ===================================================================== */
 const shapes = ["▲", "◆", "●", "■"];
@@ -1362,11 +1390,12 @@ function getSortedRanking(playersMap) {
 
 /* MODO TELÃO (HOST) */
 if (!isMobilePlayer) {
-  const roomPin = generatePin();
+  const roomPin = sessionStorage.getItem("cpan_quiz_pin") || generatePin();
+  sessionStorage.setItem("cpan_quiz_pin", roomPin);
   const hostPeerId = "cpan-ufms-quiz-" + roomPin;
-  const players = {}; // peerId -> { id, name, score, lastGain, answeredQ, conn }
+  const players = {};
   let hostState = {
-    phase: "lobby", // lobby | question | ranking | final
+    phase: "lobby",
     qIndex: 0,
     timeLeft: ROUND_SECONDS,
     questionStartTs: 0,
@@ -1459,7 +1488,7 @@ if (!isMobilePlayer) {
       lastGain: p.lastGain
     }));
 
-    Object.values(players).forEach((p, idx) => {
+    Object.values(players).forEach((p) => {
       const rankPos = ranking.findIndex(r => r.name === p.name) + 1;
       if (p.conn && p.conn.open) {
         p.conn.send({
@@ -1579,85 +1608,94 @@ if (!isMobilePlayer) {
     }
   }
 
-  /* INICIALIZA SERVIDOR P2P (PEERJS) NO TELÃO */
-  try {
-    const peer = new Peer(hostPeerId);
-    peer.on("open", () => {
-      hostState.statusText = "Conectado e pronto!";
-      renderHostStage();
-    });
-    peer.on("error", (err) => {
-      hostState.statusText = "Modo local ativo (" + err.type + ")";
-      renderHostStage();
-    });
-    peer.on("connection", (conn) => {
-      conn.on("data", (data) => {
-        if (data.type === "join") {
-          const cleanName = String(data.name || "Aluno").trim().slice(0, 22) || "Aluno";
-          players[conn.peer] = {
-            id: conn.peer,
-            name: cleanName,
-            score: 0,
-            lastGain: 0,
-            answeredQ: -1,
-            conn
-          };
-          playKahootSound("join");
-          conn.send({
-            type: "joined",
-            name: cleanName,
-            phase: hostState.phase
-          });
-          if (hostState.phase === "question") {
-            const qObj = quizData[hostState.qIndex];
-            conn.send({
-              type: "question",
-              qIndex: hostState.qIndex,
-              total: quizData.length,
-              q: qObj.q,
-              options: qObj.options,
-              seconds: hostState.timeLeft
-            });
-          }
-          renderHostStage();
-        } else if (data.type === "answer" && hostState.phase === "question") {
-          const p = players[conn.peer];
-          const qIdx = hostState.qIndex;
-          if (!p || p.answeredQ === qIdx) return;
-
-          p.answeredQ = qIdx;
-          const isCorrect = Number(data.choice) === quizData[qIdx].correct;
-          if (isCorrect) {
-            const elapsedSec = Math.max(0, (Date.now() - hostState.questionStartTs) / 1000);
-            const ratio = Math.min(1, elapsedSec / ROUND_SECONDS);
-            // Escala Kahoot: 1000 pts no instante 0s até 500 pts no último segundo
-            const gained = Math.max(500, Math.round(1000 * (1 - ratio / 2)));
-            p.lastGain = gained;
-            p.score += gained;
-          } else {
-            p.lastGain = 0;
-          }
-
-          conn.send({ type: "answer_received" });
-
-          const allAnswered = Object.values(players).every(pl => pl.answeredQ === qIdx);
-          if (allAnswered && Object.keys(players).length > 0) {
-            finishQuestionRound();
-          } else {
-            renderHostStage();
-          }
-        }
-      });
-
-      conn.on("close", () => {
-        delete players[conn.peer];
+  /* INICIALIZA SERVIDOR P2P (PEERJS) NO TELÃO COM STUN + TURN */
+  function startHostPeer() {
+    try {
+      const peer = new Peer(hostPeerId, peerConfig);
+      peer.on("open", () => {
+        hostState.statusText = "Conectado e pronto!";
         renderHostStage();
       });
-    });
-  } catch (e) {
-    hostState.statusText = "Modo local";
-  }
+      peer.on("disconnected", () => {
+        hostState.statusText = "Reconectando sala...";
+        renderHostStage();
+        peer.reconnect();
+      });
+      peer.on("error", (err) => {
+        if (err.type === "unavailable-id") {
+          sessionStorage.removeItem("cpan_quiz_pin");
+        }
+        hostState.statusText = "Atenção (" + err.type + ") — recarregue se necessário";
+        renderHostStage();
+      });
+      peer.on("connection", (conn) => {
+        conn.on("data", (data) => {
+          if (data.type === "join") {
+            const cleanName = String(data.name || "Aluno").trim().slice(0, 22) || "Aluno";
+            players[conn.peer] = {
+              id: conn.peer,
+              name: cleanName,
+              score: 0,
+              lastGain: 0,
+              answeredQ: -1,
+              conn
+            };
+            playKahootSound("join");
+            conn.send({
+              type: "joined",
+              name: cleanName,
+              phase: hostState.phase
+            });
+            if (hostState.phase === "question") {
+              const qObj = quizData[hostState.qIndex];
+              conn.send({
+                type: "question",
+                qIndex: hostState.qIndex,
+                total: quizData.length,
+                q: qObj.q,
+                options: qObj.options,
+                seconds: hostState.timeLeft
+              });
+            }
+            renderHostStage();
+          } else if (data.type === "answer" && hostState.phase === "question") {
+            const p = players[conn.peer];
+            const qIdx = hostState.qIndex;
+            if (!p || p.answeredQ === qIdx) return;
 
+            p.answeredQ = qIdx;
+            const isCorrect = Number(data.choice) === quizData[qIdx].correct;
+            if (isCorrect) {
+              const elapsedSec = Math.max(0, (Date.now() - hostState.questionStartTs) / 1000);
+              const ratio = Math.min(1, elapsedSec / ROUND_SECONDS);
+              const gained = Math.max(500, Math.round(1000 * (1 - ratio / 2)));
+              p.lastGain = gained;
+              p.score += gained;
+            } else {
+              p.lastGain = 0;
+            }
+
+            conn.send({ type: "answer_received" });
+
+            const allAnswered = Object.values(players).every(pl => pl.answeredQ === qIdx);
+            if (allAnswered && Object.keys(players).length > 0) {
+              finishQuestionRound();
+            } else {
+              renderHostStage();
+            }
+          }
+        });
+
+        conn.on("close", () => {
+          delete players[conn.peer];
+          renderHostStage();
+        });
+      });
+    } catch (e) {
+      hostState.statusText = "Erro ao iniciar rede";
+    }
+  }
+  startHostPeer();
   renderHostStage();
 
   /* EVENTOS DE CLIQUE DO TELÃO */
@@ -1725,13 +1763,31 @@ if (isMobilePlayer) {
         return;
       }
 
-      container.innerHTML = `<div style="text-align:center;padding:24px;font-weight:800;color:#1d4ed8;">Conectando à sala ${pinVal}...</div>`;
-      const clientPeer = new Peer();
+      container.innerHTML = `
+        <div style="text-align:center;padding:24px 10px;">
+          <div style="font-weight:800;color:#1d4ed8;font-size:18px;margin-bottom:8px;">Conectando à sala ${pinVal}...</div>
+          <div style="font-size:13.5px;color:#475569;">Aguarde alguns segundos enquanto estabelecemos a conexão com o telão.</div>
+        </div>`;
+
+      const clientPeer = new Peer(peerConfig);
+      let connected = false;
+
+      const fallbackTimer = setTimeout(() => {
+        if (!connected) {
+          try { clientPeer.destroy(); } catch (e) {}
+          renderJoinForm("Não foi possível alcançar a sala " + pinVal + ". Confira se o telão está no Slide 13 com o mesmo PIN.");
+        }
+      }, 12000);
+
       clientPeer.on("open", () => {
-        const conn = clientPeer.connect("cpan-ufms-quiz-" + pinVal);
+        const conn = clientPeer.connect("cpan-ufms-quiz-" + pinVal, { reliable: true });
+
         conn.on("open", () => {
+          connected = true;
+          clearTimeout(fallbackTimer);
           conn.send({ type: "join", name: nameVal });
         });
+
         conn.on("data", (msg) => {
           if (msg.type === "joined") {
             playKahootSound("join");
@@ -1785,9 +1841,17 @@ if (isMobilePlayer) {
               </div>`;
           }
         });
-        conn.on("error", () => renderJoinForm("Não foi possível conectar. Verifique o PIN no telão."));
+
+        conn.on("error", () => {
+          clearTimeout(fallbackTimer);
+          renderJoinForm("Não foi possível conectar. Verifique o PIN no telão.");
+        });
       });
-      clientPeer.on("error", () => renderJoinForm("Sala não encontrada. Confira o PIN de 6 dígitos no telão."));
+
+      clientPeer.on("error", () => {
+        clearTimeout(fallbackTimer);
+        renderJoinForm("Sala não encontrada. Confira o PIN de 6 dígitos no telão.");
+      });
     };
   }
   renderJoinForm();
