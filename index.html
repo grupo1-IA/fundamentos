@@ -4,19 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
-<title>A Educação na Democracia Popular — CPAN-UFMS</title>
+<title>EDUCAQUIZ · A Educação na Democracia Popular (1945–1964) — CPAN-UFMS</title>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <style>
 :root {
   --ink: #0f172a;
   --muted: #334155;
-  --blue: #1d4ed8;
-  --cyan: #0284c7;
-  --pale: #f0f6ff;
-  --line: #cbd5e1;
+  --navy: #0c2340;
+  --blue: #1e3a8a;
+  --cyan: #0369a1;
+  --gold: #b45309;
+  --sepia-border: #cbd5e1;
+  --pale: #f8fafc;
+  --line: #94a3b8;
   --green: #15803d;
   --red: #b91c1c;
-  --emerald: #10b981;
   --amber: #d97706;
 }
 * { box-sizing: border-box; }
@@ -25,7 +27,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #030712;
+  background: #090d16;
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -33,7 +35,7 @@ html, body {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  background: #030712;
+  background: #090d16;
   touch-action: none;
 }
 #canvas {
@@ -44,7 +46,7 @@ html, body {
   height: 100%;
   transform-origin: 0 0;
   will-change: transform;
-  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 #connections {
   position: absolute;
@@ -55,6 +57,8 @@ html, body {
   pointer-events: none;
   z-index: 0;
 }
+
+/* SLIDES COM FUNDO BRANCO E CONTORNO EDITORIAL DE ÉPOCA (1945–1964) */
 .slide {
   position: absolute;
   width: 1280px;
@@ -63,10 +67,12 @@ html, body {
   top: 0;
   transform: translate(var(--x), var(--y));
   background: #ffffff;
-  border: 2px solid #e2e8f0;
-  border-radius: 32px;
-  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.45);
-  padding: 32px 54px;
+  border: 3px solid var(--navy);
+  outline: 4px solid #ffffff;
+  outline-offset: -9px;
+  border-radius: 16px;
+  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.55), inset 0 0 0 8px #ffffff, inset 0 0 0 9.5px #cbd5e1;
+  padding: 32px 52px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -76,13 +82,9 @@ html, body {
 .slide:before {
   content: "";
   position: absolute;
-  right: -50px;
-  top: -50px;
-  width: 320px;
-  height: 320px;
-  background-image: radial-gradient(var(--blue) 1.5px, transparent 1.5px);
-  background-size: 20px 20px;
-  opacity: 0.12;
+  inset: 14px;
+  border: 1px dashed rgba(12, 35, 64, 0.16);
+  border-radius: 10px;
   pointer-events: none;
 }
 .slide:after {
@@ -92,100 +94,117 @@ html, body {
   bottom: 0;
   width: 100%;
   height: 6px;
-  background: linear-gradient(90deg, var(--blue), var(--cyan), #38bdf8);
+  background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 50%, var(--navy) 100%);
 }
+
 .topline {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  color: #475569;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 2;
-  border-bottom: 1.5px solid #f1f5f9;
-  padding-bottom: 8px;
-}
-.kicker {
-  color: var(--blue);
+  color: var(--navy);
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-size: 16px;
+  position: relative;
+  z-index: 2;
+  border-bottom: 2px solid var(--navy);
+  padding-bottom: 7px;
+}
+.era-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef3c7;
+  color: #78350f;
+  border: 1.5px solid #d97706;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.kicker {
+  color: var(--gold);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 15px;
   margin-bottom: 4px;
 }
 h1 {
-  font-size: 50px;
-  line-height: 1.06;
-  letter-spacing: -0.04em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 46px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   margin: 0 0 8px;
   max-width: 1140px;
-  color: var(--ink);
+  color: var(--navy);
 }
 h2 {
-  font-size: 35px;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
-  margin: 0 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 33px;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  margin: 0 0 6px;
   max-width: 1140px;
-  color: var(--ink);
+  color: var(--navy);
 }
 h3 {
-  font-size: 20px;
+  font-size: 19px;
   margin: 0 0 6px;
   line-height: 1.25;
-  color: var(--ink);
+  color: var(--navy);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 p {
-  font-size: 20px;
+  font-size: 19px;
   line-height: 1.38;
   color: var(--muted);
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 ul {
-  padding-left: 26px;
-  margin: 8px 0;
+  padding-left: 24px;
+  margin: 6px 0;
   color: var(--muted);
-  font-size: 20px;
-  line-height: 1.4;
+  font-size: 19px;
+  line-height: 1.38;
 }
-li { margin: 8px 0; }
+li { margin: 7px 0; }
 strong { color: var(--ink); }
 .subtitle {
-  font-size: 20.5px;
-  line-height: 1.35;
+  font-size: 19.5px;
+  line-height: 1.32;
   max-width: 1140px;
   color: #1e293b;
   font-weight: 500;
   margin-bottom: 10px;
 }
 .meta {
-  font-size: 17.5px;
+  font-size: 17px;
   color: #334155;
-  line-height: 1.42;
+  line-height: 1.4;
 }
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border-radius: 999px;
-  padding: 5px 15px;
-  background: var(--pale);
-  color: var(--blue);
-  font-size: 15px;
+  border-radius: 6px;
+  padding: 4px 13px;
+  background: #eff6ff;
+  border: 1.5px solid #93c5fd;
+  color: var(--navy);
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.04em;
 }
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 15px;
   margin-top: 8px;
   position: relative;
   z-index: 1;
@@ -196,268 +215,413 @@ strong { color: var(--ink); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 26px;
+  gap: 24px;
 }
 .split-content { flex: 1; }
 .split-visual {
-  width: 270px;
+  width: 300px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 20px;
-  padding: 16px;
+  background: #ffffff;
+  border: 2px solid var(--navy);
+  box-shadow: 4px 4px 0px rgba(12, 35, 64, 0.14);
+  border-radius: 12px;
+  padding: 12px;
 }
 .split-visual svg {
   width: 100%;
   height: auto;
-  max-height: 225px;
+  max-height: 220px;
 }
 
+/* MOLDURA DE IMAGEM HISTÓRICA COM ZOOM */
+.hist-photo-card {
+  width: 320px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 2.5px solid var(--navy);
+  box-shadow: 5px 5px 0px rgba(12, 35, 64, 0.18);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  position: relative;
+  z-index: 2;
+}
+.hist-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 205px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1.5px solid #cbd5e1;
+  cursor: zoom-in;
+  background: #f1f5f9;
+}
+.hist-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.hist-img-wrap:hover img {
+  transform: scale(1.05);
+}
+.zoom-hint {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: rgba(12, 35, 64, 0.88);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.3);
+  pointer-events: none;
+}
+.hist-caption {
+  font-size: 13px;
+  line-height: 1.32;
+  color: #1e293b;
+  font-weight: 700;
+  text-align: center;
+}
+.hist-credit {
+  font-size: 10.5px;
+  color: #64748b;
+  text-align: center;
+  font-style: italic;
+}
+
+/* MODAL DE ZOOM EXPANDIDO */
+#img-zoom-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(9, 13, 22, 0.92);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+#img-zoom-modal.open {
+  display: flex;
+}
+.zoom-modal-box {
+  background: #ffffff;
+  border: 3px solid var(--navy);
+  border-radius: 14px;
+  padding: 16px;
+  max-width: 92vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+  position: relative;
+}
+.zoom-modal-box img {
+  max-width: 86vw;
+  max-height: 75vh;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  object-fit: contain;
+}
+.zoom-close-btn {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: #b91c1c;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* CARDS COM ESTILO DOCUMENTAL */
 .card {
   border: 2px solid #cbd5e1;
-  border-left: 6px solid var(--blue);
-  background: linear-gradient(145deg, #ffffff, #f8fafc);
-  border-radius: 16px;
-  padding: 15px 18px;
-  min-height: 100px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  border-left: 6px solid var(--navy);
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  min-height: 95px;
+  box-shadow: 3px 3px 0px rgba(15, 23, 42, 0.06);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   position: relative;
 }
 .card:hover {
-  border-color: var(--cyan);
-  box-shadow: 0 6px 16px rgba(2,132,199,0.18);
+  border-color: var(--navy);
+  border-left-color: var(--gold);
+  box-shadow: 4px 4px 0px rgba(180, 83, 9, 0.18);
   transform: translateY(-2px);
 }
 .card.selected {
-  border: 2px solid var(--blue);
-  background: #eff6ff;
-  box-shadow: 0 0 0 4px rgba(29,78,216,0.15);
+  border: 2px solid var(--navy);
+  border-left: 6px solid var(--gold);
+  background: #fffbeb;
 }
 .card p {
-  font-size: 18px;
+  font-size: 17.5px;
   margin: 0;
-  line-height: 1.36;
+  line-height: 1.35;
   color: #334155;
 }
-.card h3 { font-size: 19.5px; color: #0f172a; }
+.card h3 { font-size: 18.5px; color: var(--navy); }
 
 .practical-example {
   display: none;
-  margin-top: 10px;
-  padding: 9px 13px;
-  border-left: 4px solid #0284c7;
-  font-size: 16px;
-  line-height: 1.38;
-  color: #0c4a6e;
-  background: #e0f2fe;
-  border-radius: 8px;
-  font-weight: 500;
-  animation: fadeIn 0.3s ease;
+  margin-top: 9px;
+  padding: 8px 12px;
+  border-left: 4px solid var(--gold);
+  font-size: 15.5px;
+  line-height: 1.35;
+  color: #78350f;
+  background: #fef3c7;
+  border-radius: 6px;
+  font-weight: 600;
 }
 .card.selected .practical-example { display: block; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-3px); }
-  to { opacity: 1; transform: translateY(0); }
+
+/* MARCO LINHA DO TEMPO (1945–1964) */
+.timeline-track {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin: 10px 0 12px;
+  position: relative;
+}
+.timeline-track:before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  right: 20px;
+  height: 4px;
+  background: var(--navy);
+  z-index: 0;
+}
+.tl-node {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  border: 2px solid var(--navy);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 3px 3px 0px rgba(12, 35, 64, 0.12);
+}
+.tl-year {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--navy);
+  color: #fbbf24;
+  font-family: Georgia, serif;
+  font-weight: 900;
+  font-size: 14.5px;
+  padding: 3px 9px;
+  border-radius: 5px;
+}
+.tl-title {
+  font-weight: 800;
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.22;
+}
+.tl-edu {
+  font-size: 12.8px;
+  color: #1e3a8a;
+  background: #eff6ff;
+  border-left: 3px solid var(--cyan);
+  padding: 4px 6px;
+  border-radius: 4px;
+  line-height: 1.25;
+  font-weight: 600;
 }
 
 .story-box {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border: 2px solid #fcd34d;
-  border-left: 7px solid #f59e0b;
-  border-radius: 16px;
-  padding: 18px 22px;
-  margin-bottom: 14px;
+  background: #fffbeb;
+  border: 2px solid #d97706;
+  border-left: 7px solid #b45309;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 12px;
 }
 .story-box p {
   color: #78350f;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 500;
   margin: 0;
-  line-height: 1.42;
+  line-height: 1.4;
 }
 .story-tag {
   display: inline-block;
-  background: #f59e0b;
+  background: #b45309;
   color: #ffffff;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 4px 12px;
-  border-radius: 999px;
-  margin-bottom: 8px;
+  padding: 3px 11px;
+  border-radius: 4px;
+  margin-bottom: 6px;
 }
 
 .debate-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin-top: 8px;
-  border: 2px solid #cbd5e1;
-  border-radius: 16px;
+  margin-top: 6px;
+  border: 2px solid var(--navy);
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  box-shadow: 4px 4px 0px rgba(12, 35, 64, 0.1);
 }
 .debate-table th {
-  padding: 13px 18px;
-  font-size: 18.5px;
+  padding: 11px 16px;
+  font-size: 17.5px;
   font-weight: 800;
   text-align: left;
   color: #ffffff;
 }
 .debate-table th:first-child {
-  background: linear-gradient(90deg, #1d4ed8, #2563eb);
+  background: var(--navy);
   width: 50%;
 }
 .debate-table th:last-child {
-  background: linear-gradient(90deg, #0f172a, #1e293b);
+  background: #78350f;
   width: 50%;
 }
 .debate-table td {
-  padding: 14px 18px;
-  font-size: 17.5px;
-  line-height: 1.38;
+  padding: 12px 16px;
+  font-size: 17px;
+  line-height: 1.35;
   color: #1e293b;
-  border-top: 1.5px solid #e2e8f0;
+  border-top: 1.5px solid #cbd5e1;
   vertical-align: middle;
 }
 .debate-table td:first-child {
-  background: #f8fbff;
+  background: #f8fafc;
   border-right: 1.5px solid #cbd5e1;
-  font-weight: 500;
 }
 .debate-table td:last-child {
   background: #ffffff;
-  font-weight: 500;
 }
-.debate-table tr:hover td { background: #eff6ff; }
 
 .callout {
-  padding: 13px 18px;
-  border-left: 6px solid var(--cyan);
-  background: #f0f9ff;
-  border-radius: 0 14px 14px 0;
-  font-size: 19px;
-  line-height: 1.38;
-  color: #0c4a6e;
+  padding: 11px 16px;
+  border-left: 6px solid var(--navy);
+  background: #f1f5f9;
+  border-radius: 0 8px 8px 0;
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--navy);
   margin-top: 10px;
-  font-weight: 600;
-  border-top: 1px solid #bae6fd;
-  border-right: 1px solid #bae6fd;
-  border-bottom: 1px solid #bae6fd;
+  font-weight: 700;
+  border-top: 1px solid #cbd5e1;
+  border-right: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
 }
 .callout.question {
-  border-left-color: var(--blue);
-  background: #eff6ff;
-  color: #1e3a8a;
-  border-color: #bfdbfe;
+  border-left-color: var(--gold);
+  background: #fffbeb;
+  color: #78350f;
+  border-color: #fde68a;
 }
 .flow {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 12px;
   flex-wrap: wrap;
 }
 .flow span {
-  padding: 9px 14px;
-  border: 2px solid var(--line);
-  border-radius: 12px;
-  background: #f8fafc;
+  padding: 8px 13px;
+  border: 2px solid var(--navy);
+  border-radius: 8px;
+  background: #ffffff;
   font-weight: 800;
-  font-size: 17.5px;
-  color: #0f172a;
+  font-size: 16.5px;
+  color: var(--navy);
 }
-.flow b { color: var(--cyan); font-size: 22px; }
+.flow b { color: var(--gold); font-size: 21px; }
 .quote {
-  font-size: 25px;
+  font-family: Georgia, serif;
+  font-size: 23px;
   line-height: 1.32;
-  color: #0f172a;
+  color: var(--navy);
   font-weight: 700;
   max-width: 1120px;
-  border-left: 6px solid var(--blue);
-  padding-left: 20px;
+  border-left: 6px solid var(--gold);
+  padding-left: 18px;
 }
 .footer {
   display: flex;
   justify-content: space-between;
-  color: #64748b;
-  font-size: 15px;
+  color: #475569;
+  font-size: 14px;
   font-weight: 700;
   z-index: 2;
-  border-top: 1.5px solid #f1f5f9;
-  padding-top: 8px;
+  border-top: 1.5px solid #cbd5e1;
+  padding-top: 7px;
 }
 
-/* --- CAPA --- */
+/* CAPA */
 .cover {
-  background: linear-gradient(155deg, #ffffff 0%, #f8fbff 65%, #eff6ff 100%);
-  border: 2.5px solid #93c5fd;
-  color: var(--ink);
-  box-shadow: 0 40px 90px -20px rgba(15, 23, 42, 0.5);
+  background: #ffffff;
+  border: 4px solid var(--navy);
 }
-.cover:before {
-  content: "";
-  position: absolute;
-  right: -30px;
-  top: -30px;
-  width: 360px;
-  height: 360px;
-  background-image: radial-gradient(#2563eb 1.8px, transparent 1.8px);
-  background-size: 18px 18px;
-  opacity: 0.14;
-  pointer-events: none;
-}
-.cover .topline { color: #1e40af; border-bottom-color: #dbeafe; }
-.cover .kicker { color: #1d4ed8; display: inline-flex; align-items: center; gap: 8px; }
 .cover h1 {
-  font-size: 48px;
-  max-width: 1140px;
-  background: linear-gradient(90deg, #0f172a 0%, #1d4ed8 55%, #0284c7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 46px;
+  color: var(--navy);
 }
-.cover .subtitle { color: #334155; font-size: 21px; }
 .cover .institution {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  color: #1d4ed8;
+  letter-spacing: 0.08em;
+  color: #ffffff;
   display: inline-block;
-  background: #eff6ff;
+  background: var(--navy);
   padding: 6px 14px;
-  border-radius: 8px;
-  border: 1.5px solid #bfdbfe;
+  border-radius: 6px;
 }
-.cover .meta { color: #334155; font-size: 17px; }
-.cover .meta strong { color: #0f172a; }
 .names {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin: 6px 0;
-  max-width: 740px;
+  max-width: 760px;
 }
 .names span {
-  background: #f0f6ff;
-  border: 1.5px solid #bfdbfe;
-  border-radius: 8px;
+  background: #fffbeb;
+  border: 2px solid var(--navy);
+  border-radius: 6px;
   padding: 5px 12px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e3a8a;
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--navy);
 }
 
-/* QUIZ MULTIPLAYER ESTILO KAHOOT COM PIN, LINK, QR CODE, SOM E RANKING */
+/* EDUCAQUIZ MULTIPLAYER */
 .quiz-layout {
   display: flex;
-  gap: 18px;
+  gap: 16px;
   align-items: stretch;
   margin-top: 2px;
   height: 495px;
@@ -467,18 +631,18 @@ strong { color: var(--ink); }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
-  border-radius: 18px;
-  padding: 14px 18px;
+  background: #ffffff;
+  border: 2px solid var(--navy);
+  border-radius: 12px;
+  padding: 13px 16px;
 }
 .quiz-sidebar {
-  width: 270px;
+  width: 265px;
   flex-shrink: 0;
-  background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
-  border: 2px solid #93c5fd;
-  border-radius: 18px;
-  padding: 12px 14px;
+  background: #f8fafc;
+  border: 2px solid var(--navy);
+  border-radius: 12px;
+  padding: 11px 13px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -486,32 +650,32 @@ strong { color: var(--ink); }
   text-align: center;
 }
 .quiz-sidebar img {
-  width: 132px;
-  height: 132px;
+  width: 128px;
+  height: 128px;
   background: #ffffff;
   padding: 6px;
-  border-radius: 12px;
-  border: 2px solid #bfdbfe;
+  border-radius: 8px;
+  border: 2px solid var(--navy);
 }
 .pin-badge {
-  background: #0f172a;
+  background: var(--navy);
   color: #fbbf24;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 26px;
+  font-size: 25px;
   font-weight: 900;
   letter-spacing: 0.14em;
-  padding: 5px 14px;
-  border-radius: 10px;
-  border: 2px solid #334155;
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--gold);
   width: 100%;
 }
 .link-box {
   background: #ffffff;
-  border: 1.5px solid #93c5fd;
-  border-radius: 8px;
-  padding: 5px 8px;
-  font-size: 11px;
-  color: #1e3a8a;
+  border: 1.5px solid #94a3b8;
+  border-radius: 6px;
+  padding: 4px 7px;
+  font-size: 10.5px;
+  color: var(--navy);
   font-weight: 700;
   width: 100%;
   word-break: break-all;
@@ -522,32 +686,32 @@ strong { color: var(--ink); }
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  border-bottom: 1.5px solid #e2e8f0;
-  padding-bottom: 8px;
+  border-bottom: 1.5px solid #cbd5e1;
+  padding-bottom: 7px;
 }
 .timer-pill {
-  background: #1d4ed8;
+  background: var(--navy);
   color: #ffffff;
   font-weight: 900;
-  font-size: 16px;
-  padding: 5px 13px;
-  border-radius: 999px;
-  min-width: 74px;
+  font-size: 15.5px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  min-width: 72px;
   text-align: center;
 }
 .timer-pill.urgent { background: #dc2626; animation: pulse 0.7s infinite; }
-@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.07); } }
 
 .quiz-qtext {
-  font-size: 18.5px;
+  font-size: 18px;
   font-weight: 800;
   color: var(--ink);
   line-height: 1.3;
-  background: #ffffff;
-  padding: 11px 14px;
-  border-radius: 12px;
-  border-left: 5px solid var(--cyan);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  background: #f8fafc;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  border-left: 5px solid var(--navy);
 }
 .kahoot-options {
   display: grid;
@@ -556,7 +720,7 @@ strong { color: var(--ink); }
 }
 .kahoot-btn {
   border: 0;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 12px 14px;
   color: #ffffff;
   text-align: left;
@@ -567,16 +731,16 @@ strong { color: var(--ink); }
   display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.14);
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 .kahoot-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
 .kahoot-btn.k0 { background: #dc2626; }
-.kahoot-btn.k1 { background: #2563eb; }
+.kahoot-btn.k1 { background: #1d4ed8; }
 .kahoot-btn.k2 { background: #d97706; }
-.kahoot-btn.k3 { background: #16a34a; }
-.kahoot-btn.dimmed { opacity: 0.3; }
-.kahoot-btn.winner { outline: 4px solid #0f172a; transform: scale(1.02); opacity: 1; }
+.kahoot-btn.k3 { background: #15803d; }
+.kahoot-btn.tf-true { background: #15803d; font-size: 18px; justify-content: center; padding: 18px; }
+.kahoot-btn.tf-false { background: #dc2626; font-size: 18px; justify-content: center; padding: 18px; }
 .k-shape {
   display: inline-flex;
   align-items: center;
@@ -589,30 +753,28 @@ strong { color: var(--ink); }
   flex-shrink: 0;
 }
 
-/* LISTA DE JOGADORES NO LOBBY E RANKING */
 .players-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  max-height: 170px;
+  max-height: 165px;
   overflow-y: auto;
-  padding: 6px 0;
+  padding: 4px 0;
 }
 .player-chip {
-  background: #eff6ff;
-  border: 2px solid #93c5fd;
-  color: #1e3a8a;
+  background: #fffbeb;
+  border: 2px solid var(--navy);
+  color: var(--navy);
   font-weight: 800;
-  font-size: 15px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  animation: fadeIn 0.25s ease;
+  font-size: 14.5px;
+  padding: 5px 13px;
+  border-radius: 6px;
 }
 .ranking-list {
   display: flex;
   flex-direction: column;
   gap: 7px;
-  max-height: 235px;
+  max-height: 230px;
   overflow-y: auto;
 }
 .rank-row {
@@ -621,34 +783,34 @@ strong { color: var(--ink); }
   justify-content: space-between;
   background: #ffffff;
   border: 2px solid #cbd5e1;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 8px 14px;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 15.5px;
 }
-.rank-row.top1 { background: linear-gradient(90deg, #fef3c7, #fde68a); border-color: #f59e0b; color: #78350f; }
-.rank-row.top2 { background: #f1f5f9; border-color: #94a3b8; }
-.rank-row.top3 { background: #ffedd5; border-color: #fb923c; }
+.rank-row.top1 { background: #fef3c7; border-color: #d97706; color: #78350f; }
+.rank-row.top2 { background: #f1f5f9; border-color: #64748b; }
+.rank-row.top3 { background: #ffedd5; border-color: #ea580c; }
 
 .action-btn {
   border: 0;
-  background: var(--blue);
+  background: var(--navy);
   color: #ffffff;
   font-weight: 800;
-  font-size: 15px;
-  padding: 9px 16px;
-  border-radius: 10px;
+  font-size: 14.5px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
   transition: 0.2s;
 }
 .action-btn:hover { background: var(--cyan); }
 .action-btn.green { background: #15803d; }
-.action-btn.amber { background: #d97706; }
+.action-btn.amber { background: #b45309; }
 
 /* MODO CELULAR PARA OS JOGADORES */
 body.mobile-quiz-mode {
   overflow-y: auto;
-  background: #0f172a;
+  background: var(--navy);
   padding: 16px;
 }
 body.mobile-quiz-mode #viewport,
@@ -658,7 +820,8 @@ body.mobile-quiz-mode #hud { display: none; }
   max-width: 500px;
   margin: 0 auto;
   background: #ffffff;
-  border-radius: 22px;
+  border: 3px solid var(--gold);
+  border-radius: 16px;
   padding: 20px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.45);
 }
@@ -669,12 +832,11 @@ body.mobile-quiz-mode .kahoot-options { grid-template-columns: 1fr; }
   padding: 13px 14px;
   font-size: 17px;
   font-weight: 700;
-  border: 2px solid #cbd5e1;
-  border-radius: 12px;
+  border: 2px solid var(--navy);
+  border-radius: 10px;
   margin-bottom: 10px;
   outline: none;
 }
-.m-input:focus { border-color: #1d4ed8; }
 
 /* HUD Compacto */
 #hud {
@@ -694,17 +856,16 @@ body.mobile-quiz-mode .kahoot-options { grid-template-columns: 1fr; }
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 10px;
+  background: rgba(12, 35, 64, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
   padding: 4px 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 button { font: inherit; }
 .ctrl {
   border: 0;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.16);
   color: #fff;
   border-radius: 6px;
   padding: 4px 8px;
@@ -716,11 +877,10 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.36, 1);
 }
 .ctrl.present-square {
   pointer-events: auto;
-  background: var(--blue);
+  background: var(--gold);
   color: #fff;
   width: 34px;
   height: 34px;
@@ -728,15 +888,14 @@ button { font: inherit; }
   border-radius: 8px;
   font-size: 16px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.18);
 }
-.ctrl:hover { transform: scale(1.08); background: var(--cyan); filter: brightness(1.2); }
-.ctrl:disabled { opacity: 0.25; cursor: not-allowed; transform: none !important; }
+.ctrl:hover { background: var(--cyan); }
+.ctrl:disabled { opacity: 0.25; cursor: not-allowed; }
 #counter {
   font-size: 12px;
   font-weight: 800;
   color: #f1f5f9;
-  padding: 0 5px;
+  padding: 0 6px;
   white-space: nowrap;
 }
 </style>
@@ -748,11 +907,21 @@ button { font: inherit; }
   </div>
 </div>
 
-<!-- INTERFACE DO JOGADOR NO CELULAR (VIA QR CODE, LINK OU PIN) -->
+<!-- MODAL DE ZOOM DAS IMAGENS HISTÓRICAS -->
+<div id="img-zoom-modal" role="dialog" aria-modal="true" aria-label="Imagem expandida">
+  <div class="zoom-modal-box">
+    <button class="zoom-close-btn" id="zoom-close-btn" title="Fechar zoom (ESC)">✕</button>
+    <img id="zoom-modal-img" src="" alt="Visualização ampliada">
+    <div id="zoom-modal-caption" style="font-weight:800;color:#0c2340;font-size:16px;text-align:center;"></div>
+    <div style="font-size:12px;color:#64748b;font-style:italic;">Imagem ilustrativa gerada por IA (OpenAI), 2026 · Clique fora ou pressione ESC para fechar</div>
+  </div>
+</div>
+
+<!-- INTERFACE DO JOGADOR NO CELULAR -->
 <div id="mobile-quiz-app">
-  <div style="font-size:12px;font-weight:800;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.08em;">CPAN-UFMS · Fundamentos da Educação</div>
-  <h2 style="font-size:21px;margin:4px 0 6px;">Quiz: Educação na Democracia Popular</h2>
-  <p style="font-size:13.5px;margin-bottom:12px;color:#475569;">Moisés, Jesiel, Wéllington e Glaucio</p>
+  <div style="font-size:11.5px;font-weight:900;color:#b45309;text-transform:uppercase;letter-spacing:0.08em;">CPAN-UFMS · 1945–1964</div>
+  <h2 style="font-size:21px;margin:3px 0 4px;color:#0c2340;">EDUCAQUIZ</h2>
+  <p style="font-size:13.5px;margin-bottom:12px;color:#334155;font-weight:600;">1945–1964 · O desafio do conhecimento histórico!</p>
   <div id="mobile-quiz-body"></div>
 </div>
 
@@ -760,214 +929,201 @@ button { font: inherit; }
   <div class="controls">
     <button class="ctrl" id="prev" title="Slide anterior (←)">←</button>
     <button class="ctrl" id="next" title="Próximo slide (→)">→</button>
-    <span id="counter">1 / 14</span>
+    <span id="counter">1 / 15</span>
   </div>
   <button class="ctrl present-square" id="present" title="Apresentar em tela cheia">⛶</button>
 </div>
 
 <script>
-/* ILUSTRAÇÕES VETORIAIS */
-const svgCoverEdu = `<svg viewBox="0 0 240 210" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="12" y="12" width="216" height="186" rx="24" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2.5"/>
-  <circle cx="120" cy="105" r="74" fill="#dbeafe" opacity="0.6"/>
-  <path d="M48 148C48 134 78 128 120 128C162 128 192 134 192 148V166H48V148Z" fill="#1d4ed8"/>
-  <path d="M62 84L120 56L178 84L120 112L62 84Z" fill="#0f172a"/>
-  <path d="M84 96V122C84 130 100 136 120 136C140 136 156 130 156 122V96" fill="#0284c7"/>
-  <circle cx="178" cy="106" r="6" fill="#f59e0b"/>
-  <path d="M178 84V106" stroke="#f59e0b" stroke-width="3"/>
+/* HELPER PARA IMAGENS COM ZOOM */
+function renderHistImage(src, caption, alt) {
+  return `
+    <div class="hist-photo-card">
+      <div class="hist-img-wrap" data-zoom-src="${src}" data-zoom-caption="${caption}">
+        <img src="${src}" alt="${alt}">
+        <span class="zoom-hint">🔍 Ampliar</span>
+      </div>
+      <div class="hist-caption">${caption}</div>
+      <div class="hist-credit">Ilustração histórica (OpenAI, 2026)</div>
+    </div>
+  `;
+}
+
+/* ILUSTRAÇÕES VETORIAIS COMPLEMENTARES */
+const svgCoverEdu = `<svg viewBox="0 0 240 205" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="220" height="185" rx="14" fill="#fffbeb" stroke="#0c2340" stroke-width="2.5"/>
+  <rect x="22" y="22" width="196" height="28" rx="4" fill="#0c2340"/>
+  <text x="120" y="40" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="900" font-family="Georgia, serif">BRASIL · 1945 – 1964</text>
+  <path d="M48 146C48 132 78 126 120 126C162 126 192 132 192 146V164H48V146Z" fill="#0c2340"/>
+  <path d="M64 88L120 62L176 88L120 114L64 88Z" fill="#b45309"/>
+  <path d="M86 99V121C86 128 101 134 120 134C139 134 154 128 154 121V99" fill="#1e3a8a"/>
 </svg>`;
 
-const svgTimeline1945 = `<svg viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="14" y="14" width="212" height="192" rx="18" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
-  <line x1="48" y1="38" x2="48" y2="184" stroke="#1d4ed8" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="48" cy="48" r="8" fill="#dc2626"/><text x="66" y="53" fill="#0f172a" font-size="13" font-weight="800">1945: Fim Estado Novo</text>
-  <circle cx="48" cy="88" r="8" fill="#1d4ed8"/><text x="66" y="93" fill="#0f172a" font-size="13" font-weight="800">1946: Constituição</text>
-  <circle cx="48" cy="128" r="8" fill="#0284c7"/><text x="66" y="133" fill="#0f172a" font-size="13" font-weight="800">1956-60: JK / Brasília</text>
-  <circle cx="48" cy="168" r="8" fill="#10b981"/><text x="66" y="173" fill="#0f172a" font-size="13" font-weight="800">1961: 1ª LDB (4.024)</text>
-</svg>`;
-
-const svgBrasiliaJK = `<svg viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="14" y="14" width="212" height="192" rx="18" fill="#f0f9ff" stroke="#bae6fd" stroke-width="2"/>
-  <rect x="30" y="156" width="180" height="14" rx="4" fill="#1e293b"/>
-  <path d="M44 156C44 132 92 132 92 156H44Z" fill="#0284c7"/>
-  <path d="M148 134C148 156 196 156 196 134H148Z" fill="#1d4ed8"/>
-  <rect x="106" y="64" width="11" height="92" rx="2" fill="#334155"/>
-  <rect x="123" y="64" width="11" height="92" rx="2" fill="#334155"/>
-  <text x="120" y="44" text-anchor="middle" fill="#0c4a6e" font-size="13" font-weight="800">Brasília (1960) · Plano de Metas</text>
-</svg>`;
-
-const svgLDBBalance = `<svg viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="14" y="14" width="212" height="192" rx="18" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
-  <line x1="120" y1="46" x2="120" y2="176" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-  <rect x="84" y="172" width="72" height="12" rx="6" fill="#0f172a"/>
-  <line x1="48" y1="78" x2="192" y2="62" stroke="#1d4ed8" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="48" cy="108" r="24" fill="#dbeafe" stroke="#1d4ed8" stroke-width="3"/>
-  <text x="48" y="112" text-anchor="middle" fill="#1e3a8a" font-size="11" font-weight="800">Pública</text>
-  <circle cx="192" cy="92" r="26" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+const svgLDBBalance = `<svg viewBox="0 0 240 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="12" y="12" width="216" height="191" rx="12" fill="#f8fafc" stroke="#0c2340" stroke-width="2"/>
+  <line x1="120" y1="46" x2="120" y2="174" stroke="#0c2340" stroke-width="5" stroke-linecap="round"/>
+  <rect x="84" y="170" width="72" height="12" rx="4" fill="#0c2340"/>
+  <line x1="48" y1="78" x2="192" y2="62" stroke="#b45309" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="48" cy="108" r="25" fill="#eff6ff" stroke="#0c2340" stroke-width="3"/>
+  <text x="48" y="112" text-anchor="middle" fill="#0c2340" font-size="11" font-weight="800">Pública</text>
+  <circle cx="192" cy="92" r="27" fill="#fef3c7" stroke="#b45309" stroke-width="3"/>
   <text x="192" y="96" text-anchor="middle" fill="#78350f" font-size="11" font-weight="800">Privada</text>
-  <text x="120" y="34" text-anchor="middle" fill="#1d4ed8" font-size="13" font-weight="800">Disputa na LDB 4.024/61</text>
+  <text x="120" y="34" text-anchor="middle" fill="#0c2340" font-size="13" font-weight="900">Disputa na LDB 4.024/61</text>
 </svg>`;
 
-const svgQualityPillars = `<svg viewBox="0 0 240 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="14" y="14" width="212" height="192" rx="18" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="2"/>
-  <polygon points="120,34 40,74 200,74" fill="#059669"/>
-  <rect x="52" y="80" width="24" height="86" rx="4" fill="#10b981"/>
-  <rect x="108" y="80" width="24" height="86" rx="4" fill="#10b981"/>
-  <rect x="164" y="80" width="24" height="86" rx="4" fill="#10b981"/>
-  <rect x="38" y="170" width="164" height="14" rx="4" fill="#065f46"/>
-  <text x="120" y="64" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">QUALIDADE SOCIAL</text>
+const svgQualityPillars = `<svg viewBox="0 0 240 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="12" y="12" width="216" height="191" rx="12" fill="#f8fafc" stroke="#0c2340" stroke-width="2"/>
+  <polygon points="120,34 40,74 200,74" fill="#0c2340"/>
+  <rect x="52" y="80" width="24" height="84" rx="3" fill="#1e3a8a"/>
+  <rect x="108" y="80" width="24" height="84" rx="3" fill="#b45309"/>
+  <rect x="164" y="80" width="24" height="84" rx="3" fill="#15803d"/>
+  <rect x="38" y="168" width="164" height="14" rx="3" fill="#0c2340"/>
+  <text x="120" y="64" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="900">QUALIDADE SOCIAL</text>
 </svg>`;
 
+/* =====================================================================
+   SLIDES NA NOVA ORDEM: MOISÉS → GLAUCIO → WÉLLINGTON → JESIEL
+   ===================================================================== */
 const slides = [
 /* 1. CAPA — MOISÉS */
 {
   type:"cover",
-  section:"Moisés · Slide 1 · Abertura (0–2 min)",
-  title:"A Educação na Democracia Popular",
-  subtitle:"Políticas educacionais (1945–1964) e a qualidade da escola pública na perspectiva democrática e popular.",
+  section:"Moisés · Slide 1 · Abertura",
+  title:"A Educação na Democracia Popular (1945–1964)",
+  subtitle:"Contexto histórico brasileiro, políticas educacionais e a qualidade da escola pública na perspectiva democrática e popular.",
   body:`<div>
     <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
       <div>
         <div class="institution">CPAN - UFMS · LICENCIATURA EM COMPUTAÇÃO · FUNDAMENTOS DA EDUCAÇÃO</div>
         <p class="meta" style="margin-top:8px"><strong>Professor:</strong> Edimar Aparecido da Silva</p>
-        <p class="meta" style="margin-top:2px"><strong>Acadêmicos:</strong></p>
+        <p class="meta" style="margin-top:2px"><strong>Ordem de Apresentação:</strong></p>
         <div class="names">
-          <span>Moisés</span>
-          <span>Jesiel</span>
-          <span>Wéllington</span>
-          <span>Glaucio</span>
+          <span>1º Moisés</span>
+          <span>2º Glaucio</span>
+          <span>3º Wéllington</span>
+          <span>4º Jesiel</span>
         </div>
       </div>
-      <div style="width: 215px; flex-shrink: 0;">${svgCoverEdu}</div>
+      <div style="width: 225px; flex-shrink: 0;">${svgCoverEdu}</div>
     </div>
     <div class="grid three" style="margin-top: 12px;">
       <div class="card" data-practical="Texto-base: 'A qualidade da escola pública, na perspectiva democrática e popular' (Di Giorgi & Leite, Série-Estudos/UCDB, 2010).">
         <h3>📚 Referência Central</h3>
-        <p>Di Giorgi e Leite (2010) + recorte histórico de 1945 a 1964.</p>
+        <p>Di Giorgi e Leite (2010) + marco histórico de 1945 a 1964.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Contexto histórico: redemocratização pós-Estado Novo, Constituição de 1946, Plano de Metas de JK e a 1ª LDB (Lei 4.024/61).">
-        <h3>🏛️ Percurso Histórico</h3>
-        <p>Populismo, industrialização e disputas entre ensino público e privado.</p>
+      <div class="card" data-practical="Clique sobre qualquer imagem histórica nos slides para abri-la em modo de zoom ampliado.">
+        <h3>🖼️ Marco Linha do Tempo</h3>
+        <p>Redemocratização, JK/Brasília, 1ª LDB (1961), Educação Popular e 1964.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Participação ao vivo: no Slide 13 a turma entra pelo QR Code, Link ou PIN, coloca o nome e disputa o Ranking com som!">
-        <h3>🏆 Quiz Ao Vivo (Ranking)</h3>
-        <p>5 questões (0 a 1.000 pts) com placar atualizado a cada rodada.</p>
+      <div class="card" data-practical="No Slide 14 a turma entra pelo QR Code ou PIN no EDUCAQUIZ com 10 questões (5 Múltipla Escolha + 5 Verdadeiro ou Falso).">
+        <h3>🏆 EDUCAQUIZ (10 Questões)</h3>
+        <p>5 Múltipla Escolha + 5 Verdadeiro ou Falso com ranking ao vivo!</p>
         <div class="practical-example"></div>
       </div>
     </div>
   </div>`
 },
 
-/* 2. ROTEIRO E PROBLEMATIZAÇÃO — MOISÉS */
+/* 2. MARCO LINHA DO TEMPO HISTÓRICO (1945–1964) — MOISÉS */
 {
-  section:"Moisés · Slide 2 · Introdução (2–5 min)",
-  title:"O que significa 'qualidade' na escola pública?",
-  subtitle:"Antes de analisar o período 1945–1964, uma provocação inicial para a nossa turma:",
+  section:"Moisés · Slide 2 · Marco Linha do Tempo (1945–1964)",
+  title:"Marco Linha do Tempo: Política, Sociedade e Educação",
+  subtitle:"Como cada acontecimento histórico entre 1945 e 1964 redefiniu as disputas pela escola pública no Brasil:",
   body:`<div>
-    <div class="story-box">
-      <span class="story-tag">Questão Disparadora</span>
-      <p>Quando falamos em <strong>“qualidade da escola pública”</strong>, estamos falando de rankings e notas padronizadas para o mercado, ou de uma escola que garante <strong>acesso, permanência e emancipação</strong> para as classes populares?</p>
-    </div>
-    <div class="grid">
-      <div class="card" data-practical="Moisés (Slides 1–4) e Jesiel (Slides 5–7): Contexto político (1945–1964), governo JK, João Goulart e a Constituição de 1946.">
-        <h3>1️⃣ Bloco 1 · Moisés & Jesiel</h3>
-        <p>Contexto político (1945–1964), governo JK, João Goulart e a Constituição de 1946.</p>
-        <div class="practical-example"></div>
+    <div class="timeline-track">
+      <div class="tl-node">
+        <span class="tl-year">1945</span>
+        <div class="tl-title">Fim do Estado Novo</div>
+        <div class="tl-edu">Deposição de Vargas e início da redemocratização com participação popular.</div>
       </div>
-      <div class="card" data-practical="Wéllington (Slides 8–10) e Glaucio (Slides 11–14): LDB 4.024/61, o artigo de Di Giorgi & Leite (2010), Quiz Ao Vivo com Ranking e conclusão.">
-        <h3>2️⃣ Bloco 2 · Wéllington & Glaucio</h3>
-        <p>A LDB 4.024/61, qualidade democrática e popular (2010), Quiz e síntese.</p>
-        <div class="practical-example"></div>
+      <div class="tl-node">
+        <span class="tl-year">1946</span>
+        <div class="tl-title">Nova Constituição</div>
+        <div class="tl-edu">Art. 166: educação como <strong>direito de todos</strong> e competência da União para a LDB.</div>
+      </div>
+      <div class="tl-node">
+        <span class="tl-year">1956–60</span>
+        <div class="tl-title">JK e Brasília</div>
+        <div class="tl-edu">Plano de Metas ("50 anos em 5"): urbanização pressiona por mais escolas públicas.</div>
+      </div>
+      <div class="tl-node">
+        <span class="tl-year">1961</span>
+        <div class="tl-title">1ª LDB (4.024/61)</div>
+        <div class="tl-edu">Após 13 anos de disputa, unifica os níveis de ensino conciliando público e privado.</div>
+      </div>
+      <div class="tl-node">
+        <span class="tl-year">1960–63</span>
+        <div class="tl-title">Educação Popular</div>
+        <div class="tl-edu">MCP, MEB, "De Pé no Chão" e Paulo Freire (Angicos): alfabetizar para conscientizar.</div>
+      </div>
+      <div class="tl-node">
+        <span class="tl-year">1964</span>
+        <div class="tl-title">Golpe Civil-Militar</div>
+        <div class="tl-edu">Ruptura democrática interrompe o Plano Nacional de Alfabetização e reprime movimentos.</div>
       </div>
     </div>
+    <div class="callout question">🔗 Relação com o tema (Di Giorgi & Leite, 2010): O período 1945–1964 revela a tensão permanente entre a <strong>escola como direito democrático e emancipador</strong> versus a <strong>escola voltada apenas à lógica privada e mercadológica</strong>.</div>
   </div>`
 },
 
-/* 3. FIM DO ESTADO NOVO E RETORNO À DEMOCRACIA (1945) — MOISÉS */
+/* 3. 1945: FIM DO ESTADO NOVO E REDEMOCRATIZAÇÃO — MOISÉS */
 {
-  section:"Moisés · Slide 3 · Contexto Político (1945)",
-  title:"1945: A queda de Vargas e a redemocratização",
-  subtitle:"O desgaste da ditadura do Estado Novo abre espaço para a mobilização das massas urbanas:",
+  section:"Moisés · Slide 3 · Cenário Político (1945)",
+  title:"1945: Queda de Vargas e Redemocratização",
+  subtitle:"O desgaste da ditadura do Estado Novo (1937–1945) abre espaço para eleições e mobilização das massas:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <ul>
-          <li><strong>Deposição de Vargas (29/10/1945):</strong> Insatisfações crescentes e pressões pelo retorno das liberdades democráticas encerram a ditadura.</li>
-          <li><strong>Período Populista (1945–1964):</strong> Marcado pelo apelo direto à participação das massas populares sob controle do Estado.</li>
-          <li><strong>Projeto Nacional-Desenvolvimentista:</strong> Forte propaganda nacionalista e industrialização promovida pelo Estado brasileiro.</li>
+          <li><strong>Deposição de Vargas (29/10/1945):</strong> Pressões crescentes pelo retorno das liberdades democráticas encerram o Estado Novo.</li>
+          <li><strong>Democracia Populista (1945–1964):</strong> Apelo direto às massas urbanas sob mediação do Estado, nacionalismo e industrialização.</li>
+          <li><strong>Nova Demanda Social:</strong> O crescimento das cidades e da classe trabalhadora transforma o acesso à escola pública em reivindicação popular.</li>
         </ul>
+        <div class="callout">Contradição central: O país retomou o voto e reorganizou partidos, mas manteve profundas desigualdades no acesso à escola.</div>
       </div>
-      <div class="split-visual">${svgTimeline1945}</div>
+      ${renderHistImage("imagens/01_redemocratizacao_brasil_1945.jpg", "Mobilização política e redemocratização no Brasil (1945)", "Ilustração da redemocratização no Brasil em 1945")}
     </div>
-    <div class="callout">Transformação social: A urbanização e o crescimento do operariado pressionam o Estado por mais escolas públicas.</div>
   </div>`
 },
 
-/* 4. O GOVERNO JUSCELINO KUBITSCHEK E O PLANO DE METAS — MOISÉS */
+/* 4. GOVERNO JK E DESENVOLVIMENTISMO — MOISÉS */
 {
   section:"Moisés · Slide 4 · Desenvolvimentismo (1956–1961)",
-  title:"Governo JK: Plano de Metas e Modernização",
-  subtitle:"O lema '50 anos em 5' impulsiona a indústria de base e inclui a educação no planejamento estatal:",
+  title:"Governo JK: Plano de Metas e Construção de Brasília",
+  subtitle:"O projeto '50 anos em 5' acelerou a industrialização e exigiu novas políticas de escolarização:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <div class="grid" style="grid-template-columns: 1fr;">
           <div class="card" data-practical="O Plano de Metas concentrou investimentos em energia, transportes, alimentação, indústria de base e educação.">
             <h3>🏗️ Plano Nacional de Desenvolvimento</h3>
-            <p>Priorizou indústria de base, energia, transporte, alimentação e <strong>educação</strong> como suporte ao crescimento.</p>
+            <p>Priorizou indústria de base, energia, transporte, alimentação e <strong>educação</strong> para sustentar a modernização econômica.</p>
             <div class="practical-example"></div>
           </div>
-          <div class="card" data-practical="Em 1960, JK inaugura Brasília, simbolizando a integração nacional e a modernização econômica do país.">
-            <h3>🏛️ Capital Estrangeiro e Brasília (1960)</h3>
-            <p>Abertura ao capital estrangeiro, grandes rodovias/hidrelétricas e inauguração da nova capital federal.</p>
+          <div class="card" data-practical="Inaugurada em 1960, Brasília simbolizou o projeto desenvolvimentista, enquanto milhões de brasileiros ainda permaneciam analfabetos.">
+            <h3>🏛️ Urbanização e Pressão por Escolas</h3>
+            <p>Abertura ao capital estrangeiro, inauguração de <strong>Brasília (1960)</strong> e fortalecimento das camadas médias e do proletariado urbano.</p>
             <div class="practical-example"></div>
           </div>
         </div>
       </div>
-      <div class="split-visual">${svgBrasiliaJK}</div>
+      ${renderHistImage("imagens/02_brasilia_desenvolvimentismo_1950s.jpg", "Brasília (1960): símbolo do desenvolvimentismo de JK", "Ilustração de Brasília e o desenvolvimentismo dos anos 1950")}
     </div>
   </div>`
 },
 
-/* 5. DE JÂNIO QUADROS A JOÃO GOULART E O GOLPE DE 1964 — JESIEL */
+/* 5. CONSTITUIÇÃO DE 1946 E 1ª LDB (1961) — GLAUCIO */
 {
-  section:"Jesiel · Slide 5 · Crise Política (1961–1964)",
-  title:"De Jânio Quadros às Reformas de Base de Jango",
-  subtitle:"A polarização política interrompe a experiência democrática popular em 1964:",
-  body:`<div>
-    <div class="grid three">
-      <div class="card" data-practical="Jânio Quadros governou por apenas oito meses e renunciou em agosto de 1961, gerando grave crise institucional.">
-        <h3>⚡ Renúncia de Jânio (1961)</h3>
-        <p>Mandato de apenas <strong>8 meses</strong>; sua renúncia leva o vice João Goulart (oposição) à presidência.</p>
-        <div class="practical-example"></div>
-      </div>
-      <div class="card" data-practical="Sem apoio das elites conservadoras, Jango mobiliza trabalhadores e estudantes em torno das Reformas de Base (agrária, urbana, educacional).">
-        <h3>✊ Reformas de Base (Jango)</h3>
-        <p>Sem apoio conservador, Goulart busca respaldo nas <strong>massas trabalhadoras</strong> propondo reformas estruturais.</p>
-        <div class="practical-example"></div>
-      </div>
-      <div class="card" data-practical="Nesse período florescem movimentos de educação popular, como o método de alfabetização de Paulo Freire em Angicos (1963).">
-        <h3>🚨 Radicalização e Golpe (1964)</h3>
-        <p>Confrontos entre esquerda e direita culminam na deposição de Goulart e no início do <strong>Regime Militar</strong>.</p>
-        <div class="practical-example"></div>
-      </div>
-    </div>
-    <div class="callout question">💬 Conexão com a Educação: Foi nesse caldeirão popular (1961–1964) que Paulo Freire liderou o Plano Nacional de Alfabetização!</div>
-  </div>`
-},
-
-/* 6. A CONSTITUIÇÃO FEDERAL DE 1946 — JESIEL */
-{
-  section:"Jesiel · Slide 6 · Marco Constitucional",
-  title:"Constituição de 1946: Educação como Direito de Todos",
-  subtitle:"Superando o autoritarismo de 1937, a Carta de 1946 retoma princípios liberais e democráticos:",
+  section:"Glaucio · Slide 5 · Marco Constitucional (1946–1961)",
+  title:"Constituição de 1946 e a Tramitação da 1ª LDB",
+  subtitle:"Da garantia formal do direito à educação até os 13 anos de disputa no Congresso Nacional:",
   body:`<div>
     <div class="grid">
       <div class="card" data-practical="O Art. 166 da Constituição de 1946 proclamava: 'A educação é direito de todos e será dada no lar e na escola'.">
-        <h3>📜 Princípio Democrático</h3>
-        <p>Restabelece formalmente a <strong>educação como direito de todos</strong>, inspirada nos ideais da Escola Nova (Manifesto de 1932).</p>
+        <h3>📜 Constituição de 1946 (Art. 166)</h3>
+        <p>Orientada por princípios liberais e democráticos, consagra a <strong>educação como direito de todos</strong>.</p>
         <div class="practical-example"></div>
       </div>
       <div class="card" data-practical="Enquanto Cartas anteriores falavam apenas em 'traçar diretrizes', a de 1946 deu à União poder efetivo de legislar sobre as diretrizes e bases.">
@@ -980,16 +1136,17 @@ const slides = [
       <span>Constituição de 1946</span><b>→</b>
       <span>Projeto enviado ao Congresso (1948)</span><b>→</b>
       <span>13 anos de intensos debates</span><b>→</b>
-      <span>1ª LDB (1961)</span>
+      <span>Lei n. 4.024/61 (1ª LDB)</span>
     </div>
+    <div class="callout">Marco histórico: Pela primeira vez o Brasil reuniu todos os níveis e modalidades de ensino em um único texto legal.</div>
   </div>`
 },
 
-/* 7. A LONGA TRAMITAÇÃO DA LDB E O CONFLITO PÚBLICO VS. PRIVADO — JESIEL */
+/* 6. DISPUTA PÚBLICO VS. PRIVADO NA LDB 4.024/61 — GLAUCIO */
 {
-  section:"Jesiel · Slide 7 · Disputa Ideológica",
-  title:"13 anos de disputa: Escola Pública vs. Escola Privada",
-  subtitle:"A tramitação da primeira LDB expôs dois projetos antagônicos de sociedade e educação:",
+  section:"Glaucio · Slide 6 · Disputa na LDB (1961)",
+  title:"Escola Pública vs. Privada na Lei n. 4.024/61",
+  subtitle:"A primeira LDB expressou o embate entre projetos distintos de sociedade e financiamento educacional:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
@@ -1002,46 +1159,91 @@ const slides = [
           </thead>
           <tbody>
             <tr>
-              <td>Anísio Teixeira, Florestan Fernandes, Fernando de Azevedo e movimentos estudantis/sindicais.</td>
-              <td>Igreja Católica e proprietários de estabelecimentos particulares de ensino (Substitutivo Lacerda).</td>
+              <td>Anísio Teixeira, Florestan Fernandes, Fernando de Azevedo e movimentos populares/estudantis.</td>
+              <td>Setores religiosos e proprietários de instituições particulares (Substitutivo Carlos Lacerda).</td>
             </tr>
             <tr>
-              <td>Verbas públicas exclusivas para a rede pública, laica, gratuita e universal.</td>
-              <td>Liberdade de ensino entendida como repasse de verbas públicas às escolas privadas.</td>
+              <td>Verbas públicas exclusivas para a rede estatal, laica, gratuita e universal.</td>
+              <td>Liberdade de ensino associada ao repasse de recursos públicos às escolas privadas.</td>
             </tr>
           </tbody>
         </table>
+        <div class="callout" style="margin-top:10px;">Vieira e Farias (2007): A Lei 4.024/61 conciliou interesses, mas favoreceu mais a <strong>ideologia da escola privada</strong> que o aprimoramento da pública.</div>
       </div>
       <div class="split-visual">${svgLDBBalance}</div>
     </div>
   </div>`
 },
 
-/* 8. A LDB Nº 4.024/61 E SUAS CONTRADIÇÕES — WÉLLINGTON */
+/* 7. MOVIMENTOS DE EDUCAÇÃO POPULAR — GLAUCIO */
 {
-  section:"Wéllington · Slide 8 · Legislação Educacional",
-  title:"A LDB (Lei n. 4.024/61): Conciliação e Limites",
-  subtitle:"Promulgada em dezembro de 1961, reuniu pela primeira vez todos os níveis de ensino em um único texto:",
+  section:"Glaucio · Slide 7 · Educação Popular (Anos 1950–1960)",
+  title:"Movimentos de Educação e Cultura Popular",
+  subtitle:"No fim dos anos 1950 e início dos 1960, a educação aproximou-se das lutas sociais dos trabalhadores:",
   body:`<div>
-    <div class="grid">
-      <div class="card" data-practical="Antes de 1961, a educação era regulada por leis orgânicas fragmentadas (Reforma Capanema). A Lei 4.024/61 unificou o sistema.">
-        <h3>📖 Marco Histórico (Unificação)</h3>
-        <p>Pela primeira vez no Brasil, os diferentes <strong>níveis e modalidades de ensino</strong> foram reunidos em uma única lei nacional.</p>
-        <div class="practical-example"></div>
+    <div class="split-layout">
+      <div class="split-content">
+        <ul>
+          <li><strong>Principais Iniciativas:</strong> Movimento de Cultura Popular (MCP), Centro Popular de Cultura (CPC), Movimento de Educação de Base (MEB) e campanha <em>De Pé no Chão Também se Aprende a Ler</em> (Natal/RN).</li>
+          <li><strong>Educação Além da Técnica:</strong> A escola passa a ser concebida como espaço de leitura crítica da realidade e participação cidadã.</li>
+          <li><strong>Conexão com o Tema:</strong> É a raiz histórica da <strong>perspectiva democrática e popular</strong> analisada por Di Giorgi e Leite (2010).</li>
+        </ul>
+        <div class="callout question">“A luta também se aprende a ler”: alfabetização vinculada aos direitos sociais e à organização comunitária.</div>
       </div>
-      <div class="card" data-practical="Vieira e Farias (2007) destacam que o texto final concedeu ampla margem e financiamento ao setor privado.">
-        <h3>⚖️ Favorecimento ao Setor Privado</h3>
-        <p>Como apontam <strong>Vieira e Farias (2007)</strong>, a lei conciliou interesses mas favoreceu mais a <strong>ideologia da escola privada</strong> do que o aprimoramento da escola pública.</p>
-        <div class="practical-example"></div>
-      </div>
+      ${renderHistImage("imagens/04_movimentos_educacao_popular.jpg", "Movimentos e campanhas de educação popular (início dos anos 1960)", "Ilustração dos movimentos de educação popular")}
     </div>
-    <div class="callout">Pressão socioeconômica: O fortalecimento das camadas médias e do proletariado urbano exigia um novo papel para o ensino fundamental.</div>
   </div>`
 },
 
-/* 9. DI GIORGI & LEITE (2010): O CONCEITO DE QUALIDADE — WÉLLINGTON */
+/* 8. PAULO FREIRE E A CONSCIENTIZAÇÃO — GLAUCIO */
 {
-  section:"Wéllington · Slide 9 · Texto de Referência (2010)",
+  section:"Glaucio · Slide 8 · Paulo Freire e Angicos (1963)",
+  title:"Paulo Freire: Diálogo e Conscientização",
+  subtitle:"A alfabetização de adultos como prática da liberdade e leitura crítica do mundo:",
+  body:`<div>
+    <div class="split-layout">
+      <div class="split-content">
+        <div class="grid" style="grid-template-columns: 1fr;">
+          <div class="card" data-practical="Em 1963, em Angicos (RN), 300 trabalhadores rurais foram alfabetizados em 40 horas a partir de palavras do seu cotidiano.">
+            <h3>🗣️ Experiência de Angicos (1963)</h3>
+            <p>Partia do universo vocabular e dos saberes prévios dos educandos, superando cartilhas mecânicas e descontextualizadas.</p>
+            <div class="practical-example"></div>
+          </div>
+          <div class="card" data-practical="Em janeiro de 1964, Paulo Freire foi convidado a coordenar o Plano Nacional de Alfabetização (PNA), interrompido meses depois pelo golpe.">
+            <h3>📖 Leitura da Palavra e do Mundo</h3>
+            <p>Questionava a educação puramente transmissiva, defendendo sujeitos ativos na construção do conhecimento e da democracia.</p>
+            <div class="practical-example"></div>
+          </div>
+        </div>
+      </div>
+      ${renderHistImage("imagens/03_paulo_freire_educacao_popular.jpg", "Paulo Freire: diálogo, alfabetização e leitura crítica do mundo", "Ilustração de Paulo Freire")}
+    </div>
+  </div>`
+},
+
+/* 9. JÂNIO, JANGO E O GOLPE CIVIL-MILITAR DE 1964 — WÉLLINGTON */
+{
+  section:"Wéllington · Slide 9 · Ruptura Democrática (1961–1964)",
+  title:"Reformas de Base e o Golpe Civil-Militar de 1964",
+  subtitle:"A polarização política interrompeu a experiência democrática iniciada em 1945:",
+  body:`<div>
+    <div class="split-layout">
+      <div class="split-content">
+        <ul>
+          <li><strong>De Jânio a Jango (1961):</strong> Após renúncia de Jânio Quadros (8 meses), João Goulart assume e propõe as <strong>Reformas de Base</strong> (agrária, educacional, fiscal e política).</li>
+          <li><strong>Golpe de 1964 (31/03 e 01/04):</strong> Forte resistência conservadora leva à deposição de Goulart e a 21 anos de ditadura militar.</li>
+          <li><strong>Impacto na Educação:</strong> Repressão aos movimentos populares, extinção do Plano Nacional de Alfabetização e prisão/exílio de Paulo Freire.</li>
+        </ul>
+        <div class="callout">Síntese histórica: 1964 interrompeu a construção de um projeto nacional de educação popular e democrática.</div>
+      </div>
+      ${renderHistImage("imagens/05_golpe_civil_militar_1964.jpg", "Golpe civil-militar de 1964: ruptura da experiência democrática", "Ilustração do golpe civil-militar de 1964")}
+    </div>
+  </div>`
+},
+
+/* 10. DI GIORGI & LEITE (2010): O CONCEITO DE QUALIDADE — WÉLLINGTON */
+{
+  section:"Wéllington · Slide 10 · Texto de Referência (2010)",
   title:"Di Giorgi e Leite (2010): Qualidade para quem?",
   subtitle:"No artigo da Revista Série-Estudos (UCDB), os autores problematizam o discurso sobre a qualidade escolar:",
   body:`<div>
@@ -1049,34 +1251,38 @@ const slides = [
       <div class="split-content">
         <ul>
           <li><strong>Conceito Polissêmico:</strong> “Qualidade” não é neutra — varia conforme o projeto político de sociedade que se defende.</li>
-          <li><strong>Crítica à Visão Gerencial/Neoliberal:</strong> Reduzir qualidade a testes padronizados (IDEB, rankings) culpabiliza professores e exclui os mais pobres.</li>
+          <li><strong>Crítica à Visão Gerencial/Neoliberal:</strong> Reduzir qualidade a testes padronizados e rankings culpabiliza professores e exclui os mais pobres.</li>
           <li><strong>Perspectiva Democrática e Popular:</strong> Exige qualidade <strong>com inclusão</strong> — garantir acesso, permanência e apropriação crítica do saber sistematizado.</li>
         </ul>
+        <div class="callout">Ideia-chave (Di Giorgi & Leite, 2010): Não há qualidade democrática quando o “sucesso” da escola depende da exclusão das classes populares.</div>
       </div>
       <div class="split-visual">${svgQualityPillars}</div>
     </div>
-    <div class="callout">Ideia-chave (Di Giorgi & Leite, 2010): Não há qualidade democrática quando o "sucesso" da escola depende da exclusão dos estudantes das classes populares.</div>
   </div>`
 },
 
-/* 10. PILARES DA ESCOLA PÚBLICA DEMOCRÁTICA E POPULAR — WÉLLINGTON */
+/* 11. PILARES DA ESCOLA PÚBLICA DEMOCRÁTICA E POPULAR — WÉLLINGTON */
 {
-  section:"Wéllington · Slide 10 · Texto de Referência (2010)",
+  section:"Wéllington · Slide 11 · Texto de Referência (2010)",
   title:"Pilares da Qualidade Democrática e Popular",
-  subtitle:"O que caracteriza uma escola pública comprometida com a emancipação popular segundo Di Giorgi e Leite (2010)?",
+  subtitle:"O que caracteriza uma escola pública comprometida com a emancipação segundo Di Giorgi e Leite (2010)?",
   body:`<div>
+    <div class="story-box">
+      <span class="story-tag">Reflexão Central do Período</span>
+      <p>É possível afirmar que existe democracia plena quando o direito à educação está garantido na Constituição (1946), mas as condições materiais impedem que ele chegue igualmente a toda a população?</p>
+    </div>
     <div class="grid three">
-      <div class="card" data-practical="Exemplo: Não basta matricular; é preciso transporte, merenda, apoio pedagógico e currículo significativo para evitar a evasão.">
+      <div class="card" data-practical="Não basta matricular; é preciso transporte, merenda, infraestrutura e apoio pedagógico para evitar a evasão.">
         <h3>🚪 1. Acesso e Permanência</h3>
-        <p>Universalização real com condições materiais e pedagógicas para que o estudante conclua sua formação.</p>
+        <p>Universalização real com condições concretas para que o estudante conclua sua formação.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Exemplo: Conselhos escolares ativos com voz de pais, estudantes, professores e funcionários nas decisões pedagógicas e financeiras.">
+      <div class="card" data-practical="Conselhos escolares ativos com participação efetiva de pais, estudantes, professores e funcionários nas decisões.">
         <h3>🗳️ 2. Gestão Democrática</h3>
-        <p>Participação efetiva da comunidade escolar nas decisões, rompendo o autoritarismo burocrático.</p>
+        <p>Participação da comunidade escolar nas decisões pedagógicas e administrativas, superando o autoritarismo.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Exemplo: Articular os saberes da cultura popular com o conhecimento científico e tecnológico (incluindo inclusão digital!).">
+      <div class="card" data-practical="Articular os saberes da cultura popular com o conhecimento científico e tecnológico sistematizado.">
         <h3>🧠 3. Conhecimento Crítico</h3>
         <p>Domínio dos conteúdos científicos e culturais articulados à realidade social dos trabalhadores.</p>
         <div class="practical-example"></div>
@@ -1085,11 +1291,11 @@ const slides = [
   </div>`
 },
 
-/* 11. COMPARAÇÃO: QUALIDADE MERCADOLÓGICA VS. DEMOCRÁTICA — GLAUCIO */
+/* 12. COMPARAÇÃO: DOIS PROJETOS DE EDUCAÇÃO — JESIEL */
 {
-  section:"Glaucio · Slide 11 · Análise Comparativa",
+  section:"Jesiel · Slide 12 · Análise Comparativa",
   title:"Dois Projetos de Qualidade na Educação Pública",
-  subtitle:"Síntese do debate trazido por Di Giorgi e Leite (2010) em diálogo com outras referências (Saviani, Paro, Freire):",
+  subtitle:"Síntese do debate de Di Giorgi e Leite (2010) em diálogo com Saviani, Paro e Paulo Freire:",
   body:`<div>
     <table class="debate-table">
       <thead>
@@ -1112,7 +1318,7 @@ const slides = [
           <td>Estudante visto como <strong>sujeito histórico</strong> capaz de transformar sua realidade.</td>
         </tr>
         <tr>
-          <td>Valorização da gestão empresarial e terceirização do ensino público.</td>
+          <td>Valorização da gestão empresarial e repasse de verbas ao setor privado.</td>
           <td>Valorização docente, financiamento público adequado e gestão democrática participativa.</td>
         </tr>
       </tbody>
@@ -1120,77 +1326,81 @@ const slides = [
   </div>`
 },
 
-/* 12. EXEMPLOS CONCRETOS NA LICENCIATURA EM COMPUTAÇÃO — GLAUCIO */
+/* 13. APLICAÇÃO NA LICENCIATURA EM COMPUTAÇÃO — JESIEL */
 {
-  section:"Glaucio · Slide 12 · Aplicação Prática",
-  title:"Da Teoria à Prática: O Papel da Licenciatura em Computação",
-  subtitle:"Como nós, futuros professores de Computação, concretizamos a perspectiva democrática e popular?",
+  section:"Jesiel · Slide 13 · Prática na Computação",
+  title:"Da Teoria à Prática: Licenciatura em Computação",
+  subtitle:"Como futuros professores de Computação concretizam a perspectiva democrática e popular na escola pública?",
   body:`<div>
     <div class="grid three">
-      <div class="card" data-practical="Exemplo: Criar laboratórios com Software Livre (Linux, Scratch, Python) para que escolas públicas não dependam de licenças caras.">
+      <div class="card" data-practical="Implantar laboratórios com Software Livre (Linux, Scratch, Python) para que escolas públicas não dependam de licenças caras.">
         <h3>🐧 Software Livre e Acesso</h3>
         <p>Democratizar o acesso à tecnologia nas escolas públicas sem barreiras financeiras proprietárias.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Exemplo: Ensinar pensamento computacional e letramento digital crítico contra desinformação e vieses algorítmicos.">
+      <div class="card" data-practical="Ensinar pensamento computacional e letramento digital crítico contra desinformação e vieses algorítmicos.">
         <h3>🔍 Letramento Digital Crítico</h3>
         <p>Formar estudantes que compreendam e programem tecnologias, não apenas consumidores passivos.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Exemplo: Construir plataformas abertas de acompanhamento pedagógico que auxiliem professores a identificar dificuldades reais.">
+      <div class="card" data-practical="Construir sistemas abertos de acompanhamento pedagógico que auxiliem professores a identificar dificuldades reais.">
         <h3>🤝 Tecnologia para Permanência</h3>
         <p>Usar dados educacionais para apoiar estudantes em risco de evasão, nunca para rotulá-los.</p>
         <div class="practical-example"></div>
       </div>
     </div>
-    <div class="callout">Fontes complementares: SAVIANI, Dermeval (<em>História das Ideias Pedagógicas no Brasil</em>); PARO, Vitor Henrique (<em>Gestão Democrática da Escola Pública</em>).</div>
+    <div class="callout">A Computação na escola pública deve servir à inclusão digital crítica e à cidadania, conectando o legado de 1945–1964 aos desafios atuais.</div>
   </div>`
 },
 
-/* 13. QUIZ MULTIPLAYER AO VIVO COM QR CODE, PIN, LINK, SOM E RANKING — GLAUCIO */
+/* 14. EDUCAQUIZ (10 QUESTÕES: 5 MÚLTIPLA ESCOLHA + 5 VERDADEIRO OU FALSO) — JESIEL */
 {
-  section:"Glaucio · Slide 13 · Quiz Ao Vivo com Ranking (Kahoot)",
-  title:"Quiz Ao Vivo: Disputa no Telão!",
-  subtitle:"Entre pelo QR Code, Link ou digite o PIN no celular. Acertar mais rápido rende até 1.000 pontos!",
+  section:"Jesiel · Slide 14 · EDUCAQUIZ Ao Vivo (10 Questões)",
+  title:"EDUCAQUIZ · 1945–1964: O desafio do conhecimento histórico!",
+  subtitle:"Escaneie o QR Code ou digite o PIN no celular. São 10 questões (5 Múltipla Escolha + 5 Verdadeiro ou Falso)!",
   body:`<div class="quiz-layout">
     <div class="quiz-main" id="host-quiz-stage"></div>
     <div class="quiz-sidebar">
-      <div style="font-size:12px;font-weight:900;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.06em;">1. Escaneie o QR Code</div>
-      <img id="qr-img" alt="QR Code para entrar no Quiz">
+      <div style="font-size:12px;font-weight:900;color:#0c2340;text-transform:uppercase;letter-spacing:0.06em;">1. Escaneie o QR Code</div>
+      <img id="qr-img" alt="QR Code para entrar no EDUCAQUIZ">
       <div style="font-size:12px;font-weight:900;color:#0f172a;text-transform:uppercase;">2. Ou acesse o link e use o PIN:</div>
       <div class="pin-badge" id="host-pin-display">------</div>
       <div class="link-box" id="host-link-display">Carregando link...</div>
       <div style="display:flex;gap:6px;width:100%;">
         <button id="copy-link-btn" class="action-btn" style="flex:1;font-size:11.5px;padding:6px 8px;">📋 Copiar Link</button>
-        <button id="open-mobile-preview" class="action-btn green" style="flex:1;font-size:11.5px;padding:6px 8px;">📱 Abrir Tela Aluno</button>
+        <button id="open-mobile-preview" class="action-btn green" style="flex:1;font-size:11.5px;padding:6px 8px;">📱 Tela Aluno</button>
       </div>
     </div>
   </div>`
 },
 
-/* 14. SÍNTESE E ENCERRAMENTO — TODOS OS INTEGRANTES */
+/* 15. SÍNTESE E ENCERRAMENTO — TODOS OS INTEGRANTES */
 {
   type:"cover",
-  section:"Grupo · Slide 14 · Síntese e Referências (25–30 min)",
-  title:"Síntese e Encerramento",
-  subtitle:"A Educação na Democracia Popular · CPAN-UFMS · Licenciatura em Computação",
+  section:"Grupo · Slide 15 · Síntese e Referências",
+  title:"Síntese e Referências Bibliográficas",
+  subtitle:"A Educação na Democracia Popular (1945–1964) · CPAN-UFMS · Moisés, Glaucio, Wéllington e Jesiel",
   body:`<div>
-    <div class="quote" style="margin: 8px 0 12px;">“Defender a qualidade da escola pública na perspectiva democrática e popular é lutar para que o direito à educação (1946) deixe de ser promessa formal e se torne emancipação real.”</div>
-    <div class="callout question" style="margin-bottom: 12px;">💬 Debate final com a turma: Que desafios ainda impedem que a LDB atual garanta uma escola pública verdadeiramente democrática e popular?</div>
-    <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 11px 15px; font-size: 14.5px; color: #334155; line-height: 1.42;">
+    <div class="quote" style="margin: 8px 0 12px;">“A educação é um direito de todos e uma poderosa ferramenta de transformação social — defender sua qualidade democrática e popular é tornar a cidadania real.”</div>
+    <div class="callout question" style="margin-bottom: 12px;">💬 Debate final com a turma: Que lições das lutas pela escola pública entre 1945 e 1964 permanecem urgentes hoje?</div>
+    <div style="background: #f8fafc; border: 2px solid #0c2340; border-radius: 10px; padding: 11px 15px; font-size: 14px; color: #1e293b; line-height: 1.4;">
       <strong>Referências Bibliográficas:</strong><br>
-      • DI GIORGI, Cristiano A. G.; LEITE, Yoshie Ussami Ferrari. <em>A qualidade da escola pública, na perspectiva democrática e popular</em>. Série-Estudos (UCDB), Campo Grande-MS, n. 30, p. 305-323, jul./dez. 2010.<br>
-      • BRASIL. <em>Constituição dos Estados Unidos do Brasil</em> (1946) e <em>Lei n. 4.024, de 20 de dezembro de 1961</em> (1ª LDB).<br>
-      • SAVIANI, Dermeval. <em>História das ideias pedagógicas no Brasil</em>. Campinas: Autores Associados, 2007. | VIEIRA, Sofia Lerche; FARIAS, Isabel Maria Sabino de. <em>Política educacional no Brasil</em>. Brasília: Liber Livro, 2007.
+      • DI GIORGI, Cristiano A. G.; LEITE, Yoshie Ussami Ferrari. <em>A qualidade da escola pública, na perspectiva democrática e popular</em>. Série-Estudos (UCDB), Campo Grande-MS, n. 30, p. 305–323, jul./dez. 2010.<br>
+      • BRASIL. <em>Constituição dos Estados Unidos do Brasil</em> (1946, arts. 166–169) e <em>Lei n. 4.024, de 20 de dezembro de 1961</em> (1ª LDB).<br>
+      • FAUSTO, Boris. <em>História do Brasil</em>. São Paulo: Edusp, 2002. | FREIRE, Paulo. <em>Educação como prática da liberdade</em>. Rio de Janeiro: Paz e Terra, 1967.<br>
+      • SAVIANI, Dermeval. <em>História das ideias pedagógicas no Brasil</em>. Campinas: Autores Associados, 2007. | TOLEDO, Caio Navarro de. <em>1964: o golpe contra as reformas e a democracia</em>. Rev. Bras. Hist., 2004.
     </div>
   </div>`
 }
 ];
 
-/* 5 QUESTÕES DO QUIZ (0 A 1000 PONTOS POR VELOCIDADE) */
+/* =====================================================================
+   EDUCAQUIZ: 10 QUESTÕES (5 MÚLTIPLA ESCOLHA + 5 VERDADEIRO OU FALSO)
+   ===================================================================== */
 const quizData = [
   {
-    q: "1. Qual acontecimento político em 29 de outubro de 1945 encerrou a ditadura do Estado Novo e iniciou o período populista no Brasil?",
+    kind: "mc",
+    q: "1. Qual acontecimento político em 29 de outubro de 1945 encerrou a ditadura do Estado Novo e iniciou a redemocratização no Brasil?",
     options: [
       "A deposição de Getúlio Vargas",
       "A promulgação da 1ª LDB",
@@ -1198,9 +1408,10 @@ const quizData = [
       "A inauguração de Brasília"
     ],
     correct: 0,
-    explanation: "Vargas foi deposto em 29/10/1945 após o crescimento das pressões pelo retorno das liberdades democráticas."
+    explanation: "Vargas foi deposto em 29/10/1945 após o avanço das pressões pelo retorno das liberdades democráticas."
   },
   {
+    kind: "mc",
     q: "2. Qual programa do governo Juscelino Kubitschek (1956–1961) priorizou indústria de base, energia, transporte e educação?",
     options: [
       "Reformas de Base",
@@ -1209,9 +1420,10 @@ const quizData = [
       "Plano Salte"
     ],
     correct: 1,
-    explanation: "O Plano de Metas impulsionou a modernização econômica, a construção de Brasília (1960) e incluiu a educação."
+    explanation: "O Plano de Metas ('50 anos em 5') impulsionou a industrialização, Brasília (1960) e incluiu a educação."
   },
   {
+    kind: "mc",
     q: "3. O que a Constituição Federal de 1946 (Art. 5º, XV) atribuiu de inédito à União no campo educacional?",
     options: [
       "Privatizar todas as escolas secundárias",
@@ -1223,6 +1435,7 @@ const quizData = [
     explanation: "Enquanto Cartas anteriores falavam apenas em 'traçar diretrizes', a de 1946 determinou legislar sobre diretrizes e bases."
   },
   {
+    kind: "mc",
     q: "4. Sobre a LDB (Lei n. 4.024/61), promulgada após 13 anos de debates, o que concluem Vieira e Farias (2007)?",
     options: [
       "Eliminou completamente o ensino religioso e privado",
@@ -1234,6 +1447,7 @@ const quizData = [
     explanation: "Embora tenha unificado os níveis de ensino pela 1ª vez, a Lei 4.024/61 traduziu conciliações que favoreceram o setor privado."
   },
   {
+    kind: "mc",
     q: "5. Na perspectiva democrática e popular defendida por Di Giorgi e Leite (2010), o que define a qualidade da escola pública?",
     options: [
       "Exclusivamente notas altas em rankings e testes padronizados",
@@ -1243,10 +1457,61 @@ const quizData = [
     ],
     correct: 2,
     explanation: "Para Di Giorgi e Leite (2010), qualidade social exige inclusão, permanência, gestão democrática e formação cidadã emancipadora."
+  },
+  /* + 5 NOVAS QUESTÕES DE VERDADEIRO OU FALSO */
+  {
+    kind: "tf",
+    q: "6. [VERDADEIRO OU FALSO] A Constituição de 1946 estabeleceu, em seu artigo 166, que a educação era direito de todos, mas essa garantia jurídica por si só não eliminou as desigualdades de acesso e permanência na escola.",
+    options: [
+      "VERDADEIRO",
+      "FALSO"
+    ],
+    correct: 0,
+    explanation: "VERDADEIRO! Existia uma grande distância entre o direito proclamado na Constituição de 1946 e as condições concretas de escolarização da população."
+  },
+  {
+    kind: "tf",
+    q: "7. [VERDADEIRO OU FALSO] A primeira Lei de Diretrizes e Bases da Educação Nacional (Lei nº 4.024/61) foi aprovada rapidamente em 1946, sem divergências entre defensores da escola pública e grupos privados.",
+    options: [
+      "VERDADEIRO",
+      "FALSO"
+    ],
+    correct: 1,
+    explanation: "FALSO! O projeto levou 13 anos de intensos debates no Congresso (sendo aprovado só em dezembro de 1961), marcado pelo forte embate entre defensores da escola pública (como Anísio Teixeira) e setores privados/religiosos."
+  },
+  {
+    kind: "tf",
+    q: "8. [VERDADEIRO OU FALSO] No final dos anos 1950 e início dos anos 1960, iniciativas como o MCP, o MEB, o CPC e a campanha 'De Pé no Chão Também se Aprende a Ler' aproximaram a alfabetização da realidade social e da participação popular.",
+    options: [
+      "VERDADEIRO",
+      "FALSO"
+    ],
+    correct: 0,
+    explanation: "VERDADEIRO! Esses movimentos compreendiam a educação não apenas como transmissão mecânica de conteúdos, mas como leitura crítica da realidade e organização coletiva."
+  },
+  {
+    kind: "tf",
+    q: "9. [VERDADEIRO OU FALSO] A experiência de alfabetização coordenada por Paulo Freire em Angicos (RN), em 1963, baseava-se na memorização mecânica de cartilhas tradicionais distantes do cotidiano dos trabalhadores.",
+    options: [
+      "VERDADEIRO",
+      "FALSO"
+    ],
+    correct: 1,
+    explanation: "FALSO! O método de Paulo Freire valorizava o diálogo, os saberes prévios dos educandos e palavras geradoras ligadas ao seu cotidiano para promover a conscientização."
+  },
+  {
+    kind: "tf",
+    q: "10. [VERDADEIRO OU FALSO] O golpe civil-militar de 1964 depôs João Goulart, interrompeu o Plano Nacional de Alfabetização e reprimiu movimentos de educação popular, encerrando a experiência democrática iniciada em 1945.",
+    options: [
+      "VERDADEIRO",
+      "FALSO"
+    ],
+    correct: 0,
+    explanation: "VERDADEIRO! Em março/abril de 1964 iniciou-se uma ditadura de 21 anos que fechou espaços de participação popular e prendeu/exilou educadores como Paulo Freire."
   }
 ];
 
-/* MOTOR DE ÁUDIO ESTILO KAHOOT (WEB AUDIO API) */
+/* MOTOR DE ÁUDIO */
 let soundEnabled = true;
 function playKahootSound(type) {
   if (!soundEnabled) return;
@@ -1282,22 +1547,23 @@ function playKahootSound(type) {
   } catch (e) {}
 }
 
-/* POSICIONAMENTO DOS SLIDES */
+/* POSICIONAMENTO DOS 15 SLIDES NO CANVAS */
 const layout = [
-  {x:0, y:0, s:1.03},
+  {x:0, y:0, s:1.02},
   {x:1850, y:0, s:1},
-  {x:3700, y:0, s:1},
-  {x:5550, y:0, s:1},
-  {x:7400, y:-540, s:1},
-  {x:9250, y:-540, s:1},
-  {x:11100, y:-540, s:1},
+  {x:3700, y:-420, s:1},
+  {x:5550, y:-420, s:1},
+  {x:7400, y:240, s:1},
+  {x:9250, y:240, s:1},
+  {x:11100, y:240, s:1},
   {x:12950, y:240, s:1},
-  {x:14800, y:240, s:1},
-  {x:16650, y:240, s:1},
+  {x:14800, y:-420, s:1},
+  {x:16650, y:-420, s:1},
   {x:18500, y:-420, s:1},
-  {x:20350, y:-420, s:1},
-  {x:22200, y:0, s:1},
-  {x:24050, y:0, s:1.03}
+  {x:20350, y:220, s:1},
+  {x:22200, y:220, s:1},
+  {x:24050, y:0, s:1},
+  {x:25900, y:0, s:1.02}
 ];
 
 const canvas = document.getElementById("canvas");
@@ -1310,13 +1576,19 @@ slides.forEach((sl, i) => {
   el.style.setProperty("--x", pos.x + "px");
   el.style.setProperty("--y", pos.y + "px");
   el.innerHTML = `
-    <div class="topline"><span>${sl.section}</span><span class="pill">${i + 1} / ${slides.length}</span></div>
+    <div class="topline">
+      <span>${sl.section}</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="era-badge">1945–1964</span>
+        <span class="pill">${i + 1} / ${slides.length}</span>
+      </div>
+    </div>
     <div>
       ${sl.type === "cover" ? `<div class="kicker">Fundamentos da Educação · Seminário Temático</div><h1>${sl.title}</h1>` : `<h2>${sl.title}</h2>`}
       ${sl.subtitle ? `<p class="subtitle">${sl.subtitle}</p>` : ""}
       ${sl.body}
     </div>
-    <div class="footer"><span>CPAN-UFMS · Licenciatura em Computação · Prof. Edimar Aparecido da Silva</span><span>A Educação na Democracia Popular</span></div>
+    <div class="footer"><span>CPAN-UFMS · Licenciatura em Computação · Prof. Edimar Aparecido da Silva</span><span>Moisés · Glaucio · Wéllington · Jesiel</span></div>
   `;
   canvas.appendChild(el);
 });
@@ -1331,41 +1603,45 @@ for (let i = 0; i < layout.length - 1; i++) {
   const x2 = b.x + 640 + offset;
   const y2 = b.y + 360 + offset;
   const mx = (x1 + x2) / 2;
-  svgMarkup += `<path d="M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}" fill="none" stroke="rgba(56,189,248,0.24)" stroke-width="10" stroke-linecap="round" />`;
+  svgMarkup += `<path d="M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}" fill="none" stroke="rgba(217,119,6,0.28)" stroke-width="10" stroke-linecap="round" />`;
 }
 svgConnections.style.transform = `translate(-${offset}px, -${offset}px)`;
 svgConnections.innerHTML = svgMarkup;
 
-/* =====================================================================
-   CONFIGURAÇÃO ICE (STUN + TURN PARA ATRAVESSAR FIREWALL WI-FI / 4G)
-   ===================================================================== */
+/* MODAL DE ZOOM EXPANDIDO PARA IMAGENS HISTÓRICAS */
+const zoomModal = document.getElementById("img-zoom-modal");
+const zoomModalImg = document.getElementById("zoom-modal-img");
+const zoomModalCaption = document.getElementById("zoom-modal-caption");
+
+function openZoomModal(src, caption) {
+  zoomModalImg.src = src;
+  zoomModalCaption.textContent = caption || "";
+  zoomModal.classList.add("open");
+}
+function closeZoomModal() {
+  zoomModal.classList.remove("open");
+}
+document.getElementById("zoom-close-btn")?.addEventListener("click", closeZoomModal);
+zoomModal?.addEventListener("click", (e) => {
+  if (e.target === zoomModal) closeZoomModal();
+});
+
+/* CONFIGURAÇÃO PEERJS (STUN + TURN) */
 const peerConfig = {
   debug: 1,
   config: {
     iceServers: [
       { urls: "stun:stun.l.google.com:19302" },
       { urls: "stun:stun1.l.google.com:19302" },
-      {
-        urls: "turn:openrelay.metered.ca:80",
-        username: "openrelayproject",
-        credential: "openrelayproject"
-      },
-      {
-        urls: "turn:openrelay.metered.ca:443",
-        username: "openrelayproject",
-        credential: "openrelayproject"
-      },
-      {
-        urls: "turn:openrelay.metered.ca:443?transport=tcp",
-        username: "openrelayproject",
-        credential: "openrelayproject"
-      }
+      { urls: "turn:openrelay.metered.ca:80", username: "openrelayproject", credential: "openrelayproject" },
+      { urls: "turn:openrelay.metered.ca:443", username: "openrelayproject", credential: "openrelayproject" },
+      { urls: "turn:openrelay.metered.ca:443?transport=tcp", username: "openrelayproject", credential: "openrelayproject" }
     ]
   }
 };
 
 /* =====================================================================
-   SISTEMA MULTIPLAYER EM TEMPO REAL (TELÃO HOST + CELULARES VIA PEERJS)
+   EDUCAQUIZ MULTIPLAYER EM TEMPO REAL (10 QUESTÕES: 5 MC + 5 V/F)
    ===================================================================== */
 const shapes = ["▲", "◆", "●", "■"];
 const ROUND_SECONDS = 20;
@@ -1375,7 +1651,6 @@ const isMobilePlayer = params.get("play") === "1" || params.has("pin");
 function generatePin() {
   return String(Math.floor(100000 + Math.random() * 900000));
 }
-
 function getBasePlayerUrl(pin = "") {
   const u = new URL(window.location.href);
   u.search = "";
@@ -1383,16 +1658,37 @@ function getBasePlayerUrl(pin = "") {
   if (pin) u.searchParams.set("pin", pin);
   return u.toString();
 }
-
 function getSortedRanking(playersMap) {
   return Object.values(playersMap).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 }
 
+function renderOptionsButtons(qObj, isMobile = false) {
+  const attr = isMobile ? "data-mchoice" : "data-host-opt";
+  if (qObj.kind === "tf") {
+    return `
+      <button class="kahoot-btn tf-true" ${attr}="0">
+        <span class="k-shape">✓</span>
+        <span>VERDADEIRO</span>
+      </button>
+      <button class="kahoot-btn tf-false" ${attr}="1">
+        <span class="k-shape">✕</span>
+        <span>FALSO</span>
+      </button>
+    `;
+  }
+  return qObj.options.map((opt, idx) => `
+    <button class="kahoot-btn k${idx}" ${attr}="${idx}">
+      <span class="k-shape">${shapes[idx]}</span>
+      <span>${opt}</span>
+    </button>
+  `).join("");
+}
+
 /* MODO TELÃO (HOST) */
 if (!isMobilePlayer) {
-  const roomPin = sessionStorage.getItem("cpan_quiz_pin") || generatePin();
-  sessionStorage.setItem("cpan_quiz_pin", roomPin);
-  const hostPeerId = "cpan-ufms-quiz-" + roomPin;
+  const roomPin = sessionStorage.getItem("educaquiz_pin") || generatePin();
+  sessionStorage.setItem("educaquiz_pin", roomPin);
+  const hostPeerId = "educaquiz-cpan-" + roomPin;
   const players = {};
   let hostState = {
     phase: "lobby",
@@ -1428,9 +1724,7 @@ if (!isMobilePlayer) {
 
   function broadcast(payload) {
     Object.values(players).forEach(p => {
-      if (p.conn && p.conn.open) {
-        p.conn.send(payload);
-      }
+      if (p.conn && p.conn.open) p.conn.send(payload);
     });
   }
 
@@ -1451,6 +1745,7 @@ if (!isMobilePlayer) {
       type: "question",
       qIndex: qIdx,
       total: quizData.length,
+      kind: qObj.kind,
       q: qObj.q,
       options: qObj.options,
       seconds: ROUND_SECONDS
@@ -1460,17 +1755,13 @@ if (!isMobilePlayer) {
 
     hostState.timerInterval = setInterval(() => {
       hostState.timeLeft--;
-      if (hostState.timeLeft <= 5 && hostState.timeLeft > 0) {
-        playKahootSound("tick");
-      }
+      if (hostState.timeLeft <= 5 && hostState.timeLeft > 0) playKahootSound("tick");
       const timerEl = document.getElementById("host-timer");
       if (timerEl) {
         timerEl.textContent = `⏱️ ${hostState.timeLeft}s`;
         if (hostState.timeLeft <= 5) timerEl.classList.add("urgent");
       }
-      if (hostState.timeLeft <= 0) {
-        finishQuestionRound();
-      }
+      if (hostState.timeLeft <= 0) finishQuestionRound();
     }, 1000);
   }
 
@@ -1514,63 +1805,61 @@ if (!isMobilePlayer) {
     if (hostState.phase === "lobby") {
       stage.innerHTML = `
         <div class="quiz-topbar">
-          <span class="pill">🟢 Sala Aberta · ${hostState.statusText}</span>
+          <span class="pill">🟢 EDUCAQUIZ Aberto · ${hostState.statusText}</span>
           <div style="display:flex;gap:8px;align-items:center;">
             <button class="action-btn amber" id="host-sound-btn">${soundEnabled ? "🔊 Som: ON" : "🔇 Som: OFF"}</button>
             <button class="action-btn green" id="host-start-btn">▶ Iniciar 1ª Questão (${playerList.length} jogadores)</button>
           </div>
         </div>
-        <div style="margin:8px 0;">
-          <h3 style="margin-bottom:4px;">👥 Participantes conectados no telão (${playerList.length}):</h3>
-          <p style="font-size:15px;margin:0;">Peça para a turma escanear o QR Code ou digitar o PIN <strong>${roomPin}</strong> e inserir seu nome.</p>
+        <div style="margin:6px 0;">
+          <h3 style="margin-bottom:4px;">👥 Participantes conectados (${playerList.length}):</h3>
+          <p style="font-size:15px;margin:0;">Escaneie o QR Code ou digite o PIN <strong>${roomPin}</strong> para disputar 10 questões (5 Múltipla Escolha + 5 V ou F).</p>
         </div>
         <div class="players-chips">
           ${playerList.length === 0
-            ? `<div style="padding:18px;border:2px dashed #cbd5e1;border-radius:14px;width:100%;text-align:center;color:#64748b;font-weight:700;">Aguardando os alunos entrarem pelo celular... (Você também pode clicar em "Abrir Tela Aluno" ao lado para testar)</div>`
+            ? `<div style="padding:18px;border:2px dashed #94a3b8;border-radius:10px;width:100%;text-align:center;color:#475569;font-weight:700;">Aguardando os alunos entrarem pelo celular...</div>`
             : playerList.map(p => `<span class="player-chip">🎓 ${p.name}</span>`).join("")}
         </div>
-        <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:10px 14px;font-size:14.5px;color:#1e3a8a;font-weight:700;">
-          ⚡ Regra de Pontuação: 0 a 1.000 pontos por questão. Acertou mais rápido = mais pontos. Errou = 0 ponto!
+        <div style="background:#fffbeb;border:1.5px solid #d97706;border-radius:8px;padding:9px 13px;font-size:14px;color:#78350f;font-weight:700;">
+          ⚡ Pontuação: 0 a 1.000 pts por rodada. Rodadas 1 a 5: Múltipla Escolha | Rodadas 6 a 10: Verdadeiro ou Falso!
         </div>
       `;
     } else if (hostState.phase === "question") {
       const qIdx = hostState.qIndex;
       const qObj = quizData[qIdx];
       const answeredCount = playerList.filter(p => p.answeredQ === qIdx).length;
+      const modeLabel = qObj.kind === "tf" ? "Verdadeiro ou Falso" : "Múltipla Escolha";
       stage.innerHTML = `
         <div class="quiz-topbar">
-          <span class="pill">Questão ${qIdx + 1} de ${quizData.length}</span>
-          <span style="font-weight:800;color:#1e3a8a;font-size:15px;">Respostas: ${answeredCount} / ${playerList.length}</span>
+          <span class="pill">Questão ${qIdx + 1} / ${quizData.length} · ${modeLabel}</span>
+          <span style="font-weight:800;color:#0c2340;font-size:15px;">Respostas: ${answeredCount} / ${playerList.length}</span>
           <div style="display:flex;gap:8px;align-items:center;">
             <span class="timer-pill" id="host-timer">⏱️ ${hostState.timeLeft}s</span>
-            <button class="action-btn amber" id="host-reveal-btn">Encerrar & Ver Ranking</button>
+            <button class="action-btn amber" id="host-reveal-btn">Encerrar & Ranking</button>
           </div>
         </div>
         <div class="quiz-qtext">${qObj.q}</div>
         <div class="kahoot-options">
-          ${qObj.options.map((opt, idx) => `
-            <button class="kahoot-btn k${idx}" data-host-opt="${idx}">
-              <span class="k-shape">${shapes[idx]}</span>
-              <span>${opt}</span>
-            </button>`).join("")}
+          ${renderOptionsButtons(qObj, false)}
         </div>
-        <div style="font-size:14px;color:#475569;font-weight:700;">Os jogadores estão respondendo nos celulares... (Ou clique em uma alternativa no telão para encerrar a rodada)</div>
+        <div style="font-size:13.5px;color:#475569;font-weight:700;">Aguardando respostas nos celulares (ou clique em uma opção no telão para encerrar).</div>
       `;
     } else if (hostState.phase === "ranking") {
       const qIdx = hostState.qIndex;
       const qObj = quizData[qIdx];
       const ranking = getSortedRanking(players);
       const isLast = qIdx + 1 >= quizData.length;
+      const badgeSymbol = qObj.kind === "tf" ? (qObj.correct === 0 ? "✓" : "✕") : shapes[qObj.correct];
       stage.innerHTML = `
         <div class="quiz-topbar">
-          <span class="pill" style="background:#dcfce7;color:#14532d;">✓ Gabarito: ${shapes[qObj.correct]} ${qObj.options[qObj.correct]}</span>
-          <button class="action-btn green" id="host-next-btn">${isLast ? "🏆 Ver Pódio Final" : `Próxima Questão (${qIdx + 2}/${quizData.length}) →`}</button>
+          <span class="pill" style="background:#dcfce7;border-color:#15803d;color:#14532d;">✓ Gabarito: ${badgeSymbol} ${qObj.options[qObj.correct]}</span>
+          <button class="action-btn green" id="host-next-btn">${isLast ? "🏆 Ver Pódio Final" : `Próxima (${qIdx + 2}/${quizData.length}) →`}</button>
         </div>
-        <div style="font-size:14.5px;color:#1e3a8a;font-weight:700;background:#eff6ff;padding:7px 12px;border-radius:10px;">
+        <div style="font-size:14px;color:#0c2340;font-weight:700;background:#eff6ff;border:1px solid #bfdbfe;padding:7px 12px;border-radius:8px;">
           💡 ${qObj.explanation}
         </div>
         <div>
-          <h3 style="margin-bottom:6px;">📊 Ranking Atualizado Após a Rodada ${qIdx + 1}:</h3>
+          <h3 style="margin-bottom:6px;">📊 Ranking Atualizado (Rodada ${qIdx + 1} de ${quizData.length}):</h3>
           <div class="ranking-list">
             ${ranking.length === 0
               ? `<div style="color:#64748b;font-weight:700;">Nenhum participante conectado nesta rodada.</div>`
@@ -1591,8 +1880,8 @@ if (!isMobilePlayer) {
       const ranking = getSortedRanking(players);
       stage.innerHTML = `
         <div class="quiz-topbar">
-          <span class="pill" style="background:#fef3c7;color:#78350f;">🏆 Pódio Final do Seminário</span>
-          <button class="action-btn" id="host-restart-btn">🔄 Reiniciar Quiz</button>
+          <span class="pill" style="background:#fef3c7;border-color:#d97706;color:#78350f;">🏆 Pódio Final · EDUCAQUIZ (1945–1964)</span>
+          <button class="action-btn" id="host-restart-btn">🔄 Reiniciar EDUCAQUIZ</button>
         </div>
         <div class="ranking-list" style="max-height:330px;">
           ${ranking.length === 0
@@ -1603,29 +1892,26 @@ if (!isMobilePlayer) {
                 <strong>${p.score} pontos</strong>
               </div>`).join("")}
         </div>
-        <div style="text-align:center;font-weight:800;color:#1d4ed8;font-size:16px;">Parabéns a todos os participantes!</div>
+        <div style="text-align:center;font-weight:800;color:#0c2340;font-size:16px;">Parabéns a todos pelo desafio do conhecimento histórico!</div>
       `;
     }
   }
 
-  /* INICIALIZA SERVIDOR P2P (PEERJS) NO TELÃO COM STUN + TURN */
   function startHostPeer() {
     try {
       const peer = new Peer(hostPeerId, peerConfig);
       peer.on("open", () => {
-        hostState.statusText = "Conectado e pronto!";
+        hostState.statusText = "Conectado!";
         renderHostStage();
       });
       peer.on("disconnected", () => {
-        hostState.statusText = "Reconectando sala...";
+        hostState.statusText = "Reconectando...";
         renderHostStage();
         peer.reconnect();
       });
       peer.on("error", (err) => {
-        if (err.type === "unavailable-id") {
-          sessionStorage.removeItem("cpan_quiz_pin");
-        }
-        hostState.statusText = "Atenção (" + err.type + ") — recarregue se necessário";
+        if (err.type === "unavailable-id") sessionStorage.removeItem("educaquiz_pin");
+        hostState.statusText = "Atenção (" + err.type + ")";
         renderHostStage();
       });
       peer.on("connection", (conn) => {
@@ -1641,17 +1927,14 @@ if (!isMobilePlayer) {
               conn
             };
             playKahootSound("join");
-            conn.send({
-              type: "joined",
-              name: cleanName,
-              phase: hostState.phase
-            });
+            conn.send({ type: "joined", name: cleanName, phase: hostState.phase });
             if (hostState.phase === "question") {
               const qObj = quizData[hostState.qIndex];
               conn.send({
                 type: "question",
                 qIndex: hostState.qIndex,
                 total: quizData.length,
+                kind: qObj.kind,
                 q: qObj.q,
                 options: qObj.options,
                 seconds: hostState.timeLeft
@@ -1692,13 +1975,12 @@ if (!isMobilePlayer) {
         });
       });
     } catch (e) {
-      hostState.statusText = "Erro ao iniciar rede";
+      hostState.statusText = "Erro de rede";
     }
   }
   startHostPeer();
   renderHostStage();
 
-  /* EVENTOS DE CLIQUE DO TELÃO */
   document.addEventListener("click", (e) => {
     if (e.target.id === "host-sound-btn") {
       soundEnabled = !soundEnabled;
@@ -1734,7 +2016,7 @@ if (!isMobilePlayer) {
 }
 
 /* =====================================================================
-   MODO JOGADOR NO CELULAR (ENTRADA COM PIN + NOME E RESPOSTAS AO VIVO)
+   MODO JOGADOR NO CELULAR (MÚLTIPLA ESCOLHA + VERDADEIRO OU FALSO)
    ===================================================================== */
 if (isMobilePlayer) {
   document.body.classList.add("mobile-quiz-mode");
@@ -1743,12 +2025,12 @@ if (isMobilePlayer) {
 
   function renderJoinForm(errorMsg = "") {
     container.innerHTML = `
-      ${errorMsg ? `<div style="background:#fef2f2;border:1.5px solid #fca5a5;color:#991b1b;padding:10px;border-radius:10px;font-weight:700;font-size:14px;margin-bottom:10px;">${errorMsg}</div>` : ""}
-      <label style="display:block;font-weight:800;font-size:13.5px;margin-bottom:4px;color:#1e293b;">PIN da Sala (6 dígitos)</label>
+      ${errorMsg ? `<div style="background:#fef2f2;border:1.5px solid #fca5a5;color:#991b1b;padding:10px;border-radius:8px;font-weight:700;font-size:14px;margin-bottom:10px;">${errorMsg}</div>` : ""}
+      <label style="display:block;font-weight:800;font-size:13.5px;margin-bottom:4px;color:#0c2340;">PIN da Sala (6 dígitos)</label>
       <input class="m-input" id="inp-pin" type="tel" maxlength="6" placeholder="Ex: 482910" value="${prefilledPin}">
-      <label style="display:block;font-weight:800;font-size:13.5px;margin-bottom:4px;color:#1e293b;">Seu Nome (aparecerá no telão)</label>
+      <label style="display:block;font-weight:800;font-size:13.5px;margin-bottom:4px;color:#0c2340;">Seu Nome (aparecerá no telão)</label>
       <input class="m-input" id="inp-name" type="text" maxlength="20" placeholder="Digite seu nome ou apelido">
-      <button id="btn-join-room" class="action-btn green" style="width:100%;padding:14px;font-size:17px;">🚀 Entrar no Quiz</button>
+      <button id="btn-join-room" class="action-btn green" style="width:100%;padding:14px;font-size:17px;">🚀 Entrar no EDUCAQUIZ</button>
     `;
 
     document.getElementById("btn-join-room").onclick = () => {
@@ -1765,8 +2047,8 @@ if (isMobilePlayer) {
 
       container.innerHTML = `
         <div style="text-align:center;padding:24px 10px;">
-          <div style="font-weight:800;color:#1d4ed8;font-size:18px;margin-bottom:8px;">Conectando à sala ${pinVal}...</div>
-          <div style="font-size:13.5px;color:#475569;">Aguarde alguns segundos enquanto estabelecemos a conexão com o telão.</div>
+          <div style="font-weight:800;color:#0c2340;font-size:18px;margin-bottom:8px;">Conectando à sala ${pinVal}...</div>
+          <div style="font-size:13.5px;color:#475569;">Estabelecendo conexão com o telão...</div>
         </div>`;
 
       const clientPeer = new Peer(peerConfig);
@@ -1775,12 +2057,12 @@ if (isMobilePlayer) {
       const fallbackTimer = setTimeout(() => {
         if (!connected) {
           try { clientPeer.destroy(); } catch (e) {}
-          renderJoinForm("Não foi possível alcançar a sala " + pinVal + ". Confira se o telão está no Slide 13 com o mesmo PIN.");
+          renderJoinForm("Não foi possível alcançar a sala " + pinVal + ". Confira se o telão está no Slide 14 com o mesmo PIN.");
         }
       }, 12000);
 
       clientPeer.on("open", () => {
-        const conn = clientPeer.connect("cpan-ufms-quiz-" + pinVal, { reliable: true });
+        const conn = clientPeer.connect("educaquiz-cpan-" + pinVal, { reliable: true });
 
         conn.on("open", () => {
           connected = true;
@@ -1795,21 +2077,18 @@ if (isMobilePlayer) {
               <div style="text-align:center;padding:22px 10px;">
                 <div style="font-size:44px;">✅</div>
                 <h3 style="justify-content:center;font-size:22px;">Você entrou, ${msg.name}!</h3>
-                <p style="font-size:16px;color:#334155;">Veja seu nome no telão e aguarde o grupo iniciar a pergunta.</p>
+                <p style="font-size:15.5px;color:#334155;">Veja seu nome no telão e aguarde o início da 1ª questão.</p>
               </div>`;
           } else if (msg.type === "question") {
+            const label = msg.kind === "tf" ? "Verdadeiro ou Falso" : "Múltipla Escolha";
             container.innerHTML = `
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <span class="pill">Questão ${msg.qIndex + 1} de ${msg.total}</span>
-                <span style="font-size:13px;font-weight:800;color:#d97706;">⚡ Responda rápido!</span>
+                <span class="pill">Questão ${msg.qIndex + 1} / ${msg.total}</span>
+                <span style="font-size:12.5px;font-weight:800;color:#b45309;">${label}</span>
               </div>
               <div class="quiz-qtext" style="font-size:16px;">${msg.q}</div>
-              <div class="kahoot-options">
-                ${msg.options.map((opt, i) => `
-                  <button class="kahoot-btn k${i}" data-mchoice="${i}">
-                    <span class="k-shape">${shapes[i]}</span>
-                    <span>${opt}</span>
-                  </button>`).join("")}
+              <div class="kahoot-options" style="margin-top:10px;">
+                ${renderOptionsButtons(msg, true)}
               </div>`;
             container.querySelectorAll(".kahoot-btn").forEach(btn => {
               btn.onclick = () => {
@@ -1818,7 +2097,7 @@ if (isMobilePlayer) {
                   <div style="text-align:center;padding:28px 10px;">
                     <div style="font-size:42px;">⏳</div>
                     <h3 style="justify-content:center;">Resposta enviada!</h3>
-                    <p style="font-size:15.5px;">Aguarde o fim do tempo para ver sua pontuação e o ranking no telão.</p>
+                    <p style="font-size:15.5px;">Aguarde o fim da rodada para ver sua pontuação no telão.</p>
                   </div>`;
               };
             });
@@ -1826,16 +2105,16 @@ if (isMobilePlayer) {
             const won = msg.gained > 0;
             playKahootSound(won ? "correct" : "wrong");
             container.innerHTML = `
-              <div style="text-align:center;padding:18px 10px;border-radius:16px;background:${won ? "#f0fdf4" : "#fef2f2"};border:2px solid ${won ? "#86efac" : "#fca5a5"};">
+              <div style="text-align:center;padding:18px 10px;border-radius:12px;background:${won ? "#f0fdf4" : "#fef2f2"};border:2px solid ${won ? "#86efac" : "#fca5a5"};">
                 <div style="font-size:44px;">${won ? "🎉" : "❌"}</div>
-                <h3 style="justify-content:center;font-size:22px;color:${won ? "#15803d" : "#b91c1c"};">
+                <h3 style="justify-content:center;font-size:21px;color:${won ? "#15803d" : "#b91c1c"};">
                   ${won ? `Acertou! +${msg.gained} pontos` : "Errou! +0 ponto"}
                 </h3>
-                <p style="font-size:17px;font-weight:800;color:#0f172a;margin:6px 0;">
+                <p style="font-size:16.5px;font-weight:800;color:#0f172a;margin:6px 0;">
                   Total: ${msg.totalScore} pts · Posição: #${msg.rank}
                 </p>
                 <p style="font-size:14px;color:#334155;">${msg.explanation}</p>
-                <div style="margin-top:12px;font-size:13.5px;font-weight:800;color:#1d4ed8;">
+                <div style="margin-top:12px;font-size:13.5px;font-weight:800;color:#0c2340;">
                   ${msg.isLast ? "Confira o Pódio Final no telão! 🏆" : "Olhe o ranking no telão e aguarde a próxima pergunta..."}
                 </div>
               </div>`;
@@ -1857,7 +2136,7 @@ if (isMobilePlayer) {
   renderJoinForm();
 }
 
-/* NAVEGAÇÃO DOS SLIDES NO TELÃO */
+/* NAVEGAÇÃO DOS SLIDES */
 const slideEls = [...document.querySelectorAll(".slide")];
 let current = 0;
 
@@ -1878,8 +2157,7 @@ function focusSlide(index) {
 
   slideEls.forEach((el, idx) => {
     el.style.opacity = idx === current ? "1" : (isFull ? "0" : "0.18");
-    el.style.borderRadius = isFull ? "0px" : "28px";
-    el.style.borderWidth = isFull ? "0px" : "2px";
+    el.style.borderRadius = isFull ? "0px" : "16px";
   });
 
   document.getElementById("counter").textContent = `${current + 1} / ${slides.length}`;
@@ -1899,7 +2177,11 @@ document.getElementById("present").addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (e) => {
-  if (isMobilePlayer) return;
+  if (e.key === "Escape" && zoomModal.classList.contains("open")) {
+    closeZoomModal();
+    return;
+  }
+  if (isMobilePlayer || zoomModal.classList.contains("open")) return;
   if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
     e.preventDefault();
     focusSlide(current + 1);
@@ -1917,6 +2199,11 @@ document.addEventListener("keydown", (e) => {
 });
 
 document.addEventListener("click", (e) => {
+  const zoomTarget = e.target.closest(".hist-img-wrap");
+  if (zoomTarget) {
+    openZoomModal(zoomTarget.getAttribute("data-zoom-src"), zoomTarget.getAttribute("data-zoom-caption"));
+    return;
+  }
   const card = e.target.closest(".card");
   if (card && card.hasAttribute("data-practical")) {
     const exampleBox = card.querySelector(".practical-example");
