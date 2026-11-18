@@ -1,0 +1,34 @@
+IMAGENS – CONTEXTO HISTÓRICO: A EDUCAÇÃO NA DEMOCRACIA POPULAR (1945–1964)
+
+CONTEÚDO
+01_redemocratizacao_brasil_1945.jpg
+   Uso sugerido: abertura do período, redemocratização e fim do Estado Novo.
+02_brasilia_desenvolvimentismo_1950s.jpg
+   Uso sugerido: governo Juscelino Kubitschek, Plano de Metas e construção de Brasília.
+03_paulo_freire_educacao_popular.jpg
+   Uso sugerido: Paulo Freire, alfabetização e conscientização.
+04_movimentos_educacao_popular.jpg
+   Uso sugerido: movimentos e campanhas de educação popular no início dos anos 1960.
+05_golpe_civil_militar_1964.jpg
+   Uso sugerido: encerramento do período democrático e golpe de 1964.
+
+CRÉDITO E OBSERVAÇÃO IMPORTANTE
+As imagens deste pacote são recortes de uma ilustração/infográfico gerado por inteligência artificial.
+Elas são imagens ilustrativas, NÃO fotografias históricas documentais, e não devem ser apresentadas
+como registros de arquivo ou como retratos/fotografias autênticas de pessoas e acontecimentos.
+Crédito sugerido nos slides: “Imagem ilustrativa gerada por IA (OpenAI), 2026.”
+
+REFERÊNCIAS PARA EMBASAR O CONTEÚDO HISTÓRICO
+BRASIL. Constituição dos Estados Unidos do Brasil, de 18 de setembro de 1946. Arts. 166–169.
+BRASIL. Lei nº 4.024, de 20 de dezembro de 1961. Fixa as Diretrizes e Bases da Educação Nacional.
+DI GIORGI, Cristiano Amaral G.; LEITE, Yoshie Ussami Ferrari. A qualidade da escola pública,
+na perspectiva democrática e popular. Série-Estudos, Campo Grande, n. 30, p. 305–323, jul./dez. 2010.
+FAUSTO, Boris. História do Brasil. São Paulo: Editora da Universidade de São Paulo, 2002.
+FREIRE, Paulo. Educação como prática da liberdade. Rio de Janeiro: Paz e Terra, 1967.
+TOLEDO, Caio Navarro de. 1964: o golpe contra as reformas e a democracia.
+Revista Brasileira de História, São Paulo, v. 24, n. 47, p. 13–28, 2004.
+
+DICA PARA USO NO HTML/GITHUB
+Coloque os arquivos de imagem em uma pasta, por exemplo: assets/images/
+E referencie no HTML com caminhos relativos, por exemplo:
+<img src="assets/images/01_redemocratizacao_brasil_1945.jpg" alt="Ilustração da redemocratização no Brasil em 1945">
