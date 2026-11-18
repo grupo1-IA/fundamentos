@@ -292,12 +292,6 @@ strong { color: var(--ink); }
   font-weight: 700;
   text-align: center;
 }
-.hist-credit {
-  font-size: 10.5px;
-  color: #64748b;
-  text-align: center;
-  font-style: italic;
-}
 
 /* MODAL DE ZOOM EXPANDIDO */
 #img-zoom-modal {
@@ -1013,18 +1007,19 @@ const svgLDBBalance = `<svg viewBox="0 0 240 215" fill="none" xmlns="http://www.
   <text x="120" y="34" text-anchor="middle" fill="#0c2340" font-size="13" font-weight="900">Disputa na LDB 4.024/61</text>
 </svg>`;
 
-const svgQualityPillars = `<svg viewBox="0 0 240 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+const svgSocioEconomic = `<svg viewBox="0 0 240 215" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="12" y="12" width="216" height="191" rx="12" fill="#f8fafc" stroke="#0c2340" stroke-width="2"/>
   <polygon points="120,34 40,74 200,74" fill="#0c2340"/>
   <rect x="52" y="80" width="24" height="84" rx="3" fill="#1e3a8a"/>
   <rect x="108" y="80" width="24" height="84" rx="3" fill="#b45309"/>
   <rect x="164" y="80" width="24" height="84" rx="3" fill="#15803d"/>
   <rect x="38" y="168" width="164" height="14" rx="3" fill="#0c2340"/>
-  <text x="120" y="64" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="900">QUALIDADE SOCIAL</text>
+  <text x="120" y="64" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="900">ESCOLA E SOCIEDADE</text>
 </svg>`;
 
 /* =====================================================================
    SLIDES NA ORDEM: GLAUCIO → MOISÉS → WÉLLINGTON → JESIEL
+   100% EMBASADO NO TEXTO-BASE DO ARQUIVO DOCX
    ===================================================================== */
 const slides = [
 /* 1. CAPA — GLAUCIO */
@@ -1033,7 +1028,7 @@ const slides = [
   speaker:"Glaucio",
   section:"Glaucio · Slide 1 · Abertura",
   title:"A Educação na Democracia Popular (1945–1964)",
-  subtitle:"Contexto histórico brasileiro, políticas educacionais e a qualidade da escola pública na perspectiva democrática e popular.",
+  subtitle:"Contexto político brasileiro, legislação educacional e a expansão da escolaridade segundo o texto-base (Série-Estudos, UCDB, 2010).",
   body:`<div>
     <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
       <div>
@@ -1050,17 +1045,17 @@ const slides = [
       <div style="width: 225px; flex-shrink: 0;">${svgCoverEdu}</div>
     </div>
     <div class="grid three" style="margin-top: 12px;">
-      <div class="card" data-practical="Texto-base: 'A qualidade da escola pública, na perspectiva democrática e popular' (Di Giorgi & Leite, Série-Estudos/UCDB, 2010).">
+      <div class="card" data-practical="Texto-base: 'A qualidade da escola pública, na perspectiva democrática e popular' (Di Giorgi & Leite, Série-Estudos/UCDB, n. 30, p. 305-323, jul./dez. 2010).">
         <h3>📚 Referência Central</h3>
-        <p>Di Giorgi e Leite (2010) + marco histórico de 1945 a 1964.</p>
+        <p>Di Giorgi e Leite (2010) e o recorte histórico de 1945 a 1964.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Clique sobre qualquer imagem histórica nos slides para abri-la em modo de zoom ampliado.">
-        <h3>🖼️ Marco Linha do Tempo</h3>
-        <p>Redemocratização, JK/Brasília, 1ª LDB (1961), Educação Popular e 1964.</p>
+      <div class="card" data-practical="Clique sobre qualquer imagem nos slides para abri-la em modo de zoom ampliado.">
+        <h3>🖼️ Trajetória Histórica</h3>
+        <p>Queda de Vargas (1945), Constituição de 1946, JK, 1ª LDB (1961) e golpe de 1964.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="No Slide 14 o Wéllington conduz o EDUCAQUIZ ao vivo com 10 questões alternadas (4 opções e Verdadeiro ou Falso).">
+      <div class="card" data-practical="No Slide 14 o Wéllington conduz o EDUCAQUIZ ao vivo com 10 questões alternadas (4 opções e Verdadeiro ou Falso) 100% baseadas no texto.">
         <h3>🏆 EDUCAQUIZ (10 Questões)</h3>
         <p>Alternância entre 4 opções e Verdadeiro ou Falso com ranking ao vivo!</p>
         <div class="practical-example"></div>
@@ -1074,41 +1069,41 @@ const slides = [
   speaker:"Glaucio",
   section:"Glaucio · Slide 2 · Marco Linha do Tempo (1945–1964)",
   title:"Marco Linha do Tempo: Política, Sociedade e Educação",
-  subtitle:"Como cada acontecimento histórico entre 1945 e 1964 redefiniu as disputas pela escola pública no Brasil:",
+  subtitle:"Síntese cronológica dos marcos políticos e educacionais apresentados no texto-base (1945–1964):",
   body:`<div>
     <div class="timeline-track">
       <div class="tl-node">
         <span class="tl-year">1945</span>
-        <div class="tl-title">Fim do Estado Novo</div>
-        <div class="tl-edu">Deposição de Vargas e início da redemocratização com participação popular.</div>
+        <div class="tl-title">Deposição de Vargas</div>
+        <div class="tl-edu">Retorno das liberdades democráticas e início do período populista.</div>
       </div>
       <div class="tl-node">
         <span class="tl-year">1946</span>
-        <div class="tl-title">Nova Constituição</div>
-        <div class="tl-edu">Art. 166: educação como <strong>direito de todos</strong> e competência da União para a LDB.</div>
+        <div class="tl-title">Constituição e Projeto LDB</div>
+        <div class="tl-edu">Educação como <strong>direito de todos</strong>; União legisla sobre diretrizes e bases e envia projeto ao Congresso.</div>
       </div>
       <div class="tl-node">
         <span class="tl-year">1956–60</span>
-        <div class="tl-title">JK e Brasília</div>
-        <div class="tl-edu">Plano de Metas ("50 anos em 5"): urbanização pressiona por mais escolas públicas.</div>
+        <div class="tl-title">Governo JK e Brasília</div>
+        <div class="tl-edu">Plano de Metas privilegia indústria de base, alimentação, energia, transporte e <strong>educação</strong>.</div>
       </div>
       <div class="tl-node">
         <span class="tl-year">1961</span>
-        <div class="tl-title">1ª LDB (4.024/61)</div>
-        <div class="tl-edu">Após 13 anos de disputa, unifica os níveis de ensino conciliando público e privado.</div>
+        <div class="tl-title">1ª LDB (Lei 4.024/61)</div>
+        <div class="tl-edu">Promulgada após 15 anos de discussão, reúne níveis e modalidades em um único texto legal.</div>
       </div>
       <div class="tl-node">
-        <span class="tl-year">1960–63</span>
-        <div class="tl-title">Educação Popular</div>
-        <div class="tl-edu">MCP, MEB, "De Pé no Chão" e Paulo Freire (Angicos): alfabetizar para conscientizar.</div>
+        <span class="tl-year">1961–64</span>
+        <div class="tl-title">Jânio, Jango e Crise</div>
+        <div class="tl-edu">Renúncia de Jânio (1961); João Goulart busca apoio nas massas acenando com reformas de base.</div>
       </div>
       <div class="tl-node">
         <span class="tl-year">1964</span>
-        <div class="tl-title">Golpe Civil-Militar</div>
-        <div class="tl-edu">Ruptura democrática interrompe o Plano Nacional de Alfabetização e reprime movimentos.</div>
+        <div class="tl-title">Início do Regime Militar</div>
+        <div class="tl-edu">Radicalização política culmina na deposição de João Goulart em 1964.</div>
       </div>
     </div>
-    <div class="callout question">🔗 Relação com o tema (Di Giorgi & Leite, 2010): O período 1945–1964 revela a tensão permanente entre a <strong>escola como direito democrático e emancipador</strong> versus a <strong>escola voltada apenas à lógica privada e mercadológica</strong>.</div>
+    <div class="callout question">🔗 Eixo do texto-base (Di Giorgi & Leite, 2010): O período 1945–1964 articula redemocratização, industrialização e a primeira legislação nacional unificada da educação brasileira.</div>
   </div>`
 },
 
@@ -1117,18 +1112,18 @@ const slides = [
   speaker:"Glaucio",
   section:"Glaucio · Slide 3 · Cenário Político (1945)",
   title:"1945: Queda de Vargas e Redemocratização",
-  subtitle:"O desgaste da ditadura do Estado Novo (1937–1945) abre espaço para eleições e mobilização das massas:",
+  subtitle:"O desgaste da ditadura de Vargas abre espaço para o retorno das liberdades democráticas:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <ul>
-          <li><strong>Deposição de Vargas (29/10/1945):</strong> Pressões crescentes pelo retorno das liberdades democráticas encerram o Estado Novo.</li>
-          <li><strong>Democracia Populista (1945–1964):</strong> Apelo direto às massas urbanas sob mediação do Estado, nacionalismo e industrialização.</li>
-          <li><strong>Nova Demanda Social:</strong> O crescimento das cidades e da classe trabalhadora transforma o acesso à escola pública em reivindicação popular.</li>
+          <li><strong>Deposição de Vargas (29/10/1945):</strong> O avolumar das insatisfações contra a ditadura fortalece o movimento pelo retorno das liberdades democráticas.</li>
+          <li><strong>Características do Período (1945–1964):</strong> Marcado pelo <strong>populismo</strong> — apelo direto à participação das massas populares sob controle do governo.</li>
+          <li><strong>Nacionalismo e Industrialização:</strong> O Estado conduz um projeto de industrialização apoiado por forte propaganda nacionalista.</li>
         </ul>
-        <div class="callout">Contradição central: O país retomou o voto e reorganizou partidos, mas manteve profundas desigualdades no acesso à escola.</div>
+        <div class="callout">Síntese histórica: Entre 1945 e 1964, a participação das massas populares entrou na cena política sob mediação estatal.</div>
       </div>
-      ${renderHistImage("01_redemocratizacao_brasil_1945.jpg", "Mobilização política e redemocratização no Brasil (1945)", "Ilustração da redemocratização no Brasil em 1945")}
+      ${renderHistImage("01_redemocratizacao_brasil_1945.jpg", "Mobilização política e retorno das liberdades democráticas no Brasil (1945)", "Ilustração da redemocratização no Brasil em 1945")}
     </div>
   </div>`
 },
@@ -1136,56 +1131,56 @@ const slides = [
 /* 4. GOVERNO JK E DESENVOLVIMENTISMO — GLAUCIO */
 {
   speaker:"Glaucio",
-  section:"Glaucio · Slide 4 · Desenvolvimentismo (1956–1961)",
-  title:"Governo JK: Plano de Metas e Construção de Brasília",
-  subtitle:"O projeto '50 anos em 5' acelerou a industrialização e exigiu novas políticas de escolarização:",
+  section:"Glaucio · Slide 4 · Desenvolvimentismo (Governo JK)",
+  title:"Governo Kubitschek: Plano de Metas e Modernização",
+  subtitle:"Um discurso notadamente desenvolvimentista impulsionou a indústria nacional e grandes obras:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <div class="grid" style="grid-template-columns: 1fr;">
-          <div class="card" data-practical="O Plano de Metas concentrou investimentos em energia, transportes, alimentação, indústria de base e educação.">
-            <h3>🏗️ Plano Nacional de Desenvolvimento</h3>
-            <p>Priorizou indústria de base, energia, transporte, alimentação e <strong>educação</strong> para sustentar a modernização econômica.</p>
+          <div class="card" data-practical="Segundo o texto-base, o Plano de Metas privilegiou a indústria de base e quatro setores essenciais: alimentação, energia, transporte e educação.">
+            <h3>🏗️ Plano Nacional de Desenvolvimento (Plano de Metas)</h3>
+            <p>Privilegiou a <strong>indústria de base</strong> e os setores de <strong>alimentação, energia, transporte e educação</strong>.</p>
             <div class="practical-example"></div>
           </div>
-          <div class="card" data-practical="Inaugurada em 1960, Brasília simbolizou o projeto desenvolvimentista, enquanto milhões de brasileiros ainda permaneciam analfabetos.">
-            <h3>🏛️ Urbanização e Pressão por Escolas</h3>
-            <p>Abertura ao capital estrangeiro, inauguração de <strong>Brasília (1960)</strong> e fortalecimento das camadas médias e do proletariado urbano.</p>
+          <div class="card" data-practical="O governo JK recorreu ao capital estrangeiro para financiar estradas, usinas hidrelétricas e a nova capital federal.">
+            <h3>🏛️ Capital Estrangeiro e Brasília (1960)</h3>
+            <p>Apelou ao capital estrangeiro para estradas e usinas hidrelétricas e construiu <strong>Brasília (1960)</strong>, gerando visível crescimento econômico e modernização.</p>
             <div class="practical-example"></div>
           </div>
         </div>
       </div>
-      ${renderHistImage("02_brasilia_desenvolvimentismo_1950s.jpg", "Brasília (1960): símbolo do desenvolvimentismo de JK", "Ilustração de Brasília e o desenvolvimentismo dos anos 1950")}
+      ${renderHistImage("02_brasilia_desenvolvimentismo_1950s.jpg", "Brasília (1960): símbolo do crescimento econômico e da modernização no governo JK", "Ilustração de Brasília e o desenvolvimentismo dos anos 1950")}
     </div>
   </div>`
 },
 
-/* 5. CONSTITUIÇÃO DE 1946 E 1ª LDB (1961) — MOISÉS */
+/* 5. CONSTITUIÇÃO DE 1946 E ENCAMINHAMENTO DA 1ª LDB — MOISÉS */
 {
   speaker:"Moisés",
-  section:"Moisés · Slide 5 · Marco Constitucional (1946–1961)",
-  title:"Constituição de 1946 e a Tramitação da 1ª LDB",
-  subtitle:"Da garantia formal do direito à educação até os 13 anos de disputa no Congresso Nacional:",
+  section:"Moisés · Slide 5 · Marco Constitucional (1946)",
+  title:"Constituição de 1946 e o Início da 1ª LDB",
+  subtitle:"No plano educacional, a Carta de 1946 trouxe princípios democráticos e uma nova competência para a União:",
   body:`<div>
     <div class="grid">
-      <div class="card" data-practical="O Art. 166 da Constituição de 1946 proclamava: 'A educação é direito de todos e será dada no lar e na escola'.">
-        <h3>📜 Constituição de 1946 (Art. 166)</h3>
-        <p>Orientada por princípios liberais e democráticos, consagra a <strong>educação como direito de todos</strong> (sem eliminar por si só as desigualdades reais).</p>
+      <div class="card" data-practical="Diferente das Constituições anteriores (que apenas falavam em 'traçar diretrizes' ou 'fixar as bases'), a de 1946 deu à União poder efetivo para legislar sobre diretrizes e bases.">
+        <h3>📜 Constituição Federal de 1946</h3>
+        <p>Orientada por <strong>princípios liberais e democráticos</strong>, estabeleceu explicitamente a <strong>educação como direito de todos</strong>.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Enquanto Cartas anteriores falavam apenas em 'traçar diretrizes', a de 1946 deu à União poder efetivo de legislar sobre as diretrizes e bases.">
+      <div class="card" data-practical="Em 1946, o Poder Executivo encaminhou ao Congresso Nacional a tarefa de elaborar o projeto da LDB, promulgada apenas em 1961.">
         <h3>⚖️ Competência da União (Art. 5º, XV)</h3>
-        <p>Confere à União o poder de <strong>“legislar sobre as diretrizes e bases da educação nacional”</strong> em lei única.</p>
+        <p>Conferiu à União a atribuição de <strong>“legislar sobre as diretrizes e bases de educação nacional”</strong> (superando apenas “traçar diretrizes”).</p>
         <div class="practical-example"></div>
       </div>
     </div>
     <div class="flow">
       <span>Constituição de 1946</span><b>→</b>
-      <span>Projeto enviado ao Congresso (1948)</span><b>→</b>
-      <span>13 anos de intensos debates</span><b>→</b>
+      <span>Executivo encaminha tarefa ao Congresso (1946)</span><b>→</b>
+      <span>15 anos de discussão (1946–1961)</span><b>→</b>
       <span>Lei n. 4.024/61 (1ª LDB)</span>
     </div>
-    <div class="callout">Marco histórico: Pela primeira vez o Brasil reuniu todos os níveis e modalidades de ensino em um único texto legal.</div>
+    <div class="callout">Inovação jurídica: A partir da LDB, os diferentes níveis e modalidades de educação escolar passaram a estar reunidos em um único texto.</div>
   </div>`
 },
 
@@ -1193,187 +1188,187 @@ const slides = [
 {
   speaker:"Moisés",
   section:"Moisés · Slide 6 · Disputa na LDB (1961)",
-  title:"Escola Pública vs. Privada na Lei n. 4.024/61",
-  subtitle:"A primeira LDB expressou o embate entre projetos distintos de sociedade e financiamento educacional:",
+  title:"Conflito Público vs. Privado na Lei n. 4.024/61",
+  subtitle:"Promulgada somente em 1961, a primeira LDB retratou as diferentes visões presentes na sociedade brasileira:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <table class="debate-table">
           <thead>
             <tr>
-              <th>🏫 Defensores da Escola Pública</th>
-              <th>⛪ Defensores da Escola Privada</th>
+              <th>🏫 Defensores do Ensino Público</th>
+              <th>🏛️ Defensores do Ensino Privado</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Anísio Teixeira, Florestan Fernandes, Fernando de Azevedo e movimentos populares/estudantis.</td>
-              <td>Setores religiosos e proprietários de instituições particulares (Substitutivo Carlos Lacerda).</td>
+              <td>Defendiam o aprimoramento e a primazia da rede pública na organização nacional do ensino.</td>
+              <td>Defendiam os interesses das instituições particulares de ensino nas diretrizes nacionais.</td>
             </tr>
             <tr>
-              <td>Verbas públicas exclusivas para a rede estatal, laica, gratuita e universal.</td>
-              <td>Liberdade de ensino associada ao repasse de recursos públicos às escolas privadas.</td>
+              <td>Representavam uma das visões em disputa ao longo do longo processo de discussão no Congresso (1946–1961).</td>
+              <td>Segundo <strong>Vieira e Farias (2007)</strong>, a Lei n. 4.024/61 favoreceu mais a <strong>ideologia da escola privada</strong>.</td>
             </tr>
           </tbody>
         </table>
-        <div class="callout" style="margin-top:10px;">Vieira e Farias (2007): A Lei 4.024/61 conciliou interesses, mas favoreceu mais a <strong>ideologia da escola privada</strong> que o aprimoramento da pública.</div>
+        <div class="callout" style="margin-top:10px;">Balanço histórico (texto-base): Apesar da conciliação favorável ao setor privado, pela primeira vez o Brasil aglutinou todos os níveis e modalidades de ensino em uma única lei.</div>
       </div>
       <div class="split-visual">${svgLDBBalance}</div>
     </div>
   </div>`
 },
 
-/* 7. MOVIMENTOS DE EDUCAÇÃO POPULAR — MOISÉS */
+/* 7. CRISE POLÍTICA: DE JÂNIO QUADROS A JOÃO GOULART (1961–1964) — MOISÉS */
 {
   speaker:"Moisés",
-  section:"Moisés · Slide 7 · Educação Popular (Anos 1950–1960)",
-  title:"Movimentos de Educação e Cultura Popular",
-  subtitle:"No fim dos anos 1950 e início dos 1960, a educação aproximou-se das lutas sociais dos trabalhadores:",
+  section:"Moisés · Slide 7 · Polarização Política (1961–1964)",
+  title:"De Jânio Quadros a João Goulart: A Fase Conturbada",
+  subtitle:"A sucessão de Juscelino Kubitschek abriu uma crise institucional que culminou na ruptura de 1964:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <ul>
-          <li><strong>Principais Iniciativas:</strong> Movimento de Cultura Popular (MCP), Centro Popular de Cultura (CPC), Movimento de Educação de Base (MEB) e campanha <em>De Pé no Chão Também se Aprende a Ler</em> (Natal/RN).</li>
-          <li><strong>Educação Além da Técnica:</strong> A escola passa a ser concebida como espaço de leitura crítica da realidade e participação cidadã.</li>
-          <li><strong>Conexão com o Tema:</strong> É a raiz histórica da <strong>perspectiva democrática e popular</strong> analisada por Di Giorgi e Leite (2010).</li>
+          <li><strong>Mandato Relâmpago (1961):</strong> Jânio Quadros sucede JK e inicia um mandato de <strong>apenas oito meses</strong>, renunciando em 1961.</li>
+          <li><strong>Posse de João Goulart:</strong> O vice-presidente, pertencente a um partido de oposição, assume sem suporte dos segmentos políticos fortes e conservadores.</li>
+          <li><strong>Mobilização e Reformas de Base:</strong> Sem apoio conservador, Goulart busca sustentação na <strong>mobilização das massas trabalhadoras</strong>, acenando com <strong>reformas de base</strong>.</li>
         </ul>
-        <div class="callout question">“A luta também se aprende a ler”: alfabetização vinculada aos direitos sociais e à organização comunitária.</div>
+        <div class="callout question">A radicalização entre manifestações de esquerda e de direita preparou o terreno para a deposição presidencial de 1964.</div>
       </div>
-      ${renderHistImage("04_movimentos_educacao_popular.jpg", "Movimentos e campanhas de educação popular (início dos anos 1960)", "Ilustração dos movimentos de educação popular")}
+      ${renderHistImage("04_movimentos_educacao_popular.jpg", "Mobilização das massas trabalhadoras e debates sociais no início dos anos 1960", "Ilustração das mobilizações sociais dos anos 1960")}
     </div>
   </div>`
 },
 
-/* 8. PAULO FREIRE E A CONSCIENTIZAÇÃO — MOISÉS */
+/* 8. O GOLPE E O INÍCIO DO REGIME MILITAR (1964) — MOISÉS */
 {
   speaker:"Moisés",
-  section:"Moisés · Slide 8 · Paulo Freire e Angicos (1963)",
-  title:"Paulo Freire: Diálogo e Conscientização",
-  subtitle:"A alfabetização de adultos como prática da liberdade e leitura crítica do mundo:",
+  section:"Moisés · Slide 8 · Ruptura de 1964",
+  title:"1964: Radicalização Política e Início do Regime Militar",
+  subtitle:"O acirramento das disputas políticas encerra a experiência democrática iniciada em 1945:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <div class="grid" style="grid-template-columns: 1fr;">
-          <div class="card" data-practical="Em 1963, em Angicos (RN), 300 trabalhadores rurais foram alfabetizados em 40 horas a partir de palavras do seu cotidiano.">
-            <h3>🗣️ Experiência de Angicos (1963)</h3>
-            <p>Partia do universo vocabular e dos saberes prévios dos educandos, superando cartilhas mecânicas e descontextualizadas.</p>
+          <div class="card" data-practical="Conforme o texto-base, o cenário político foi se radicalizando entre manifestações de esquerda e de direita até a deposição de João Goulart em 1964.">
+            <h3>⚔️ Polarização entre Esquerda e Direita</h3>
+            <p>As manifestações de esquerda e de direita radicalizaram o cenário nacional diante da proposta de reformas de base.</p>
             <div class="practical-example"></div>
           </div>
-          <div class="card" data-practical="Em janeiro de 1964, Paulo Freire foi convidado a coordenar o Plano Nacional de Alfabetização (PNA), interrompido meses depois pelo golpe.">
-            <h3>📖 Leitura da Palavra e do Mundo</h3>
-            <p>Questionava a educação puramente transmissiva, defendendo sujeitos ativos na construção do conhecimento e da democracia.</p>
+          <div class="card" data-practical="Com a deposição do presidente em 1964, encerra-se o ciclo populista (1945–1964) e tem início o Regime Militar.">
+            <h3>🏛️ Deposição de João Goulart (1964)</h3>
+            <p>Em <strong>1964</strong>, o presidente é deposto, encerrando o período populista-democrático e dando início ao <strong>Regime Militar</strong>.</p>
             <div class="practical-example"></div>
           </div>
         </div>
       </div>
-      ${renderHistImage("03_paulo_freire_educacao_popular.jpg", "Paulo Freire: diálogo, alfabetização e leitura crítica do mundo", "Ilustração de Paulo Freire")}
+      ${renderHistImage("05_golpe_civil_militar_1964.jpg", "Deposição de João Goulart em 1964 e início do Regime Militar", "Ilustração da ruptura política de 1964")}
     </div>
   </div>`
 },
 
-/* 9. JÂNIO, JANGO E O GOLPE CIVIL-MILITAR DE 1964 — WÉLLINGTON */
+/* 9. EXPANSÃO DA ESCOLARIDADE E ENSINO FUNDAMENTAL — WÉLLINGTON */
 {
   speaker:"Wéllington",
-  section:"Wéllington · Slide 9 · Ruptura Democrática (1961–1964)",
-  title:"Reformas de Base e o Golpe Civil-Militar de 1964",
-  subtitle:"A polarização política interrompeu a experiência democrática iniciada em 1945:",
+  section:"Wéllington · Slide 9 · Política Educacional (Texto-Base)",
+  title:"Pressão pela Escolaridade e Ensino Fundamental",
+  subtitle:"Como o texto de Di Giorgi e Leite (2010) analisa a dinâmica educacional desse período histórico?",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <ul>
-          <li><strong>De Jânio a Jango (1961):</strong> Após renúncia de Jânio Quadros (8 meses), João Goulart assume e propõe as <strong>Reformas de Base</strong> (agrária, educacional, fiscal e política).</li>
-          <li><strong>Golpe de 1964 (31/03 e 01/04):</strong> Forte resistência conservadora leva à deposição de Goulart e a 21 anos de ditadura militar.</li>
-          <li><strong>Impacto na Educação:</strong> Repressão aos movimentos populares, extinção do Plano Nacional de Alfabetização e prisão/exílio de Paulo Freire.</li>
+          <li><strong>Continuidade desde os Anos 1930:</strong> Passa-se a vivenciar uma <strong>política do ensino fundamental</strong> decorrente da pressão pela expansão da escolaridade em curso desde a década de 1930.</li>
+          <li><strong>Sintonia com a Sociedade em Mudança:</strong> Essa política educacional responde diretamente às grandes transformações no perfil socioeconômico brasileiro.</li>
+          <li><strong>Nova Função da Escola:</strong> A educação deixa de atender apenas a uma elite agrária e passa a ser exigida pela nova dinâmica urbana e industrial.</li>
         </ul>
-        <div class="callout">Síntese histórica: 1964 interrompeu a construção de um projeto nacional de educação popular e democrática.</div>
+        <div class="callout">Ideia central do texto-base: A política de expansão do ensino fundamental estava diretamente conectada às transformações socioeconômicas do país.</div>
       </div>
-      ${renderHistImage("05_golpe_civil_militar_1964.jpg", "Golpe civil-militar de 1964: ruptura da experiência democrática", "Ilustração do golpe civil-militar de 1964")}
+      ${renderHistImage("03_paulo_freire_educacao_popular.jpg", "Expansão da escolaridade e novas demandas educacionais da sociedade urbana", "Ilustração sobre demandas educacionais e escolarização")}
     </div>
   </div>`
 },
 
-/* 10. DI GIORGI & LEITE (2010): O CONCEITO DE QUALIDADE — WÉLLINGTON */
+/* 10. MUDANÇAS NO PERFIL SOCIOECONÔMICO BRASILEIRO — WÉLLINGTON */
 {
   speaker:"Wéllington",
-  section:"Wéllington · Slide 10 · Texto de Referência (2010)",
-  title:"Di Giorgi e Leite (2010): Qualidade para quem?",
-  subtitle:"No artigo da Revista Série-Estudos (UCDB), os autores problematizam o discurso sobre a qualidade escolar:",
+  section:"Wéllington · Slide 10 · Transformações Socioeconômicas",
+  title:"Urbanização, Industrialização e o Novo Papel da Educação",
+  subtitle:"Segundo o texto-base (Di Giorgi & Leite, 2010), três vetores sociais redefiniram o que se esperava da escola:",
   body:`<div>
     <div class="split-layout">
       <div class="split-content">
         <ul>
-          <li><strong>Conceito Polissêmico:</strong> “Qualidade” não é neutra — varia conforme o projeto político de sociedade que se defende.</li>
-          <li><strong>Crítica à Visão Gerencial/Neoliberal:</strong> Reduzir qualidade a testes padronizados e rankings culpabiliza professores e exclui os mais pobres.</li>
-          <li><strong>Perspectiva Democrática e Popular:</strong> Exige qualidade <strong>com inclusão</strong> — garantir acesso, permanência e apropriação crítica do saber sistematizado.</li>
+          <li><strong>1. Camadas Médias e Proletariado Urbano:</strong> O fortalecimento desses grupos nos centros urbanos ampliou a demanda social por escolarização.</li>
+          <li><strong>2. Processo de Industrialização:</strong> O avanço da indústria nacional exigiu maior qualificação e formação básica da população trabalhadora.</li>
+          <li><strong>3. Crescimento do Setor de Serviços:</strong> A expansão dos serviços nas cidades apontou para um modelo que esperava da educação um <strong>novo papel</strong>.</li>
         </ul>
-        <div class="callout">Ideia-chave (Di Giorgi & Leite, 2010): Não há qualidade democrática quando o “sucesso” da escola depende da exclusão das classes populares.</div>
+        <div class="callout">Conexão com o artigo (Série-Estudos, 2010): É nesse contexto de democratização e urbanização que emerge o debate sobre a qualidade da escola pública para as camadas populares.</div>
       </div>
-      <div class="split-visual">${svgQualityPillars}</div>
+      <div class="split-visual">${svgSocioEconomic}</div>
     </div>
   </div>`
 },
 
-/* 11. PILARES DA ESCOLA PÚBLICA DEMOCRÁTICA E POPULAR — WÉLLINGTON */
+/* 11. ARTICULAÇÃO ENTRE POLÍTICA E EDUCAÇÃO (1945–1964) — WÉLLINGTON */
 {
   speaker:"Wéllington",
-  section:"Wéllington · Slide 11 · Texto de Referência (2010)",
-  title:"Pilares da Qualidade Democrática e Popular",
-  subtitle:"O que caracteriza uma escola pública comprometida com a emancipação segundo Di Giorgi e Leite (2010)?",
+  section:"Wéllington · Slide 11 · Síntese do Texto-Base",
+  title:"Articulação entre Democracia, Estado e Escola Pública",
+  subtitle:"Síntese das tensões históricas destacadas no texto-base de Di Giorgi e Leite (2010):",
   body:`<div>
     <div class="story-box">
-      <span class="story-tag">Reflexão Central do Período</span>
-      <p>É possível afirmar que existe democracia plena quando o direito à educação está garantido na Constituição (1946), mas as condições materiais impedem que ele chegue igualmente a toda a população?</p>
+      <span class="story-tag">Questão Central do Período (1945–1964)</span>
+      <p>Como conciliar o reconhecimento constitucional da educação como “direito de todos” (1946) e a pressão urbana pela expansão do ensino fundamental diante de uma LDB (1961) que favoreceu mais a ideologia privada?</p>
     </div>
     <div class="grid three">
-      <div class="card" data-practical="Não basta matricular; é preciso transporte, merenda, infraestrutura e apoio pedagógico para evitar a evasão.">
-        <h3>🚪 1. Acesso e Permanência</h3>
-        <p>Universalização real com condições concretas para que o estudante conclua sua formação.</p>
+      <div class="card" data-practical="Constituição de 1946: estabeleceu a educação como direito de todos e deu à União poder para legislar sobre diretrizes e bases.">
+        <h3>📜 1. Direito Formal (1946)</h3>
+        <p>Princípios liberais e democráticos consagram a educação como direito de todos na Constituição.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Conselhos escolares ativos com participação efetiva de pais, estudantes, professores e funcionários nas decisões.">
-        <h3>🗳️ 2. Gestão Democrática</h3>
-        <p>Participação da comunidade escolar nas decisões pedagógicas e administrativas, superando o autoritarismo.</p>
+      <div class="card" data-practical="Lei n. 4.024/61: aglutinou pela primeira vez todos os níveis e modalidades de ensino, conciliando interesses divergentes.">
+        <h3>⚖️ 2. Disputa na 1ª LDB (1961)</h3>
+        <p>Unificou os níveis de ensino, mas favoreceu mais a ideologia da escola privada que o aprimoramento da pública.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Articular os saberes da cultura popular com o conhecimento científico e tecnológico sistematizado.">
-        <h3>🧠 3. Conhecimento Crítico</h3>
-        <p>Domínio dos conteúdos científicos e culturais articulados à realidade social dos trabalhadores.</p>
+      <div class="card" data-practical="Mudanças socioeconômicas: fortalecimento das camadas médias, do proletariado urbano, da indústria e do setor de serviços.">
+        <h3>🏙️ 3. Demanda Urbana e Social</h3>
+        <p>Industrialização e urbanização pressionam pela expansão do ensino fundamental e por um novo papel da escola.</p>
         <div class="practical-example"></div>
       </div>
     </div>
   </div>`
 },
 
-/* 12. COMPARAÇÃO: DOIS PROJETOS DE EDUCAÇÃO — JESIEL */
+/* 12. COMPARAÇÃO: DOIS PROJETOS DE EDUCAÇÃO NO PERÍODO — JESIEL */
 {
   speaker:"Jesiel",
   section:"Jesiel · Slide 12 · Análise Comparativa",
-  title:"Dois Projetos de Qualidade na Educação Pública",
-  subtitle:"Síntese do debate de Di Giorgi e Leite (2010) em diálogo com Saviani, Paro e Paulo Freire:",
+  title:"Tensões Educacionais no Período (1945–1964)",
+  subtitle:"Comparação estruturada a partir dos elementos apresentados no texto-base (Di Giorgi & Leite, 2010):",
   body:`<div>
     <table class="debate-table">
       <thead>
         <tr>
-          <th>📈 Perspectiva Gerencial / Neoliberal</th>
-          <th>✊ Perspectiva Democrática e Popular</th>
+          <th>🏛️ Tendência Privatista / Conciliadora</th>
+          <th>✊ Demanda Democrática e Popular</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Foco em <strong>eficiência de mercado</strong>, competição entre escolas e rankings numéricos.</td>
-          <td>Foco na <strong>função social da escola</strong>, justiça social e formação cidadã integral.</td>
+          <td>Aprovação da LDB (Lei 4.024/61) favorecendo mais a <strong>ideologia da escola privada</strong> (Vieira & Farias, 2007).</td>
+          <td>Princípio constitucional de 1946 que estabelece a <strong>educação como direito de todos</strong>.</td>
         </tr>
         <tr>
-          <td>Avaliação usada para classificar, premiar ou punir escolas e docentes.</td>
-          <td>Avaliação diagnóstica e formativa para orientar políticas de apoio e superação de desigualdades.</td>
+          <td>Controle populista das massas pelo Estado e resistência de setores conservadores às reformas de base.</td>
+          <td>Pressão pela <strong>expansão da escolaridade</strong> e política do ensino fundamental impulsionada pelas massas urbanas.</td>
         </tr>
         <tr>
-          <td>Estudante visto como “cliente” ou futuro “capital humano” adaptável.</td>
-          <td>Estudante visto como <strong>sujeito histórico</strong> capaz de transformar sua realidade.</td>
+          <td>Longo processo de 15 anos (1946–1961) para aprovação da LDB devido aos conflitos de interesses na sociedade.</td>
+          <td>Aglutinação, pela primeira vez em um único texto legal, dos diferentes níveis e modalidades de ensino.</td>
         </tr>
         <tr>
-          <td>Valorização da gestão empresarial e repasse de verbas ao setor privado.</td>
-          <td>Valorização docente, financiamento público adequado e gestão democrática participativa.</td>
+          <td>Ruptura institucional de 1964 com a deposição de João Goulart e início do Regime Militar.</td>
+          <td>Novo papel esperado da educação diante da industrialização, camadas médias, proletariado urbano e setor de serviços.</td>
         </tr>
       </tbody>
     </table>
@@ -1384,27 +1379,27 @@ const slides = [
 {
   speaker:"Jesiel",
   section:"Jesiel · Slide 13 · Prática na Computação",
-  title:"Da Teoria à Prática: Licenciatura em Computação",
-  subtitle:"Como futuros professores de Computação concretizam a perspectiva democrática e popular na escola pública?",
+  title:"Legado de 1945–1964 na Licenciatura em Computação",
+  subtitle:"Como os debates sobre direito à educação e aprimoramento da escola pública orientam nossa formação docente?",
   body:`<div>
     <div class="grid three">
-      <div class="card" data-practical="Implantar laboratórios com Software Livre (Linux, Scratch, Python) para que escolas públicas não dependam de licenças caras.">
-        <h3>🐧 Software Livre e Acesso</h3>
-        <p>Democratizar o acesso à tecnologia nas escolas públicas sem barreiras financeiras proprietárias.</p>
+      <div class="card" data-practical="Assim como a Constituição de 1946 afirmou a educação como direito de todos, o acesso às tecnologias educacionais na escola pública deve ser universal.">
+        <h3>💻 Educação como Direito</h3>
+        <p>Garantir que o ensino de Computação na rede pública seja um direito efetivo de todos os estudantes.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Ensinar pensamento computacional e letramento digital crítico contra desinformação e vieses algorítmicos.">
-        <h3>🔍 Letramento Digital Crítico</h3>
-        <p>Formar estudantes que compreendam e programem tecnologias, não apenas consumidores passivos.</p>
+      <div class="card" data-practical="Superar a lógica em que o setor privado define os rumos da escola pública, priorizando soluções abertas e aprimoramento da rede estatal.">
+        <h3>🐧 Aprimoramento da Escola Pública</h3>
+        <p>Fortalecer a infraestrutura pública com Software Livre e recursos pedagógicos abertos e sustentáveis.</p>
         <div class="practical-example"></div>
       </div>
-      <div class="card" data-practical="Construir sistemas abertos de acompanhamento pedagógico que auxiliem professores a identificar dificuldades reais.">
-        <h3>🤝 Tecnologia para Permanência</h3>
-        <p>Usar dados educacionais para apoiar estudantes em risco de evasão, nunca para rotulá-los.</p>
+      <div class="card" data-practical="Assim como a industrialização e os serviços exigiram um novo papel da escola nos anos 1950–60, a sociedade digital exige formação crítica.">
+        <h3>🌐 Novo Papel Social da Escola</h3>
+        <p>Responder às transformações socioeconômicas atuais formando cidadãos críticos, não apenas usuários passivos.</p>
         <div class="practical-example"></div>
       </div>
     </div>
-    <div class="callout">A Computação na escola pública deve servir à inclusão digital crítica e à cidadania, conectando o legado de 1945–1964 aos desafios atuais.</div>
+    <div class="callout">Compreender a história da LDB (1961) e das disputas entre público e privado fortalece o compromisso ético do professor de Computação com a escola pública.</div>
   </div>`
 },
 
@@ -1435,17 +1430,15 @@ const slides = [
   type:"cover",
   speaker:"Jesiel",
   section:"Jesiel · Slide 15 · Síntese e Referências",
-  title:"Síntese e Referências Bibliográficas",
+  title:"Síntese e Referência Bibliográfica",
   subtitle:"A Educação na Democracia Popular (1945–1964) · CPAN-UFMS · Glaucio, Moisés, Wéllington e Jesiel",
   body:`<div>
-    <div class="quote" style="margin: 8px 0 12px;">“A educação é um direito de todos e uma poderosa ferramenta de transformação social — defender sua qualidade democrática e popular é tornar a cidadania real.”</div>
-    <div class="callout question" style="margin-bottom: 12px;">💬 Debate final com a turma: Que lições das lutas pela escola pública entre 1945 e 1964 permanecem urgentes hoje?</div>
-    <div style="background: #f8fafc; border: 2px solid #0c2340; border-radius: 10px; padding: 11px 15px; font-size: 14px; color: #1e293b; line-height: 1.4;">
-      <strong>Referências Bibliográficas:</strong><br>
-      • DI GIORGI, Cristiano A. G.; LEITE, Yoshie Ussami Ferrari. <em>A qualidade da escola pública, na perspectiva democrática e popular</em>. Série-Estudos (UCDB), Campo Grande-MS, n. 30, p. 305–323, jul./dez. 2010.<br>
-      • BRASIL. <em>Constituição dos Estados Unidos do Brasil</em> (1946, arts. 166–169) e <em>Lei n. 4.024, de 20 de dezembro de 1961</em> (1ª LDB).<br>
-      • FAUSTO, Boris. <em>História do Brasil</em>. São Paulo: Edusp, 2002. | FREIRE, Paulo. <em>Educação como prática da liberdade</em>. Rio de Janeiro: Paz e Terra, 1967.<br>
-      • SAVIANI, Dermeval. <em>História das ideias pedagógicas no Brasil</em>. Campinas: Autores Associados, 2007. | TOLEDO, Caio Navarro de. <em>1964: o golpe contra as reformas e a democracia</em>. Rev. Bras. Hist., 2004.
+    <div class="quote" style="margin: 8px 0 12px;">“A Constituição de 1946 estabeleceu a educação como direito de todos, mas a disputa entre o ensino público e o privado e as transformações socioeconômicas mostraram que aprimorar a escola pública é um desafio histórico permanente.”</div>
+    <div class="callout question" style="margin-bottom: 12px;">💬 Debate final com a turma: Como a tensão entre interesses privados e o aprimoramento da escola pública (presente na LDB de 1961) ainda se manifesta hoje?</div>
+    <div style="background: #f8fafc; border: 2px solid #0c2340; border-radius: 10px; padding: 12px 16px; font-size: 14.5px; color: #1e293b; line-height: 1.45;">
+      <strong>Referência Bibliográfica (Texto-Base):</strong><br>
+      • DI GIORGI, Cristiano Amaral G.; LEITE, Yoshie Ussami Ferrari. <em>A qualidade da escola pública, na perspectiva democrática e popular</em>. <strong>Série-Estudos</strong> – Periódico do Programa de Pós-Graduação em Educação da UCDB, Campo Grande-MS, n. 30, p. 305–323, jul./dez. 2010.<br>
+      • Obra citada no texto-base: VIEIRA, Sofia Lerche; FARIAS, Isabel Maria Sabino de. <em>Política educacional no Brasil: introdução histórica</em>. Brasília: Liber Livro, 2007.
     </div>
   </div>`
 }
@@ -1453,128 +1446,128 @@ const slides = [
 
 /* =====================================================================
    EDUCAQUIZ: 10 QUESTÕES ALTERNADAS (4 OPÇÕES ↔ VERDADEIRO OU FALSO)
-   TODAS EXPLICITAMENTE ABORDADAS NOS SLIDES 3 A 11
+   100% EMBASADAS NO ARQUIVO DOCX E NOS SLIDES
    ===================================================================== */
 const quizData = [
   /* 1. 4 OPÇÕES (Slide 3) */
   {
     kind: "mc",
-    q: "1. (Slide 3) Qual acontecimento político em 29 de outubro de 1945 encerrou a ditadura do Estado Novo e iniciou a redemocratização no Brasil?",
+    q: "1. (Slide 3) Em que data Getúlio Vargas foi deposto após o avolumar das insatisfações contra a ditadura e o avanço do movimento pelas liberdades democráticas?",
     options: [
-      "A deposição de Getúlio Vargas",
-      "A promulgação da 1ª LDB",
-      "A renúncia de Jânio Quadros",
-      "A inauguração de Brasília"
+      "29 de outubro de 1945",
+      "20 de dezembro de 1961",
+      "21 de abril de 1960",
+      "31 de março de 1964"
     ],
     correct: 0,
-    explanation: "Abordado no Slide 3: Getúlio Vargas foi deposto em 29/10/1945 após pressões pelo retorno das liberdades democráticas."
+    explanation: "Conforme o texto-base (Slide 3), Getúlio Vargas foi deposto em 29 de outubro de 1945."
   },
-  /* 2. VERDADEIRO OU FALSO (Slide 5) */
+  /* 2. VERDADEIRO OU FALSO (Slide 3) */
   {
     kind: "tf",
-    q: "2. [VERDADEIRO OU FALSO] (Slide 5) A Constituição de 1946 estabeleceu, em seu artigo 166, que a educação era direito de todos, mas essa garantia formal por si só não eliminou as desigualdades de acesso e permanência na escola.",
+    q: "2. [VERDADEIRO OU FALSO] (Slide 3) Segundo o texto-base, o período entre 1945 e 1964 caracterizou-se pelo populismo (apelo direto à participação das massas sob controle do governo), pela propaganda nacionalista e pela industrialização promovida pelo Estado.",
     options: [
       "VERDADEIRO",
       "FALSO"
     ],
     correct: 0,
-    explanation: "VERDADEIRO! Abordado nos Slides 3, 5 e 11: havia uma grande distância entre o direito formal da Constituição de 1946 e as condições materiais reais de acesso."
+    explanation: "VERDADEIRO! Essa é a caracterização exata do período 1945–1964 apresentada no texto-base (Slide 3)."
   },
   /* 3. 4 OPÇÕES (Slide 4) */
   {
     kind: "mc",
-    q: "3. (Slide 4) Qual programa do governo Juscelino Kubitschek (1956–1961) priorizou indústria de base, energia, transporte e educação?",
+    q: "3. (Slide 4) Além da indústria de base, quais quatro setores foram privilegiados pelo Plano Nacional de Desenvolvimento (Plano de Metas) do governo Kubitschek?",
     options: [
-      "Reformas de Base",
-      "Plano de Metas",
-      "Manifesto dos Pioneiros",
-      "Plano Salte"
+      "Turismo, mineração, cultura e previdência",
+      "Alimentação, energia, transporte e educação",
+      "Comércio exterior, habitação, saneamento e defesa",
+      "Telecomunicações, saúde, agricultura e esporte"
     ],
     correct: 1,
-    explanation: "Abordado no Slide 4: O Plano de Metas ('50 anos em 5') impulsionou a industrialização, Brasília (1960) e incluiu a educação."
+    explanation: "Conforme o texto-base (Slide 4), o Plano de Metas privilegiou a indústria de base e os setores de alimentação, energia, transporte e educação."
   },
   /* 4. VERDADEIRO OU FALSO (Slides 5 e 6) */
   {
     kind: "tf",
-    q: "4. [VERDADEIRO OU FALSO] (Slides 5 e 6) A primeira Lei de Diretrizes e Bases da Educação Nacional (Lei nº 4.024/61) foi aprovada rapidamente em 1946, sem divergências entre defensores da escola pública e grupos privados.",
+    q: "4. [VERDADEIRO OU FALSO] (Slides 5 e 6) O Poder Executivo encaminhou a tarefa de elaborar o projeto da LDB ao Congresso Nacional em 1946, mas sua promulgação só ocorreu em 1961 após um longo processo de discussão.",
     options: [
       "VERDADEIRO",
       "FALSO"
     ],
-    correct: 1,
-    explanation: "FALSO! Abordado nos Slides 5 e 6: o projeto levou 13 anos de intensos debates no Congresso (sendo aprovado só em 1961), com forte embate entre defensores da escola pública e setores privados."
+    correct: 0,
+    explanation: "VERDADEIRO! O texto-base destaca que o projeto foi encaminhado em 1946 e promulgado apenas em 1961 (Lei n. 4.024/61)."
   },
   /* 5. 4 OPÇÕES (Slide 5) */
   {
     kind: "mc",
-    q: "5. (Slide 5) O que a Constituição Federal de 1946 (Art. 5º, XV) atribuiu de inédito à União no campo educacional?",
+    q: "5. (Slide 5) O que a Constituição Federal de 1946 (art. 5º, XV) conferiu à União, diferenciando-se das Constituições anteriores?",
     options: [
-      "Privatizar todas as escolas secundárias",
-      "Extinguir o ensino público gratuito",
-      "Legislar sobre as diretrizes e bases da educação nacional",
-      "Transferir as universidades aos municípios"
+      "Apenas traçar diretrizes gerais",
+      "Apenas fixar as bases mínimas",
+      "Legislar sobre as diretrizes e bases de educação nacional",
+      "Transferir a legislação educacional exclusivamente aos municípios"
     ],
     correct: 2,
-    explanation: "Abordado no Slide 5: A Constituição de 1946 conferiu à União a competência de legislar sobre as diretrizes e bases da educação nacional."
+    explanation: "Conforme o texto-base (Slide 5), a Constituição de 1946 conferiu à União a competência para 'legislar sobre as diretrizes e bases de educação nacional'."
   },
-  /* 6. VERDADEIRO OU FALSO (Slide 7) */
+  /* 6. VERDADEIRO OU FALSO (Slide 6) */
   {
     kind: "tf",
-    q: "6. [VERDADEIRO OU FALSO] (Slide 7) No final dos anos 1950 e início dos anos 1960, iniciativas como o MCP, o MEB, o CPC e a campanha 'De Pé no Chão Também se Aprende a Ler' aproximaram a alfabetização da realidade social e da participação popular.",
-    options: [
-      "VERDADEIRO",
-      "FALSO"
-    ],
-    correct: 0,
-    explanation: "VERDADEIRO! Abordado no Slide 7: esses movimentos concebiam a educação como leitura crítica da realidade e participação cidadã."
-  },
-  /* 7. 4 OPÇÕES (Slide 6) */
-  {
-    kind: "mc",
-    q: "7. (Slide 6) Sobre a LDB (Lei n. 4.024/61), promulgada após 13 anos de debates, o que concluem Vieira e Farias (2007)?",
-    options: [
-      "Eliminou completamente o ensino religioso e privado",
-      "Favoreceu mais a ideologia da escola privada que o aprimoramento da escola pública",
-      "Foi aprovada em menos de seis meses sem conflitos",
-      "Criou o FUNDEB e o sistema de cotas"
-    ],
-    correct: 1,
-    explanation: "Abordado no Slide 6: Vieira e Farias (2007) concluem que a Lei 4.024/61 conciliou interesses, mas favoreceu mais a ideologia da escola privada que o aprimoramento da pública."
-  },
-  /* 8. VERDADEIRO OU FALSO (Slide 8) */
-  {
-    kind: "tf",
-    q: "8. [VERDADEIRO OU FALSO] (Slide 8) A experiência de alfabetização coordenada por Paulo Freire em Angicos (RN), em 1963, baseava-se na memorização mecânica de cartilhas tradicionais distantes do cotidiano dos trabalhadores.",
+    q: "6. [VERDADEIRO OU FALSO] (Slide 6) Segundo Vieira e Farias (2007), citados no texto-base, a LDB (Lei n. 4.024/61) favoreceu mais o aprimoramento da escola pública do que a ideologia da escola privada.",
     options: [
       "VERDADEIRO",
       "FALSO"
     ],
     correct: 1,
-    explanation: "FALSO! Abordado no Slide 8: a experiência de Angicos (1963) partia do universo vocabular e dos saberes prévios dos educandos, superando cartilhas mecânicas."
+    explanation: "FALSO! Conforme citado no texto-base (Slide 6), Vieira e Farias (2007) afirmam que a Lei n. 4.024/61 favoreceu mais a ideologia da escola privada do que o aprimoramento da escola pública."
   },
-  /* 9. 4 OPÇÕES (Slides 10 e 11) */
+  /* 7. 4 OPÇÕES (Slide 7) */
   {
     kind: "mc",
-    q: "9. (Slides 10 e 11) Na perspectiva democrática e popular defendida por Di Giorgi e Leite (2010), o que define a qualidade da escola pública?",
+    q: "7. (Slide 7) Após a renúncia de Jânio Quadros em 1961 (após oito meses de mandato), como João Goulart buscou apoio para seu plano de governo?",
     options: [
-      "Exclusivamente notas altas em rankings e testes padronizados",
-      "Competição empresarial entre escolas e seleção dos melhores alunos",
-      "Acesso, permanência, gestão democrática e apropriação crítica do saber por todos",
-      "Substituição de professores por apostilas padronizadas"
+      "Exclusivamente junto aos segmentos políticos conservadores",
+      "Na mobilização das massas trabalhadoras, acenando com reformas de base",
+      "Por meio do fechamento imediato do Congresso Nacional",
+      "Suspendendo todas as manifestações sindicais e populares"
     ],
-    correct: 2,
-    explanation: "Abordado nos Slides 10 e 11: para Di Giorgi e Leite (2010), qualidade social exige acesso, permanência, gestão democrática e conhecimento crítico."
+    correct: 1,
+    explanation: "Conforme o texto-base (Slide 7), sem suporte dos segmentos políticos fortes e conservadores, Goulart buscou apoio na mobilização das massas trabalhadoras, acenando com reformas de base."
   },
-  /* 10. VERDADEIRO OU FALSO (Slide 9) */
+  /* 8. VERDADEIRO OU FALSO (Slide 6) */
   {
     kind: "tf",
-    q: "10. [VERDADEIRO OU FALSO] (Slide 9) O golpe civil-militar de 1964 depôs João Goulart, interrompeu o Plano Nacional de Alfabetização e reprimiu movimentos de educação popular, encerrando a experiência democrática iniciada em 1945.",
+    q: "8. [VERDADEIRO OU FALSO] (Slide 6) Com a promulgação da Lei n. 4.024/61, o Brasil passou a contar, pela primeira vez, com uma legislação que reunia os diferentes níveis e modalidades de ensino em um único texto.",
     options: [
       "VERDADEIRO",
       "FALSO"
     ],
     correct: 0,
-    explanation: "VERDADEIRO! Abordado no Slide 9: em março/abril de 1964 iniciou-se uma ditadura de 21 anos que extinguiu o Plano Nacional de Alfabetização e prendeu/exilou Paulo Freire."
+    explanation: "VERDADEIRO! O texto-base ressalta que a LDB de 1961 aglutinou, pela primeira vez, os diferentes níveis e modalidades de educação escolar em um único texto."
+  },
+  /* 9. 4 OPÇÕES (Slides 9 e 10) */
+  {
+    kind: "mc",
+    q: "9. (Slides 9 e 10) Segundo o texto-base, qual política educacional passou a ser vivenciada em sintonia com as mudanças socioeconômicas (camadas médias, proletariado urbano, industrialização e serviços)?",
+    options: [
+      "A política do ensino fundamental decorrente da pressão pela expansão da escolaridade",
+      "A extinção das escolas públicas nos centros urbanos",
+      "O retorno exclusivo ao ensino rural agrário",
+      "A substituição das escolas por ensino a distância"
+    ],
+    correct: 0,
+    explanation: "Conforme o texto-base (Slides 9 e 10), vivenciou-se uma política do ensino fundamental decorrente da pressão pela expansão da escolaridade em curso desde os anos 1930."
+  },
+  /* 10. VERDADEIRO OU FALSO (Slide 8) */
+  {
+    kind: "tf",
+    q: "10. [VERDADEIRO OU FALSO] (Slide 8) Em 1964, após a radicalização do cenário político entre manifestações de esquerda e de direita, o presidente João Goulart foi deposto, dando início ao Regime Militar.",
+    options: [
+      "VERDADEIRO",
+      "FALSO"
+    ],
+    correct: 0,
+    explanation: "VERDADEIRO! Conforme o texto-base (Slide 8), a radicalização entre esquerda e direita culminou na deposição de João Goulart em 1964 e no início do Regime Militar."
   }
 ];
 
